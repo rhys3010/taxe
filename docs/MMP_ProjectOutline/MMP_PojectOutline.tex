@@ -1,0 +1,86 @@
+\documentclass[11pt,fleqn,twoside]{article}
+\usepackage{makeidx}
+\makeindex
+\usepackage{palatino}
+\usepackage{plain}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{mmpv2}
+%\usepackage{url}
+\usepackage{hyperref}
+\usepackage{cite}
+
+\begin{document}
+	
+\name{Rhys Evans}
+\userid{rhe24}
+\projecttitle{Android App for Local Taxi Bookings}
+\projecttitlememoir{Android App for Local Taxi Bookings}
+\reporttitle{Project Outline}
+\version{1.1}
+\docstatus{Release}
+\modulecode{CS39440}
+\degreeschemecode{G400}
+\degreeschemename{Computer Science}
+\supervisor{Chris Loftus}
+\supervisorid{cwl}
+\wordcount{}
+\mmp
+
+%==============================================================================
+\section{Project description} \label{project_description}
+%==============================================================================
+The Android App for Local Taxi Bookings project will primarily involve creating a mobile app that is intended to serve as an intermediary between local taxi companies and their customers. It will likely support three types of users: Company Admin, Driver and Customer. All users will have to register an account, the app will have access management to ensure only desired features are available to different classes of users. \par
+
+\textbf{Customers} will be able to make bookings through the app and provide information such as location, number of passengers, time and additional notes (i.e instructions for entry to tricky pickup locations). The customer can then either specify a desired taxi company or select 'no preference'. A push notification will be sent to the customer whenever the status of their booking changes, they will also be able to check this within the app whilst their booking is active. Customers will be able to cancel their booking at any time and view all their previous bookings. \par
+
+\textbf{Company Admins} will have access to several management tools/settings. These management tools will allow Company admins to set the 'available hours' of their taxi service, add or remove drivers and block or unblock customers. Company admins will also be able to select how bookings are delegated and managed by the app. For example, if they select automatic delegation, the app will delegate bookings to drivers using an algorithm similar to line hunting in telephony. However, if they select manual delegation all bookings will come through to the company admin, who will then manually delegate bookings to drivers. \par
+
+\textbf{Drivers} will 'belong' to a given taxi company that is managed by a company admin. They will be able to mark themselves as available/unavailable within the app; being 'unavailable' will exclude them from automatic delegation. If the driver's company has automatic delegation selected, they will be able to Accept or Decline bookings as they come through. Drivers will also be able to mark the status of their current booking, which will be sent to the customer. Depending on company preference, the live GPS location of the driver could also be broadcast to the user whilst the booking is active. The app will have a 'driving mode' option available to drivers when enabled it will present a more simplistic and easy to use UI. \par
+
+The main goal of the app is to streamline the process of making taxi bookings, both for customers and for taxi companies. A history of previous bookings can be made available to each customer and taxi company. Such a history could be extremely helpful for cases of lost property, criminal damage, etc. Taxi companies would also be able to identify and blacklist problematic customers. By viewing the live status of their booking, customers can also make sure they are present for their booking at the correct time, hopefully resulting in fewer taxis waiting around. \par
+
+
+%==============================================================================
+\section{Proposed tasks} \label{proposed_tasks}
+%==============================================================================
+In order to complete this project, the following tasks will need to be completed:
+
+\begin{itemize}
+	\item \textbf{Document the chosen methodology.} Extreme Programming~\cite{xp_applied_ref, xp_explained_ref} has already been selected as the chosen methodology for this project. However, decisions still need to be made regarding the practices of Extreme Programming~\cite{xp_applied_ref, xp_explained_ref} that are best suited for this project. These decisions will need to be documented for reference throughout the project.
+	\item \textbf{Identify key functionality and create user stories.} This work will involve identifying what the key, high-level requirements of the project are and writing them down in the form of user stories. Each story should have some sort of acceptance test outlined for it.
+	\item \textbf{Look into build processes and deployment platforms.} This task will involve researching continuous integration and deployment solutions such as Jenkins~\cite{jenkins_documentation_ref}, Travis-CI~\cite{travis_documentation_ref} and Team City~\cite{teamcity_documentation_ref}. Options for hosting the Application's backend server will also need to be considered.
+	\item \textbf{Research the technologies and languages required for the Application's backend.} This work will involve researching options for data persistence~\cite{mongodb_documentation_ref}, and various different server-side technologies, such as Node.js~\cite{nodejs_documentation_ref}, Express.js~\cite{expressjs_documentation_ref} and Ruby on Rails~\cite{rails_documentation_ref}, and perhaps more.
+	\item \textbf{Setting up a Git Repository and local build environment.} This task will involve creating a Git repository and setting up a local development environment that is compatible with the aforementioned development tools.
+	\item \textbf{Development and Integration of the Backend Server.} Information security~\cite{nodejs_security_ref} will need to be constantly considered in order to develop a robust, reliable and GDPR~\cite{gdpr_legislation_ref} compliant application.
+	\item \textbf{Development of the Android App.} This aspect of development will focus on the Android App itself. The look and feel, identity and branding of the app will need to be established. The user interface of the application will need to be designed and prototyped~\cite{adobeXD_documentation_ref, fluidUI_documentation_ref}. The app will also need to interact with the backend. Automated tests will need to be created for each feature of the application.
+	\item \textbf{Write the Final Report.} The final report will contain all documentation relevant to the built system.
+	\item \textbf{Prepare for Demonstrations.} This task will involve making preparations for the project's demonstrations. These will involve ensuring the system to be demonstrated works as intended and prepare a verbal presentation to accompany the technical demonstration.
+\end{itemize}
+
+
+%==============================================================================
+\section{Project deliverables} \label{project_deliverables}
+%==============================================================================
+The following deliverables can be expected:
+
+\begin{itemize}
+	\item \textbf{A brief document outlining my chosen methodology and coding standards.} A brief document will be produced to describe and justify the choice of methodology. This will include a short breakdown of each practice that is part of the methodology and a section addressing the coding standards of the project.
+	\item \textbf{Story Cards.} The story cards created as part of the chosen methodology will be documented, there will also be a brief description of the acceptance test for each story within the document.
+	\item \textbf{An online blog documenting weekly progress.} This deliverable will be continuously updated, up until the week of submission. A plain HTML/CSS blog will be created and made available to the project's supervisor.
+	\item \textbf{Final Completed System.} The final system will contain a fully functioning Android App with an aesthetically pleasing user interface and a fully functional backend. The app should meet all the criteria outlined in Section .~\ref{project_description}. This deliverable will contain all source code and a planned demonstration of the system.
+	\item \textbf{Test suite.} A suite of tests that will be submitted alongside the final system. They will cover all automated tests and perhaps some manual tests that are created throughout the app's development. Tools such as Espresso and JUnit will likely be used to create the majority of tests.
+	\item \textbf{Final Report.} This document will contain the project report in its entirety, including associated appendices. In this document, all 3rd party libraries, frameworks, and tools used in development will be formally acknowledged. 
+\end{itemize}
+
+
+\nocite{*}
+\newpage
+\addcontentsline{toc}{section}{Initial Annotated Bibliography}
+\bibliographystyle{IEEEannotU}
+\renewcommand{\refname}{Initial Annotated Bibliography}
+\bibliography{mmp}
+\end{document}

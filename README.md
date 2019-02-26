@@ -15,6 +15,11 @@ Android, Retrofit, rxJava
 
 ### Prerequisites
 
+## Story Board
+[Trello Project Page](https://trello.com/rhe24_mmp)
+
+## Progress Blog
+[Personal Project Blog](http://blog.rhysevans.xyz/)
 
 ## Versioning
 Project uses [Semantic Versioning 2.0.0](https://semver.org/)

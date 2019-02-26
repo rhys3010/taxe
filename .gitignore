@@ -1,3 +1,5 @@
+### IntelliJ ###
+
 *.iml
 .gradle
 /local.properties
@@ -6,3 +8,32 @@
 /build
 /captures
 .externalNativeBuild
+
+### Latex ###
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+*.idx
+.*.lb
+
+.pdf
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
