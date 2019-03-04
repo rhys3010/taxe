@@ -1,4 +1,4 @@
-(logo here)
+<img src="https://i.imgur.com/ZpCtOo4.png" width="120" height="120">
 
 # Tax-E
 
