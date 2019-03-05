@@ -5,7 +5,64 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorPrimaryLight">@color/colorPrimaryLight</item>
     </style>
 
+    <!-- Theme Without Action Bar -->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Custom Button Theme -->
+    <style name="AppTheme.Button" parent="android:Widget.Material.Button">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!-- Text Themes -->
+    <style name="AppTheme.TextAppearance.Header1" parent="Base.TextAppearance.AppCompat.Display1">
+        <item name="android:textSize">@dimen/text_size_header_1</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Header2" parent="Base.TextAppearance.AppCompat.Display2">
+        <item name="android:textSize">@dimen/text_size_header_2</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Header3" parent="Base.TextAppearance.AppCompat.Display3">
+        <item name="android:textSize">@dimen/text_size_header_3</item>
+        <item name="android:fontFamily">sans-serif-regular</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Header4" parent="Base.TextAppearance.AppCompat.Display4">
+        <item name="android:textSize">@dimen/text_size_header_4</item>
+        <item name="android:fontFamily">sans-serif-regular</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Subtitle1" parent="Base.TextAppearance.AppCompat.Subhead">
+        <item name="android:textSize">@dimen/text_size_subtitle_1</item>
+        <item name="android:fontFamily">sans-serif-regular</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Body1" parent="Base.TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">@dimen/text_size_body_1</item>
+        <item name="android:fontFamily">sans-serif-regular</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Body2" parent="Base.TextAppearance.AppCompat.Body2">
+        <item name="android:textSize">@dimen/text_size_body_2</item>
+        <item name="android:fontFamily">sans-serif-regular</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Button" parent="Base.TextAppearance.AppCompat.Button">
+        <item name="android:textSize">@dimen/text_size_button</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Caption" parent="Base.TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">@dimen/text_size_caption</item>
+        <item name="android:fontFamily">sans-serif-regular</item>
+    </style>
 </resources>
