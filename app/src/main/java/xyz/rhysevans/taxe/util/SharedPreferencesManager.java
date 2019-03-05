@@ -77,6 +77,14 @@ public class SharedPreferencesManager {
     }
 
     /**
+     * Delete token from shared preferences
+     */
+    public void deleteToken(){
+        editor.remove(Constants.TOKEN);
+        editor.apply();
+    }
+
+    /**
      * Delete all shared preferences
      */
     public void deleteAll(){

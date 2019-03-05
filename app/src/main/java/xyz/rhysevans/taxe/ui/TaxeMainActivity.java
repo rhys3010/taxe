@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
 
 import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.util.Constants;
@@ -23,17 +24,19 @@ public class TaxeMainActivity extends AppCompatActivity {
      */
     private SharedPreferencesManager sharedPreferencesManager;
 
+    private Button logoutButton;
+
     /**
      * Initialize the activity, check if user is 'logged in' (token saved in shared prefs).
      * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_taxe_main);
+
         // Initialize shared preferences manager
         sharedPreferencesManager = SharedPreferencesManager.getInstance(getApplicationContext());
-
-        // TEMP
-        sharedPreferencesManager.deleteAll();
 
         // Check if token is saved
         if(!sharedPreferencesManager.isTokenPresent()){
@@ -43,8 +46,15 @@ public class TaxeMainActivity extends AppCompatActivity {
             finish();
         }
 
+        // Initialize Button
+        logoutButton = findViewById(R.id.logout_btn);
+        logoutButton.setOnClickListener(v -> logout());
+    }
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_taxe_main);
+    private void logout(){
+        sharedPreferencesManager.deleteToken();
+        Intent intent = new Intent(this, TaxeAuthenticationActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

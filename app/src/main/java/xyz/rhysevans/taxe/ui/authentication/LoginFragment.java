@@ -2,6 +2,7 @@ package xyz.rhysevans.taxe.ui.authentication;
 
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.TextInputLayout;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import xyz.rhysevans.taxe.R;
+import xyz.rhysevans.taxe.ui.TaxeMainActivity;
 import xyz.rhysevans.taxe.util.SharedPreferencesManager;
 
 /**
@@ -72,6 +74,7 @@ public class LoginFragment extends Fragment {
 
     /**
      * Initialize all of the UI views and inflate the fragment
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -95,7 +98,7 @@ public class LoginFragment extends Fragment {
     /**
      * Initialize the fragment's UI views and declare button behaviour
      */
-    private void initViews(View view){
+    private void initViews(View view) {
         // Initialize all the views
         emailInput = view.findViewById(R.id.email_input);
         passwordInput = view.findViewById(R.id.password_input);
@@ -105,19 +108,31 @@ public class LoginFragment extends Fragment {
         passwordInputContainer = view.findViewById(R.id.password_input_container);
 
         // Declare button actions
+        loginBtn.setOnClickListener(v -> login());
         registerText.setOnClickListener(v -> goToRegister());
+    }
+
+    /**
+     * Send provided credentials to server for authentication
+     */
+    private void login() {
+        // TEMP
+        // Set token
+        sharedPreferencesManager.putToken("tokengoeshere");
+        // Move to main screen
+        Intent intent = new Intent(getActivity(), TaxeMainActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     /**
      * Change fragments to register fragment, called when
      * user chooses to 'register'
      */
-    private void goToRegister(){
+    private void goToRegister() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         RegisterFragment registerFragment = new RegisterFragment();
         ft.replace(R.id.authentication_fragment_container, registerFragment, RegisterFragment.TAG);
         ft.commit();
-
     }
-
 }
