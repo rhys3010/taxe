@@ -5,7 +5,7 @@
     <dimen name="header_1_margin">20dp</dimen>
     <dimen name="header_2_margin">10dp</dimen>
     <dimen name="form_margin">30dp</dimen>
-    <dimen name="form_margin_register">20dp</dimen>
+    <dimen name="form_margin_register">5dp</dimen>
     <dimen name="form_input_margin">20dp</dimen>
     <dimen name="register_text_margin">20dp</dimen>
     <dimen name="register_text_padding">3dp</dimen>
