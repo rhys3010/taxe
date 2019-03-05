@@ -38,7 +38,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/welcome_text"
                 android:layout_marginTop="@dimen/header_1_margin"
-                android:theme="@style/AppTheme.TextAppearance.Header1"/>
+                android:fontFamily="sans-serif-light"
+                android:textSize="@dimen/text_size_header_5"/>
 
             <!-- Welcome Sub Text -->
             <TextView
@@ -47,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/welcome_sub_text"
                 android:layout_marginTop="@dimen/header_2_margin"
-                android:theme="@style/AppTheme.TextAppearance.Header2"/>
+                android:textSize="@dimen/text_size_header_6"/>
         </LinearLayout>
 
         <!-- Login Form -->
@@ -86,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/form_input_margin"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@android:color/white">
+                app:passwordToggleTint="@android:color/darker_gray">
 
                 <EditText
                     android:id="@+id/password_input"
@@ -102,7 +103,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/form_margin"
-                android:theme="@style/AppTheme.Button"
                 android:text="@string/login_button_text"/>
         </LinearLayout>
 
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:text="@string/register_text"
             android:gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/header_1_margin"
+            android:layout_marginBottom="@dimen/register_text_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

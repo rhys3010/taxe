@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import xyz.rhysevans.taxe.R;
+import xyz.rhysevans.taxe.ui.authentication.LoginFragment;
 
 /**
  * TaxeAuthenticationActivity.java
@@ -18,5 +19,9 @@ public class TaxeAuthenticationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_taxe_authentication);
+
+        // Show login fragment
+        LoginFragment loginFragment = new LoginFragment();
+        getFragmentManager().beginTransaction().replace(R.id.authentication_fragment_container, loginFragment, "Login").commit();
     }
 }

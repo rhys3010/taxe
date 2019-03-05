@@ -6,4 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.TaxeAuthenticationActivity">
 
+    <!-- Fragment Containner -->
+    <FrameLayout
+        android:id="@+id/authentication_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>

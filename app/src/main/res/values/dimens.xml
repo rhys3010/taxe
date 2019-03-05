@@ -2,10 +2,11 @@
 <resources>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="header_1_margin">10dp</dimen>
-    <dimen name="header_2_margin">5dp</dimen>
+    <dimen name="header_1_margin">20dp</dimen>
+    <dimen name="header_2_margin">10dp</dimen>
     <dimen name="form_margin">50dp</dimen>
     <dimen name="form_input_margin">20dp</dimen>
+    <dimen name="register_text_margin">20dp</dimen>
 
 
     <!-- Text Sizes -->
