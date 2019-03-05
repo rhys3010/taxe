@@ -15,6 +15,10 @@ import xyz.rhysevans.taxe.ui.authentication.LoginFragment;
  */
 public class TaxeAuthenticationActivity extends AppCompatActivity {
 
+    /**
+     * Initialize activity by displaying the login fragment
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +26,6 @@ public class TaxeAuthenticationActivity extends AppCompatActivity {
 
         // Show login fragment
         LoginFragment loginFragment = new LoginFragment();
-        getFragmentManager().beginTransaction().replace(R.id.authentication_fragment_container, loginFragment, "Login").commit();
+        getFragmentManager().beginTransaction().replace(R.id.authentication_fragment_container, loginFragment, LoginFragment.TAG).commit();
     }
 }

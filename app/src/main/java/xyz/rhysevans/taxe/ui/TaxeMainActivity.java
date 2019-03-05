@@ -1,9 +1,14 @@
 package xyz.rhysevans.taxe.ui;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import xyz.rhysevans.taxe.R;
+import xyz.rhysevans.taxe.util.Constants;
+import xyz.rhysevans.taxe.util.SharedPreferencesManager;
 
 /**
  * TaxeMainActivity.java
@@ -13,8 +18,32 @@ import xyz.rhysevans.taxe.R;
  */
 public class TaxeMainActivity extends AppCompatActivity {
 
+    /**
+     * Instance of shared preference manager
+     */
+    private SharedPreferencesManager sharedPreferencesManager;
+
+    /**
+     * Initialize the activity, check if user is 'logged in' (token saved in shared prefs).
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Initialize shared preferences manager
+        sharedPreferencesManager = SharedPreferencesManager.getInstance(getApplicationContext());
+
+        // TEMP
+        sharedPreferencesManager.deleteAll();
+
+        // Check if token is saved
+        if(!sharedPreferencesManager.isTokenPresent()){
+            // If token is not saved, user is not authed and should be sent to login
+            Intent intent = new Intent(this, TaxeAuthenticationActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_taxe_main);
     }

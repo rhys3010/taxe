@@ -8,6 +8,7 @@
         <item name="android:buttonStyle">@style/ButtonTheme</item>
     </style>
 
+
     <!-- Theme Without Action Bar -->
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
