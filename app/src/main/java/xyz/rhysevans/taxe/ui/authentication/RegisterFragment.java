@@ -2,6 +2,7 @@ package xyz.rhysevans.taxe.ui.authentication;
 
 
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import java.io.IOException;
 
@@ -26,6 +28,7 @@ import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.model.Response;
 import xyz.rhysevans.taxe.model.User;
 import xyz.rhysevans.taxe.network.NetworkUtil;
+import xyz.rhysevans.taxe.util.ErrorParser;
 import xyz.rhysevans.taxe.util.SharedPreferencesManager;
 import xyz.rhysevans.taxe.util.Validation;
 
@@ -180,6 +183,11 @@ public class RegisterFragment extends Fragment {
 
         // If all fields are successfully validated, begin registration process
         if(validateFields(name, email, password, confirmPassword)){
+            // Disable Register Button
+            registerBtn.setEnabled(false);
+
+            // Show Progress Bar
+
             // Create new user
             User user = new User(name, email, password);
 
@@ -234,26 +242,30 @@ public class RegisterFragment extends Fragment {
     private void goToLogin(){
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         LoginFragment loginFragment = new LoginFragment();
-        ft.replace(R.id.authentication_fragment_container, loginFragment, LoginFragment.TAG);
+        ft.replace(R.id.authentication_fragment_container, loginFragment, LoginFragment.TAG).addToBackStack(TAG);
         ft.commit();
     }
 
     /**
-     * Handle errors received from API by displaying the message in a snackbar based on
-     * code returned
+     * Handle errors received from API by using the error parser util and providing the error
+     * code returned.
      * @param error
      */
     private void handleError(Throwable error){
+        // Re-enable register button
+        registerBtn.setEnabled(true);
 
         // Get the status code from the error
         if(error instanceof HttpException){
-            Gson gson = new GsonBuilder().create();
 
             try{
                 // Get the body of the error and convert to java object (response) using gson.
                 String errorBody = ((HttpException) error).response().errorBody().string();
-                Response response = gson.fromJson(errorBody, Response.class);
-                showSnackbarMessage(response.getMessage());
+                JsonObject response = new Gson().fromJson(errorBody, JsonObject.class);
+
+                // Use json response to get the error code and parse it
+                int errorStringResource = ErrorParser.getErrorMessage(response.get("code").getAsInt());
+                showSnackbarMessage(getString(errorStringResource));
 
             }catch(IOException e){
                 e.printStackTrace();
@@ -269,10 +281,14 @@ public class RegisterFragment extends Fragment {
      * @param response
      */
     private void handleSuccess(Response response){
+        // Re-enable register button
+        registerBtn.setEnabled(true);
+
         // Move user to login screen
         goToLogin();
         showSnackbarMessage(getString(R.string.register_success));
     }
+
 
     /**
      * Send a snackbar message, checking for a null view
@@ -280,7 +296,7 @@ public class RegisterFragment extends Fragment {
      */
     private void showSnackbarMessage(String message){
         if(getView() != null){
-            Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
         }
     }
 

@@ -132,7 +132,7 @@ public class LoginFragment extends Fragment {
     private void goToRegister() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         RegisterFragment registerFragment = new RegisterFragment();
-        ft.replace(R.id.authentication_fragment_container, registerFragment, RegisterFragment.TAG);
+        ft.replace(R.id.authentication_fragment_container, registerFragment, RegisterFragment.TAG).addToBackStack(TAG);;
         ft.commit();
     }
 }
