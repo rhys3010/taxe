@@ -1,7 +1,10 @@
 package xyz.rhysevans.taxe.ui.authentication;
 
 
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.Snackbar;
@@ -254,7 +257,7 @@ public class RegisterFragment extends Fragment {
             }
             // If the error wasn't a HTTP error, print network issues
         }else{
-            showSnackbarMessage(getString(R.string.network_error));
+            showNetworkErrorDialog();
         }
     }
 
@@ -288,6 +291,25 @@ public class RegisterFragment extends Fragment {
         if(getView() != null){
             Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    /**
+     * Show a network error dialog to inform the user that something's gone wrong
+     */
+    private void showNetworkErrorDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setTitle(getString(R.string.network_error));
+        builder.setMessage(getString(R.string.network_error_long));
+        builder.setIcon(R.drawable.ic_signal_cellular_connected_no_internet_0_bar_black_24dp);
+        builder.setPositiveButton(android.R.string.ok, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Change button colors
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setTextColor(getActivity().getColor(R.color.colorPrimary));
     }
 
     /**

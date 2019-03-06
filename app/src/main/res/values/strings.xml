@@ -36,5 +36,6 @@
     <string name="unauthorized_edit_error">You are not authorized to make that edit.</string>
 
     <string name="internal_server_error">Something Went Wrong :/</string>
-    <string name="network_error">Network Error :(</string>
+    <string name="network_error">Network Error</string>
+    <string name="network_error_long">A network error has occurred. Please make sure you are connected to the internet</string>
 </resources>

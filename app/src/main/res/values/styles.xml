@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:buttonStyle">@style/ButtonTheme</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
 
@@ -19,5 +20,19 @@
     <style name="ButtonTheme" parent="android:Widget.Material.Button">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!-- AlertDialog Button Styles -->
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 </resources>
