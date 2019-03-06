@@ -9,6 +9,7 @@
     <dimen name="form_input_margin">20dp</dimen>
     <dimen name="register_text_margin">20dp</dimen>
     <dimen name="register_text_padding">3dp</dimen>
+    <dimen name="fab_marign">16dp</dimen>
 
 
     <!-- Text Sizes -->
