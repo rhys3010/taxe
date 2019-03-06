@@ -284,6 +284,12 @@ public class RegisterFragment extends Fragment {
         // Re-enable register button
         registerBtn.setEnabled(true);
 
+        // Clear the text inputs
+        emailInput.setText(null);
+        nameInput.setText(null);
+        passwordInput.setText(null);
+        confirmPasswordInput.setText(null);
+
         // Move user to login screen
         goToLogin();
         showSnackbarMessage(getString(R.string.register_success));

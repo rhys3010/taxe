@@ -2,6 +2,7 @@ package xyz.rhysevans.taxe.network;
 
 
 import android.util.Base64;
+import android.util.Log;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -52,7 +53,6 @@ public class NetworkUtil {
      * @return
      */
     public static RetrofitInterface getRetrofit(String email, String password){
-
         // Concat the credentials
         String credentials = email + ":" + password;
         // Encode using Basic64

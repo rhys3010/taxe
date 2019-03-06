@@ -20,6 +20,26 @@ public class Response {
     private String token;
 
     /**
+     * Error code for error responses
+     */
+    private int code;
+
+    /**
+     * Name returned in response
+     */
+    private String name;
+
+    /**
+     * Role returned in response
+     */
+    private String role;
+
+    /**
+     * Id returned in response
+     */
+    private String _id;
+
+    /**
      * Get the message returned by the API
      * @return
      */
@@ -33,5 +53,29 @@ public class Response {
      */
     public String getToken() {
         return token;
+    }
+
+    /**
+     * Get the role from a response
+     * @return
+     */
+    public String getRole(){
+        return role;
+    }
+
+    /**
+     * Get the name from the response
+     * @return
+     */
+    public String getName(){
+        return name;
+    }
+
+    /**
+     * Get the ID from the response
+     * @return
+     */
+    public String getId(){
+        return _id;
     }
 }

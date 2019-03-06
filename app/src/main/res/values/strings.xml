@@ -19,9 +19,10 @@
 
     <!-- Validation Errors -->
     <string name="name_error">Name must be at least 3 characters long, and not contain any numbers.</string>
-    <string name="email_error">Email must be valid.</string>
+    <string name="email_error">Please enter a valid email</string>
     <string name="password_error">Password must contain at least 1 number and must be at least 8 characters long.</string>
     <string name="password_confirmation_error">Passwords do not Match</string>
+    <string name="empty_password_error">Please enter password.</string>
 
     <!-- Errors -->
     <string name="invalid_token_error">Invalid token provided, try logging in again.</string>

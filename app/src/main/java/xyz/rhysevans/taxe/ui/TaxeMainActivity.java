@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.util.Constants;
@@ -49,10 +50,23 @@ public class TaxeMainActivity extends AppCompatActivity {
         // Initialize Button
         logoutButton = findViewById(R.id.logout_btn);
         logoutButton.setOnClickListener(v -> logout());
+
+        populateCard();
+    }
+
+    private void populateCard(){
+        TextView name = findViewById(R.id.profile_name);
+        TextView id = findViewById(R.id.profile_id);
+        TextView role = findViewById(R.id.profile_role);
+
+        name.setText(sharedPreferencesManager.getName());
+        id.setText(sharedPreferencesManager.getId());
+        role.setText(sharedPreferencesManager.getRole());
     }
 
     private void logout(){
-        sharedPreferencesManager.deleteToken();
+        // Delete all shared preferences
+        sharedPreferencesManager.deleteAll();
         Intent intent = new Intent(this, TaxeAuthenticationActivity.class);
         startActivity(intent);
         finish();
