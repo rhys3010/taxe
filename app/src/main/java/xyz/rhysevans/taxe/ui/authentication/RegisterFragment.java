@@ -2,20 +2,18 @@ package xyz.rhysevans.taxe.ui.authentication;
 
 
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
@@ -79,24 +77,9 @@ public class RegisterFragment extends Fragment {
     private TextView loginText;
 
     /**
-     * The container for the name input
+     * The progress indicator
      */
-    private TextInputLayout nameInputContainer;
-
-    /**
-     * The container for the email input
-     */
-    private TextInputLayout emailInputContainer;
-
-    /**
-     * The container for the password input
-     */
-    private TextInputLayout passwordInputContainer;
-
-    /**
-     * The container for the password confirmation
-     */
-    private TextInputLayout confirmPasswordInputContainer;
+    private ProgressBar progressIndicator;
 
     /**
      * The shared preference manager singleton instance
@@ -152,11 +135,7 @@ public class RegisterFragment extends Fragment {
         confirmPasswordInput = view.findViewById(R.id.confirm_password_input);
         registerBtn = view.findViewById(R.id.register_btn);
         loginText = view.findViewById(R.id.login_text);
-
-        nameInputContainer = view.findViewById(R.id.name_input_container);
-        emailInputContainer = view.findViewById(R.id.email_input_container);
-        passwordInputContainer = view.findViewById(R.id.password_input_container);
-        confirmPasswordInputContainer = view.findViewById(R.id.confirm_password_input_container);
+        progressIndicator = view.findViewById(R.id.progress_indicator);
 
         // Initailize view behaviour
         registerBtn.setOnClickListener(v -> register());
@@ -187,6 +166,7 @@ public class RegisterFragment extends Fragment {
             registerBtn.setEnabled(false);
 
             // Show Progress Bar
+            progressIndicator.setVisibility(View.VISIBLE);
 
             // Create new user
             User user = new User(name, email, password);
@@ -254,6 +234,8 @@ public class RegisterFragment extends Fragment {
     private void handleError(Throwable error){
         // Re-enable register button
         registerBtn.setEnabled(true);
+        // Hide Progress Bar
+        progressIndicator.setVisibility(View.GONE);
 
         // Get the status code from the error
         if(error instanceof HttpException){
@@ -283,6 +265,8 @@ public class RegisterFragment extends Fragment {
     private void handleSuccess(Response response){
         // Re-enable register button
         registerBtn.setEnabled(true);
+        // Hide Progress Bar
+        progressIndicator.setVisibility(View.GONE);
 
         // Clear the text inputs
         emailInput.setText(null);

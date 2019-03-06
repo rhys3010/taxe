@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -66,14 +68,10 @@ public class LoginFragment extends Fragment {
     private TextView registerText;
 
     /**
-     * The container for the email text input
+     * The progress indicator
      */
-    private TextInputLayout emailInputContainer;
+    private ProgressBar progressIndicator;
 
-    /**
-     * The container fo rhte password input
-     */
-    private TextInputLayout passwordInputContainer;
 
     /**
      * Instance of SharedPreferenceManager
@@ -126,8 +124,7 @@ public class LoginFragment extends Fragment {
         passwordInput = view.findViewById(R.id.password_input);
         loginBtn = view.findViewById(R.id.login_btn);
         registerText = view.findViewById(R.id.register_text);
-        emailInputContainer = view.findViewById(R.id.email_input_container);
-        passwordInputContainer = view.findViewById(R.id.password_input_container);
+        progressIndicator = view.findViewById(R.id.progress_indicator);
 
         // Declare button actions
         loginBtn.setOnClickListener(v -> login());
@@ -148,8 +145,10 @@ public class LoginFragment extends Fragment {
 
         // If all fields are successfully validated, begin login process
         if(validateFields(email, password)){
-            // Disable cold
+            // Disable button
             loginBtn.setEnabled(false);
+            // Show Progress bar
+            progressIndicator.setVisibility(View.VISIBLE);
 
             // Send login request
             subscriptions.add(NetworkUtil.getRetrofit(email, password).login()
@@ -190,6 +189,8 @@ public class LoginFragment extends Fragment {
     private void handleSuccess(Response response){
         // Re-enable button
         loginBtn.setEnabled(true);
+        // Hide Progress bar
+        progressIndicator.setVisibility(View.GONE);
 
         // Place all the values in the shared preferences
         sharedPreferencesManager.putToken(response.getToken());
@@ -214,6 +215,8 @@ public class LoginFragment extends Fragment {
     private void handleError(Throwable error){
         // Re-enable button
         loginBtn.setEnabled(true);
+        // Hide Progress bar
+        progressIndicator.setVisibility(View.GONE);
 
         // Get the status code from the error
         if(error instanceof HttpException){
@@ -224,7 +227,15 @@ public class LoginFragment extends Fragment {
                 JsonObject response = new Gson().fromJson(errorBody, JsonObject.class);
 
                 // Use json response to get the error code and parse it
-                int errorStringResource = ErrorParser.getErrorMessage(response.get("code").getAsInt());
+                int errorCode = response.get("code").getAsInt();
+                int errorStringResource = ErrorParser.getErrorMessage(errorCode);
+
+                // If error code was auth eror, show errors on input
+                if(errorCode == 6){
+                    emailInput.setError(getString(R.string.authentication_failed_error));
+                    passwordInput.setError(getString(R.string.authentication_failed_error));
+                }
+
                 showSnackbarMessage(getString(errorStringResource));
 
             }catch(IOException e){

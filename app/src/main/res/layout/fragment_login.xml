@@ -111,7 +111,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/form_margin"
+                android:background="@drawable/button_disabled_bg"
                 android:text="@string/login_button_text"/>
+        </LinearLayout>
+
+        <!-- Progress Bar -->
+        <LinearLayout
+            android:id="@+id/progress_indicator_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/form_margin"
+            app:layout_constraintTop_toBottomOf="@id/login_form"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ProgressBar
+                android:id="@+id/progress_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxHeight="20dp"
+                android:indeterminate="true"
+                android:visibility="gone"
+                style="?android:attr/progressBarStyleHorizontal"/>
         </LinearLayout>
 
         <!-- Registration Text -->
