@@ -14,5 +14,15 @@
     <string name="confirm_password_input_hint">Confirm Password</string>
     <string name="register_button_text">Register</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Success Strings -->
+    <string name="register_success">Successfully Registered</string>
+
+    <!-- Validation Errors -->
+    <string name="name_error">Name must be at least 3 characters long, and not contain any numbers.</string>
+    <string name="email_error">Email must be valid.</string>
+    <string name="password_error">Password must contain at least 1 number and must be at least 8 characters long.</string>
+    <string name="password_confirmation_error">Passwords do not Match</string>
+
+    <!-- Errors -->
+    <string name="network_error">Network Error :(</string>
 </resources>

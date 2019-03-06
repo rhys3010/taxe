@@ -42,6 +42,24 @@ public class User {
     private String token;
 
     /**
+     * Default user constructor to allow empty users
+     */
+    public User(){}
+
+    /**
+     * Overloaded user constructor to create user with information
+     * provided at registration
+     * @param name
+     * @param email
+     * @param password
+     */
+    public User(String name, String email, String password){
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    /**
      * Set the name of the user being created
      * @param name
      */

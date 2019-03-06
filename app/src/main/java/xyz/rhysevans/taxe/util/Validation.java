@@ -41,6 +41,16 @@ public class Validation {
      */
     public static boolean isValidPassword(String password){
         return password.length()  > 8 && password.matches(".*\\d+.*");
+    }
 
+    /**
+     * Evaluate whether the value entered into the confirm password field matches
+     * the value entered into the password field.
+     * @param password
+     * @param confirmedPassword
+     * @return
+     */
+    public static boolean isValidPasswordConfirmation(String password, String confirmedPassword){
+        return password.equals(confirmedPassword);
     }
 }

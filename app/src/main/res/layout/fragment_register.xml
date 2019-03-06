@@ -91,16 +91,19 @@
                 android:id="@+id/password_input_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/form_input_margin"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@android:color/darker_gray">
+                android:layout_marginTop="@dimen/form_input_margin">
 
                 <EditText
                     android:id="@+id/password_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password_input_hint"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword"
+                    android:drawableEnd="@drawable/ic_lock_black_24dp"
+                    android:drawablePadding="2dip"
+                    android:paddingEnd="12dp"
+                    android:paddingStart="2dp"
+                    android:drawableTint="@android:color/darker_gray"/>
             </android.support.design.widget.TextInputLayout>
 
             <!-- Confirm Password Field -->
@@ -108,16 +111,19 @@
                 android:id="@+id/confirm_password_input_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/form_input_margin"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@android:color/darker_gray">
+                android:layout_marginTop="@dimen/form_input_margin">
 
                 <EditText
                     android:id="@+id/confirm_password_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/confirm_password_input_hint"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword"
+                    android:drawableEnd="@drawable/ic_lock_black_24dp"
+                    android:drawablePadding="2dip"
+                    android:paddingEnd="12dp"
+                    android:paddingStart="2dp"
+                    android:drawableTint="@android:color/darker_gray"/>
             </android.support.design.widget.TextInputLayout>
 
             <!-- Submit Button -->
