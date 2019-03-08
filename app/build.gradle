@@ -16,6 +16,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "mock"
+    productFlavors {
+        // Build variant for running App without linking to API
+        mock {
+            applicationIdSuffix = ".mock"
+            dimension "mock"
+        }
+        // Build variant for debugging production app
+        prod {
+            dimension "mock"
+        }
+    }
+
+    // remove mockRelease - not needed
+    android.variantFilter { variant ->
+        if (variant.buildType.name.equals('release') && variant.getFlavors().get(0).name.equals('mock')) {
+            variant.setIgnore(true);
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -44,4 +64,5 @@ dependencies {
     // rxJava
     implementation 'io.reactivex:rxjava:1.2.0'
     implementation 'io.reactivex:rxandroid:1.2.1'
+
 }

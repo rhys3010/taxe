@@ -1,12 +1,12 @@
 package xyz.rhysevans.taxe.ui.authentication;
 
 
-import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +15,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
 import java.io.IOException;
+import java.util.Date;
 
-import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+import xyz.rhysevans.taxe.BuildConfig;
 import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.model.Response;
 import xyz.rhysevans.taxe.model.User;
@@ -155,16 +153,24 @@ public class LoginFragment extends Fragment {
 
         // If all fields are successfully validated, begin login process
         if(validateFields(email, password)){
-            // Disable button
-            loginBtn.setEnabled(false);
-            // Show Progress bar
-            progressIndicator.setVisibility(View.VISIBLE);
 
-            // Send login request
-            subscriptions.add(NetworkUtil.getRetrofit(email, password).login()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(this::handleSuccess, this::handleError));
+            // If in mock environment, skip HTTP request
+            // TODO: Actually Mock HTTP requests using mockito / mockwebserver / wiremock?
+            if(BuildConfig.FLAVOR.equals("mock")){
+                Response response = new Response("mocktoken", "123456789", "John Doe", "johndoe@gmail.com", "Customer", new Date());
+                handleSuccess(response);
+            }else{
+                // Disable button
+                loginBtn.setEnabled(false);
+                // Show Progress bar
+                progressIndicator.setVisibility(View.VISIBLE);
+
+                // Send login request
+                subscriptions.add(NetworkUtil.getRetrofit(email, password).login()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(this::handleSuccess, this::handleError));
+            }
         }
     }
 
@@ -248,5 +254,14 @@ public class LoginFragment extends Fragment {
         RegisterFragment registerFragment = new RegisterFragment();
         ft.replace(R.id.authentication_fragment_container, registerFragment, RegisterFragment.TAG).addToBackStack(TAG);
         ft.commit();
+    }
+
+    /**
+     * When fragment is destroyed, unsubscribe all rx subscriptions
+     */
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        subscriptions.unsubscribe();
     }
 }

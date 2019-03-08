@@ -53,6 +53,30 @@ public class Response {
     private String _id;
 
     /**
+     * Default Constructor
+     */
+    public Response(){
+    }
+
+    /**
+     * Mock Constructor to force mocked response
+     * @param token
+     * @param id
+     * @param name
+     * @param email
+     * @param role
+     * @param created_at
+     */
+    public Response(String token, String id, String name, String email, String role, Date created_at){
+        this.token = token;
+        this._id = id;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+        this.created_at = created_at;
+    }
+
+    /**
      * Get the message returned by the API
      * @return
      */
