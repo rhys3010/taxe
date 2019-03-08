@@ -26,6 +26,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.model.Response;
+import xyz.rhysevans.taxe.model.User;
 import xyz.rhysevans.taxe.network.NetworkUtil;
 import xyz.rhysevans.taxe.ui.TaxeMainActivity;
 import xyz.rhysevans.taxe.util.ErrorHandler;
@@ -201,11 +202,12 @@ public class LoginFragment extends Fragment {
         // Hide Progress bar
         progressIndicator.setVisibility(View.GONE);
 
+        // Create a new user object to store non-sensitive data in shared prefs
+        User user = new User(response.getId(), response.getName(), response.getEmail(), response.getRole(), response.getCreated_at());
+
         // Place all the values in the shared preferences
         sharedPreferencesManager.putToken(response.getToken());
-        sharedPreferencesManager.putId(response.getId());
-        sharedPreferencesManager.putName(response.getName());
-        sharedPreferencesManager.putRole(response.getRole());
+        sharedPreferencesManager.putUser(user);
 
         // Clear the text fields
         emailInput.setText(null);

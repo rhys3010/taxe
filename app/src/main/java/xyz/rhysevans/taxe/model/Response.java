@@ -1,5 +1,7 @@
 package xyz.rhysevans.taxe.model;
 
+import java.util.Date;
+
 /**
  * Response.java
  *
@@ -28,6 +30,17 @@ public class Response {
      * Name returned in response
      */
     private String name;
+
+    /**
+     * Email returned in response
+     */
+    private String email;
+
+    /**
+     * Created at returned in response
+     */
+    private Date created_at;
+
 
     /**
      * Role returned in response
@@ -77,5 +90,21 @@ public class Response {
      */
     public String getId(){
         return _id;
+    }
+
+    /**
+     * Get the Email returned in the response
+     * @return
+     */
+    public String getEmail(){
+        return email;
+    }
+
+    /**
+     * Get the created_at date date of the user
+     * @return created_at
+     */
+    public Date getCreated_at(){
+        return created_at;
     }
 }

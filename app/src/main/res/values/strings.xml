@@ -13,6 +13,7 @@
     <string name="name_input_hint">Name</string>
     <string name="confirm_password_input_hint">Confirm Password</string>
     <string name="register_button_text">Register</string>
+    <string name="logout_confirmation">Are you sure you wish to log out?</string>
 
     <!-- Nav Options -->
     <string name="nav_home">Home</string>

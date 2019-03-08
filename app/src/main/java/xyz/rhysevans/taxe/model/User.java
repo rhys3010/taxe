@@ -1,15 +1,23 @@
 package xyz.rhysevans.taxe.model;
 
+import java.util.Date;
+
 import xyz.rhysevans.taxe.util.Roles;
 
 /**
  * User.java
  *
- * User model class, that maps onto values in the User document in MongoDB
+ * User model class, that maps onto values in the User document in MongoDB. Also used to save
+ * user information in shared preferences.
  * @author Rhys Evans
  * @version 0.1
  */
-public class User {
+public class User{
+
+    /**
+     * The user's Object ID
+     */
+    private String id;
 
     /**
      * The user's full name
@@ -34,12 +42,12 @@ public class User {
     /**
      * The date the user's record was created
      */
-    private String created_at;
+    private Date created_at;
 
     /**
-     * The user's current access token
+     * The user's current device token for FCM Messaging
      */
-    private String token;
+    private String deviceToken;
 
     /**
      * Default user constructor to allow empty users
@@ -57,6 +65,31 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    /**
+     * Another overloaded user constructor to create user for storage in shared preferences
+     * @param id
+     * @param name
+     * @param email
+     * @param role
+     * @param created_at
+     */
+    public User(String id, String name, String email, String role, Date created_at){
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+        this.created_at = created_at;
+    }
+
+
+    /**
+     * Set the object ID of the user
+     * @param id
+     */
+    public void setId(String id){
+        this.id = id;
     }
 
     /**
@@ -94,10 +127,10 @@ public class User {
 
     /**
      * Sets the access token of the user
-     * @param token
+     * @param deviceToken
      */
-    public void setToken(String token){
-        this.token = token;
+    public void setDeviceToken(String deviceToken){
+        this.deviceToken = deviceToken;
     }
 
     /**
@@ -136,8 +169,16 @@ public class User {
      * Gets the creation date of the user
      * @return
      */
-    public String getCreated_at(){
+    public Date getCreated_at(){
         return this.created_at;
+    }
+
+    /**
+     * Gets the user's object ID.
+     * @return
+     */
+    public String getId(){
+        return this.id;
     }
 
 }

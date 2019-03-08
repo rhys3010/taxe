@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+
+import xyz.rhysevans.taxe.model.User;
+
 /**
  * SharedPreferencesManager.java
  *
@@ -52,31 +56,33 @@ public class SharedPreferencesManager {
     }
 
     /**
-     * Save the user's id into the shared preferences
-     * @param id
+     * Store a user in the shared preferences by converting to json using
+     * Gson
+     * @param user
      */
-    public void putId(String id){
-        editor.putString(Constants.USER_ID, id);
-        editor.apply();
+    public void putUser(User user){
+        // Be extra sure that password is not present in user object
+        if(user.getPassword() != null){
+            user.setPassword(null);
+        }
+
+        // Convert object to JSON using Gson
+        Gson gson = new Gson();
+        String userJson = gson.toJson(user);
+        editor.putString(Constants.USER, userJson);
+        editor.commit();
     }
 
     /**
-     * Save the user's name in the shared preferences
-     * @param name
+     * Retrieves a user from the shared preferences
+     * @returns User - The user
      */
-    public void putName(String name){
-        editor.putString(Constants.USER_NAME, name);
-        editor.apply();
-    }
+    public User getUser(){
+        Gson gson = new Gson();
+        String userJson = sharedPreferences.getString(Constants.USER, "NO_USER_FOUND");
 
-    /**
-     * Save the user's role
-     * @param role
-     */
-    public void putRole(String role){
-        editor.putString(Constants.USER_ROLE, role);
-        editor.apply();
-
+        // Return user object
+        return gson.fromJson(userJson, User.class);
     }
 
     /**
@@ -86,30 +92,6 @@ public class SharedPreferencesManager {
     public void putToken(String token){
         editor.putString(Constants.TOKEN, token);
         editor.apply();
-    }
-
-    /**
-     * Get the user's id from the shared preferences
-     * @return
-     */
-    public String getId(){
-        return sharedPreferences.getString(Constants.USER_ID, "NO_ID_FOUND");
-    }
-
-    /**
-     * Get the user's name from the shared preferences
-     * @return
-     */
-    public String getName(){
-        return sharedPreferences.getString(Constants.USER_NAME, "NO_NAME_FOUND");
-    }
-
-    /**
-     * Get the user's role from the shared preferences
-     * @return
-     */
-    public String getRole(){
-        return sharedPreferences.getString(Constants.USER_ROLE, "NO_ROLE_FOUND");
     }
 
     /**

@@ -19,17 +19,7 @@ public class Constants {
     public static final String TOKEN = "token";
 
     /**
-     * The shared preferences key for the user's name
+     * The shared preferences key for the user object
      */
-    public static final String USER_NAME = "userName";
-
-    /**
-     * The shared preferences key for the user's role
-     */
-    public static final String USER_ROLE = "userRole";
-
-    /**
-     * The shared preferences key for the user's id
-     */
-    public static final String USER_ID = "userId";
+    public static final String USER = "user";
 }
