@@ -26,6 +26,6 @@ public class TaxeAuthenticationActivity extends AppCompatActivity {
 
         // Show login fragment
         LoginFragment loginFragment = new LoginFragment();
-        getFragmentManager().beginTransaction().replace(R.id.authentication_fragment_container, loginFragment, LoginFragment.TAG).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.authentication_fragment_container, loginFragment, LoginFragment.TAG).commit();
     }
 }

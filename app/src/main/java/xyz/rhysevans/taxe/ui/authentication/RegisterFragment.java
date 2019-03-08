@@ -2,12 +2,10 @@ package xyz.rhysevans.taxe.ui.authentication;
 
 
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +27,8 @@ import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.model.Response;
 import xyz.rhysevans.taxe.model.User;
 import xyz.rhysevans.taxe.network.NetworkUtil;
-import xyz.rhysevans.taxe.util.ErrorParser;
+import xyz.rhysevans.taxe.util.ErrorHandler;
+import xyz.rhysevans.taxe.util.Errors;
 import xyz.rhysevans.taxe.util.SharedPreferencesManager;
 import xyz.rhysevans.taxe.util.Validation;
 
@@ -90,14 +89,29 @@ public class RegisterFragment extends Fragment {
     private SharedPreferencesManager sharedPreferencesManager;
 
     /**
+     * Error handler util class
+     */
+    private ErrorHandler errorHandler;
+
+    /**
      * rxJava Composite subscription to subscribe to
      * observables returned from HTTP response
      */
     private CompositeSubscription subscriptions;
 
 
+    /**
+     * Constructor to utilize all helper classes
+     */
     public RegisterFragment() {
-        // Required empty public constructor
+        // Initialize Shared Pref Manager
+        sharedPreferencesManager = SharedPreferencesManager.getInstance(getContext());
+
+        // Initialize subscriptions
+        subscriptions = new CompositeSubscription();
+
+        // Initialize Error Handler
+        errorHandler = new ErrorHandler(this);
     }
 
 
@@ -113,12 +127,6 @@ public class RegisterFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register, container, false);
-
-        // Initialize Shared Pref Manager
-        sharedPreferencesManager = SharedPreferencesManager.getInstance(getContext());
-
-        // Initialize subscriptions
-        subscriptions = new CompositeSubscription();
 
         // Initialize Views
         initViews(view);
@@ -219,15 +227,6 @@ public class RegisterFragment extends Fragment {
         return errors == 0;
     }
 
-    /**
-     * Move to login page, by switching fragments.
-     */
-    private void goToLogin(){
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        LoginFragment loginFragment = new LoginFragment();
-        ft.replace(R.id.authentication_fragment_container, loginFragment, LoginFragment.TAG).addToBackStack(TAG);
-        ft.commit();
-    }
 
     /**
      * Handle errors received from API by using the error parser util and providing the error
@@ -240,24 +239,12 @@ public class RegisterFragment extends Fragment {
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
 
-        // Get the status code from the error
-        if(error instanceof HttpException){
+        // Handle Errors using util class and save the error code
+        int errorCode = errorHandler.handle(error);
 
-            try{
-                // Get the body of the error and convert to java object (response) using gson.
-                String errorBody = ((HttpException) error).response().errorBody().string();
-                JsonObject response = new Gson().fromJson(errorBody, JsonObject.class);
-
-                // Use json response to get the error code and parse it
-                int errorStringResource = ErrorParser.getErrorMessage(response.get("code").getAsInt());
-                showSnackbarMessage(getString(errorStringResource));
-
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-            // If the error wasn't a HTTP error, print network issues
-        }else{
-            showNetworkErrorDialog();
+        // If the error was caused by pre-existing users, mark that field as errored
+        if(errorCode == Errors.USER_ALREADY_EXISTS_ERROR.getErrorCode()){
+            emailInput.setError(getString(R.string.user_already_exists_error));
         }
     }
 
@@ -294,22 +281,13 @@ public class RegisterFragment extends Fragment {
     }
 
     /**
-     * Show a network error dialog to inform the user that something's gone wrong
+     * Move to login page, by switching fragments.
      */
-    private void showNetworkErrorDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-        builder.setTitle(getString(R.string.network_error));
-        builder.setMessage(getString(R.string.network_error_long));
-        builder.setIcon(R.drawable.ic_signal_cellular_connected_no_internet_0_bar_black_24dp);
-        builder.setPositiveButton(android.R.string.ok, null);
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-        // Change button colors
-        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        positiveButton.setTextColor(getActivity().getColor(R.color.colorPrimary));
+    private void goToLogin(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        LoginFragment loginFragment = new LoginFragment();
+        ft.replace(R.id.authentication_fragment_container, loginFragment, LoginFragment.TAG).addToBackStack(TAG);
+        ft.commit();
     }
 
     /**

@@ -32,5 +32,4 @@ public class Constants {
      * The shared preferences key for the user's id
      */
     public static final String USER_ID = "userId";
-
 }

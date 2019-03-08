@@ -43,6 +43,7 @@
 
     <string name="internal_server_error">Something Went Wrong :/</string>
     <string name="network_error">Network Error</string>
+    <string name="token_expiry">Token Expired</string>
     <string name="network_error_long">A network error has occurred. Please make sure you are connected to the internet</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="title_home">Home</string>

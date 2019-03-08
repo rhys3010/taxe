@@ -50,9 +50,6 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
         // Initialize shared preferences manager
         sharedPreferencesManager = SharedPreferencesManager.getInstance(getApplicationContext());
 
-        // DEBUG: Save token inn shared prefs
-        sharedPreferencesManager.putToken("token");
-
         // Check if token is saved
         if(!sharedPreferencesManager.isTokenPresent()){
             // If token is not saved, user is not authed and should be sent to login

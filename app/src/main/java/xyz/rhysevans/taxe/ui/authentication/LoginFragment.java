@@ -2,14 +2,11 @@ package xyz.rhysevans.taxe.ui.authentication;
 
 
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputLayout;
-import android.util.Log;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +28,8 @@ import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.model.Response;
 import xyz.rhysevans.taxe.network.NetworkUtil;
 import xyz.rhysevans.taxe.ui.TaxeMainActivity;
-import xyz.rhysevans.taxe.util.ErrorParser;
+import xyz.rhysevans.taxe.util.ErrorHandler;
+import xyz.rhysevans.taxe.util.Errors;
 import xyz.rhysevans.taxe.util.SharedPreferencesManager;
 import xyz.rhysevans.taxe.util.Validation;
 
@@ -81,13 +79,28 @@ public class LoginFragment extends Fragment {
     private SharedPreferencesManager sharedPreferencesManager;
 
     /**
+     * Error Handler
+     */
+    private ErrorHandler errorHandler;
+
+    /**
      * rxJava Composite subscription to subscribe to
      * observables returned from HTTP response
      */
     private CompositeSubscription subscriptions;
 
+    /**
+     * Initialize all the helper classess
+     */
     public LoginFragment() {
-        // Required empty public constructor
+        // Initailize shared preference manager
+        sharedPreferencesManager = SharedPreferencesManager.getInstance(getContext());
+
+        // Initialize subscriptions
+        subscriptions = new CompositeSubscription();
+
+        // Initialize Error Handler
+        errorHandler = new ErrorHandler(this);
     }
 
 
@@ -104,12 +117,6 @@ public class LoginFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-
-        // Initailize shared preference manager
-        sharedPreferencesManager = SharedPreferencesManager.getInstance(getContext());
-
-        // Initialize subscriptions
-        subscriptions = new CompositeSubscription();
 
         // Initialize views
         initViews(view);
@@ -220,63 +227,14 @@ public class LoginFragment extends Fragment {
         // Hide Progress bar
         progressIndicator.setVisibility(View.GONE);
 
-        // Get the status code from the error
-        if(error instanceof HttpException){
+        // Handle the error using the util classs
+        int errorCode = errorHandler.handle(error);
 
-            try{
-                // Get the body of the error and convert to java object (response) using gson.
-                String errorBody = ((HttpException) error).response().errorBody().string();
-                JsonObject response = new Gson().fromJson(errorBody, JsonObject.class);
-
-                // Use json response to get the error code and parse it
-                int errorCode = response.get("code").getAsInt();
-                int errorStringResource = ErrorParser.getErrorMessage(errorCode);
-
-                // If error code was auth eror, show errors on input
-                if(errorCode == 6){
-                    emailInput.setError(getString(R.string.authentication_failed_error));
-                    passwordInput.setError(getString(R.string.authentication_failed_error));
-                }
-
-                showSnackbarMessage(getString(errorStringResource));
-
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-            // If the error wasn't a HTTP error, print network issues
-        }else{
-            showNetworkErrorDialog();
+        // Show errors on form if auth error occurs
+        if(errorCode == Errors.AUTHENTICATION_FAILED_ERROR.getErrorCode()){
+            emailInput.setError(getString(R.string.authentication_failed_error));
+            passwordInput.setError(getString(R.string.authentication_failed_error));
         }
-    }
-
-    /**
-     * Send a snackbar message, checking for a null view
-     * @param message
-     */
-    private void showSnackbarMessage(String message){
-        if(getView() != null){
-            Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
-        }
-    }
-
-    /**
-     * Show a network error dialog to inform the user that something's gone wrong
-     */
-    private void showNetworkErrorDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-        builder.setTitle(getString(R.string.network_error));
-        builder.setMessage(getString(R.string.network_error_long));
-        builder.setIcon(R.drawable.ic_signal_cellular_connected_no_internet_0_bar_black_24dp);
-        builder.setPositiveButton(android.R.string.ok, null);
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-        // Change button colors
-        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        positiveButton.setTextColor(getActivity().getColor(R.color.colorPrimary));
-
     }
 
     /**
@@ -286,7 +244,7 @@ public class LoginFragment extends Fragment {
     private void goToRegister() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         RegisterFragment registerFragment = new RegisterFragment();
-        ft.replace(R.id.authentication_fragment_container, registerFragment, RegisterFragment.TAG).addToBackStack(TAG);;
+        ft.replace(R.id.authentication_fragment_container, registerFragment, RegisterFragment.TAG).addToBackStack(TAG);
         ft.commit();
     }
 }
