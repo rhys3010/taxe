@@ -66,7 +66,7 @@ public class AccountOverviewFragment extends Fragment {
     private void populateCardView(View view){
         // Initialize objects
         TextView name = view.findViewById(R.id.profile_name);
-        TextView id = view.findViewById(R.id.profile_id);
+        TextView email = view.findViewById(R.id.profile_email);
         TextView role = view.findViewById(R.id.profile_role);
 
         // Get user from shared prefs
@@ -74,7 +74,7 @@ public class AccountOverviewFragment extends Fragment {
 
         // Populate fields
         name.setText(user.getName());
-        id.setText(user.getId());
+        email.setText(user.getEmail());
         role.setText(user.getRole());
     }
 
