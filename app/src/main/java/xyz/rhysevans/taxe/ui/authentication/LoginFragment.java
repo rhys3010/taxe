@@ -153,24 +153,16 @@ public class LoginFragment extends Fragment {
 
         // If all fields are successfully validated, begin login process
         if(validateFields(email, password)){
+            // Disable button
+            loginBtn.setEnabled(false);
+            // Show Progress bar
+            progressIndicator.setVisibility(View.VISIBLE);
 
-            // If in mock environment, skip HTTP request
-            // TODO: Actually Mock HTTP requests using mockito / mockwebserver / wiremock?
-            if(BuildConfig.FLAVOR.equals("mock")){
-                Response response = new Response("mocktoken", "123456789", "John Doe", "johndoe@gmail.com", "Customer", new Date());
-                handleSuccess(response);
-            }else{
-                // Disable button
-                loginBtn.setEnabled(false);
-                // Show Progress bar
-                progressIndicator.setVisibility(View.VISIBLE);
-
-                // Send login request
-                subscriptions.add(NetworkUtil.getRetrofit(email, password).login()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
-                        .subscribe(this::handleSuccess, this::handleError));
-            }
+            // Send login request
+            subscriptions.add(NetworkUtil.getRetrofit(email, password).login()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::handleSuccess, this::handleError));
         }
     }
 

@@ -276,7 +276,7 @@ public class RegisterFragment extends Fragment {
      */
     private void showSnackbarMessage(String message){
         if(getView() != null){
-            Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(getView(), message, Snackbar.LENGTH_SHORT).show();
         }
     }
 

@@ -157,7 +157,7 @@ public class ErrorHandler {
      */
     private void showSnackbarMessage(String message) {
         if (fragment.getView() != null) {
-            Snackbar.make(fragment.getView(), message, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(fragment.getView(), message, Snackbar.LENGTH_SHORT).show();
         }
     }
 
