@@ -3,8 +3,10 @@ package xyz.rhysevans.taxe.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 
 import xyz.rhysevans.taxe.model.User;
 
@@ -69,7 +71,7 @@ public class SharedPreferencesManager {
         // Convert object to JSON using Gson
         Gson gson = new Gson();
         String userJson = gson.toJson(user);
-        editor.putString(Constants.USER, userJson);
+        editor.putString(Constants.USER_KEY, userJson);
         editor.commit();
     }
 
@@ -77,12 +79,17 @@ public class SharedPreferencesManager {
      * Retrieves a user from the shared preferences
      * @returns User - The user
      */
+    @Nullable
     public User getUser(){
         Gson gson = new Gson();
-        String userJson = sharedPreferences.getString(Constants.USER, "NO_USER_FOUND");
+        String userJson = sharedPreferences.getString(Constants.USER_KEY, "NO_USER_FOUND");
 
-        // Return user object
-        return gson.fromJson(userJson, User.class);
+        // Attempt to serialize json, if userJson is invalid or malformed, return null
+        try{
+            return gson.fromJson(userJson, User.class);
+        }catch(JsonParseException e){
+            return null;
+        }
     }
 
     /**
@@ -90,7 +97,7 @@ public class SharedPreferencesManager {
      * @param token
      */
     public void putToken(String token){
-        editor.putString(Constants.TOKEN, token);
+        editor.putString(Constants.TOKEN_KEY, token);
         editor.apply();
     }
 
@@ -99,7 +106,7 @@ public class SharedPreferencesManager {
      * @return
      */
     public String getToken(){
-        return sharedPreferences.getString(Constants.TOKEN, "NO_TOKEN_FOUND");
+        return sharedPreferences.getString(Constants.TOKEN_KEY, "NO_TOKEN_FOUND");
     }
 
     /**
@@ -107,14 +114,14 @@ public class SharedPreferencesManager {
      * @return
      */
     public boolean isTokenPresent(){
-        return sharedPreferences.contains(Constants.TOKEN);
+        return sharedPreferences.contains(Constants.TOKEN_KEY);
     }
 
     /**
      * Delete token from shared preferences
      */
     public void deleteToken(){
-        editor.remove(Constants.TOKEN);
+        editor.remove(Constants.TOKEN_KEY);
         editor.apply();
     }
 

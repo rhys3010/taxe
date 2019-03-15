@@ -5,6 +5,7 @@
     <color name="colorPrimaryLight">#FFE54C</color>
     <color name="colorDisabledElement">#4DFFB300</color>
     <color name="colorBackground">#F9F9F9</color>
+    <color name="colorLightGrey">#e2e2e2</color>
     <color name="accent_material_light">#FFB300</color>
 
 </resources>

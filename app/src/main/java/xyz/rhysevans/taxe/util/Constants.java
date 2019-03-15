@@ -18,10 +18,10 @@ public class Constants {
     /**
      * The shared preferences key for access token
      */
-    public static final String TOKEN = "token";
+    public static final String TOKEN_KEY = "token";
 
     /**
      * The shared preferences key for the user object
      */
-    public static final String USER = "user";
+    public static final String USER_KEY = "user";
 }

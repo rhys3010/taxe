@@ -20,6 +20,15 @@
     <string name="nav_booking">Booking</string>
     <string name="nav_history">History</string>
     <string name="nav_account">Account</string>
+    
+    <!-- Account Action Options -->
+    <string name="account_action_change_password">Change Password</string>
+    <string name="account_action_change_name">Change Name</string>
+    <string name="account_action_language">Language</string>
+    <string name="account_action_log_out">Log Out</string>
+    <string name="account_action_about">About</string>
+
+    <string name="account_option_icon_content_description">Icon for account action</string>
 
     <!-- Success Strings -->
     <string name="register_success">Successfully Registered</string>
