@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.booking.CreateBookingActivity">
+
+    <!-- Toolbar -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/create_booking_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/Theme.AppCompat.Light"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/create_booking_form">
+
+        <!-- Close Button -->
+        <ImageButton
+            android:id="@+id/create_booking_close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_close_black_24dp"
+            android:tint="@android:color/white"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"/>
+
+        <!-- Page Title -->
+        <TextView
+            android:id="@+id/create_booking_toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@+id/create_booking_close_button"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/create_new_booking"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_subtitle_1"
+            android:textAlignment="viewEnd"/>
+
+        <!-- Create 'Button' -->
+        <TextView
+            android:id="@+id/create_booking_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/create_booking_toolbar_title"
+            android:layout_marginEnd="20dp"
+            android:text="@string/create_new_booking_submit"
+            android:textColor="@android:color/white"
+            android:textAllCaps="true"
+            android:textAlignment="textEnd"/>
+    </android.support.v7.widget.Toolbar>
+
+    <!-- Booking Creation Form -->
+    <LinearLayout
+        android:id="@+id/create_booking_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/form_margin_register"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/create_booking_toolbar">
+
+        <!-- Pickup Location Field -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/pickup_location_input_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/form_margin_register">
+
+            <EditText
+                android:id="@+id/pickup_location_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/pickup_location_input_hint"
+                android:inputType="textCapWords"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Destination Location Field -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/destination_input_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/form_margin_register">
+
+            <EditText
+                android:id="@+id/destination_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/destination_input_hint"
+                android:inputType="textCapWords"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Requested Time Field -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/time_input_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/form_margin_register">
+
+            <EditText
+                android:id="@+id/time_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/time_input_hint"
+                android:inputType="time"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Number of Passengers Field -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/number_of_passengers_input_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/form_margin_register">
+
+            <EditText
+                android:id="@+id/number_of_passengers_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/number_of_passengers_input_hint"
+                android:inputType="number"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <!-- Additional Notes Field (Optional) -->
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/notes_input_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/form_margin_register">
+
+            <EditText
+                android:id="@+id/notes_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/notes_input_hint"
+                android:inputType="textMultiLine"
+                android:maxLength="200"
+                android:maxLines="4"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

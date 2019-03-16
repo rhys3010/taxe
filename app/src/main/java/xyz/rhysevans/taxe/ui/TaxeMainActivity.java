@@ -1,10 +1,9 @@
 package xyz.rhysevans.taxe.ui;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -12,15 +11,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.TextView;
 
 import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.ui.account.AccountOverviewFragment;
+import xyz.rhysevans.taxe.ui.authentication.TaxeAuthenticationActivity;
 import xyz.rhysevans.taxe.ui.booking.BookingHistoryFragment;
 import xyz.rhysevans.taxe.ui.booking.BookingOverviewFragment;
+import xyz.rhysevans.taxe.ui.booking.CreateBookingActivity;
 import xyz.rhysevans.taxe.ui.home.HomeFragment;
-import xyz.rhysevans.taxe.util.Constants;
 import xyz.rhysevans.taxe.util.SharedPreferencesManager;
 
 /**
@@ -61,6 +59,10 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
         // Initialize Nav Menu
         BottomNavigationView navMenu = findViewById(R.id.navigation_menu);
         navMenu.setOnNavigationItemSelectedListener(this::onNavigationItemSelected);
+
+        // Initalize FAB
+        FloatingActionButton fab = findViewById(R.id.new_booking_fab);
+        fab.setOnClickListener(v -> showCreateBooking());
 
         // Load the default fragment
         loadFragment(new HomeFragment());
@@ -110,7 +112,14 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
         // Load the fragment
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.main_fragment_container, fragment);
-        ft.addToBackStack(null);
         ft.commit();
+    }
+
+    /**
+     * Show the create booking activity above the main activity
+     */
+    private void showCreateBooking(){
+        Intent intent = new Intent(this, CreateBookingActivity.class);
+        startActivity(intent);
     }
 }

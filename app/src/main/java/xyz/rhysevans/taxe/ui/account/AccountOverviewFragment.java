@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.model.User;
-import xyz.rhysevans.taxe.ui.TaxeAuthenticationActivity;
+import xyz.rhysevans.taxe.ui.authentication.TaxeAuthenticationActivity;
 import xyz.rhysevans.taxe.ui.authentication.LoginFragment;
 import xyz.rhysevans.taxe.util.SharedPreferencesManager;
 
@@ -72,6 +72,44 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
         return view;
     }
 
+    /**
+     * OnItemClick, handle when an item from the account actions list is clicked
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // Get the resource ID of the list item's String
+        int itemId = accountActions.get(position).getText();
+
+        // Depending on the value of the string, perform relevant action
+        switch(itemId){
+            case R.string.account_action_change_password:
+                // TODO
+                break;
+
+            case R.string.account_action_change_name:
+                // TODO
+                break;
+
+            case R.string.account_action_language:
+                // TODO
+                break;
+
+            case R.string.account_action_log_out:
+                logout();
+                break;
+
+            case R.string.account_action_about:
+                // TODO
+                break;
+
+            default:
+                // Do nothing
+        }
+    }
 
     /**
      * Initialize the contents of the account overview masthead
@@ -158,44 +196,5 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
         positiveButton.setTextColor(getActivity().getColor(R.color.colorPrimary));
         Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
         negativeButton.setTextColor(getActivity().getColor(R.color.colorPrimary));
-    }
-
-    /**
-     * OnItemClick, handle when an item from the account actions list is clicked
-     * @param parent
-     * @param view
-     * @param position
-     * @param id
-     */
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // Get the resource ID of the list item's String
-        int itemId = accountActions.get(position).getText();
-
-        // Depending on the value of the string, perform relevant action
-        switch(itemId){
-            case R.string.account_action_change_password:
-                // TODO
-                break;
-
-            case R.string.account_action_change_name:
-                // TODO
-                break;
-
-            case R.string.account_action_language:
-                // TODO
-                break;
-
-            case R.string.account_action_log_out:
-                logout();
-                break;
-
-            case R.string.account_action_about:
-                // TODO
-                break;
-
-            default:
-                // Do nothing
-        }
     }
 }

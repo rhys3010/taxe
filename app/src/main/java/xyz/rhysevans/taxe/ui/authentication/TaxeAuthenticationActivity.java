@@ -1,4 +1,4 @@
-package xyz.rhysevans.taxe.ui;
+package xyz.rhysevans.taxe.ui.authentication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

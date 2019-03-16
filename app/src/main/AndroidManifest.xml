@@ -22,10 +22,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.TaxeAuthenticationActivity"
+            android:name=".ui.authentication.TaxeAuthenticationActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.booking.CreateBookingActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -14,13 +14,21 @@
     <string name="confirm_password_input_hint">Confirm Password</string>
     <string name="register_button_text">Register</string>
     <string name="logout_confirmation">Are you sure you wish to log out?</string>
+    <string name="create_new_booking">New Booking</string>
+    <string name="create_new_booking_submit">Create</string>
+    <string name="pickup_location_input_hint">Pickup Location</string>
+    <string name="destination_input_hint">Where are you going to?</string>
+    <string name="time_input_hint">Desired Time</string>
+    <string name="number_of_passengers_input_hint">Number of Passengers</string>
+    <string name="notes_input_hint">Additional Notes (optional)</string>
+    <string name="cancel_booking_creation_confirmation">Are you sure you wish to abandon this booking?</string>
 
     <!-- Nav Options -->
     <string name="nav_home">Home</string>
     <string name="nav_booking">Booking</string>
     <string name="nav_history">History</string>
     <string name="nav_account">Account</string>
-    
+
     <!-- Account Action Options -->
     <string name="account_action_change_password">Change Password</string>
     <string name="account_action_change_name">Change Name</string>

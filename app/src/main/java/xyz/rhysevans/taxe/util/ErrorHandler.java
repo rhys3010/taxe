@@ -1,8 +1,6 @@
 package xyz.rhysevans.taxe.util;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -15,8 +13,7 @@ import java.io.IOException;
 
 import retrofit2.adapter.rxjava.HttpException;
 import xyz.rhysevans.taxe.R;
-import xyz.rhysevans.taxe.ui.TaxeAuthenticationActivity;
-import xyz.rhysevans.taxe.ui.TaxeMainActivity;
+import xyz.rhysevans.taxe.ui.authentication.TaxeAuthenticationActivity;
 
 /**
  * ErrorHandler.java
