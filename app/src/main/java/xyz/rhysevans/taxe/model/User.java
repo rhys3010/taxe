@@ -45,9 +45,10 @@ public class User{
     private Date created_at;
 
     /**
-     * The user's current device token for FCM Messaging
+     * The IDs of all of the user's bookings
      */
-    private String deviceToken;
+    private String[] bookings;
+
 
     /**
      * Default user constructor to allow empty users
@@ -125,13 +126,6 @@ public class User{
         this.role = role.name();
     }
 
-    /**
-     * Sets the access token of the user
-     * @param deviceToken
-     */
-    public void setDeviceToken(String deviceToken){
-        this.deviceToken = deviceToken;
-    }
 
     /**
      * Gets the name of the user being created
@@ -179,6 +173,14 @@ public class User{
      */
     public String getId(){
         return this.id;
+    }
+
+    /**
+     * Gets the bookings the user has made
+     * @return
+     */
+    public String[] getBookings(){
+        return this.bookings;
     }
 
 }

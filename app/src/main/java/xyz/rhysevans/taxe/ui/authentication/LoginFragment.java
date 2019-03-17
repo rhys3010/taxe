@@ -23,6 +23,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import xyz.rhysevans.taxe.BuildConfig;
 import xyz.rhysevans.taxe.R;
+import xyz.rhysevans.taxe.model.LoginResponse;
 import xyz.rhysevans.taxe.model.Response;
 import xyz.rhysevans.taxe.model.User;
 import xyz.rhysevans.taxe.network.NetworkUtil;
@@ -194,7 +195,7 @@ public class LoginFragment extends Fragment {
      * main screeen.
      * @param response
      */
-    private void handleSuccess(Response response){
+    private void handleSuccess(LoginResponse response){
         // Re-enable button
         loginBtn.setEnabled(true);
         // Hide Progress bar

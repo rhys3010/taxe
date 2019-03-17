@@ -7,6 +7,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import rx.Observable;
+import xyz.rhysevans.taxe.model.LoginResponse;
 import xyz.rhysevans.taxe.model.Response;
 import xyz.rhysevans.taxe.model.User;
 
@@ -44,7 +45,7 @@ public interface RetrofitInterface {
      * @return
      */
     @POST("users/login")
-    Observable<Response> login();
+    Observable<LoginResponse> login();
 
     /**
      * Edit a user record
