@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 
 import rx.android.schedulers.AndroidSchedulers;

@@ -1,5 +1,9 @@
 package xyz.rhysevans.taxe.util;
 
+import android.util.Log;
+
+import java.util.Date;
+
 /**
  * Validation.java
  *
@@ -52,5 +56,53 @@ public class Validation {
      */
     public static boolean isValidPasswordConfirmation(String password, String confirmedPassword){
         return password.equals(confirmedPassword);
+    }
+
+    /**
+     * Evaluate whether a provided booking time meets the following criteria:
+     *  - Cannot be too far in the future (see const)
+     *  - Cannot be in the past
+     *  - Cannot be too soon (see const)
+     * @param time
+     * @return
+     */
+    public static boolean isValidBookingTime(Date time){
+        // Conversion rate for millisecond to hour
+        final int MILLIS_PER_HOUR = 1000 * 60 * 60;
+        // How far in the future are we willing to take bookings for?
+        final int MAX_HOURS_FUTURE = 3;
+        // How much notice do we need for a booking (i.e. 10 minutes in future..)
+        final int MIN_MINUTES_NOTICE = 10;
+
+        // Get the number of hours between the booking time and NOW
+        // Cast to int
+        int hoursDiff = (int) (time.getTime() - new Date().getTime()) / MILLIS_PER_HOUR;
+
+        // Make sure booking isn't too far away
+        if(hoursDiff > MAX_HOURS_FUTURE){
+            return false;
+        }
+
+        // Make sure booking isn't in the past
+        if(time.getTime() < new Date().getTime()){
+            return false;
+        }
+
+        // Make sure booking isn't too soon
+        // (if the difference in minutes between NOW and booking time is less than wanted
+        if((hoursDiff * 60) < MIN_MINUTES_NOTICE){
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Evaluate whether the provided number of passengers is valid (must be atleast 1)
+     * @param noPassengers
+     * @return
+     */
+    public static boolean isValidNoPassengers(int noPassengers){
+        return noPassengers >= 1;
     }
 }
