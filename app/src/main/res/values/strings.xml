@@ -58,6 +58,12 @@
     <string name="validation_error">One or more fields were invalid.</string>
     <string name="invalid_object_id_error">Invalid ID provided.</string>
     <string name="unauthorized_edit_error">You are not authorized to make that edit.</string>
+    <string name="booking_not_found_error">Booking could not be found</string>
+    <string name="customer_already_has_active_booking_error">You already have an active booking, please cancel it and try again.</string>
+    <string name="unauthorized_view_error">You are not authorized to view this record</string>
+    <string name="invalid_role_error">The user provided does not have the needed permissions for this task</string>
+
+
 
     <string name="internal_server_error">Something Went Wrong :/</string>
     <string name="network_error">Network Error</string>

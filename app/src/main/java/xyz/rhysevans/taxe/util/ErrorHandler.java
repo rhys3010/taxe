@@ -203,6 +203,22 @@ public class ErrorHandler {
             return R.string.unauthorized_edit_error;
         }
 
+        if(code == Errors.BOOKING_NOT_FOUND_ERROR.getErrorCode()){
+            return R.string.booking_not_found_error;
+        }
+
+        if(code == Errors.CUSTOMER_ALREADY_HAS_ACTIVE_BOOKING_ERROR.getErrorCode()){
+            return R.string.customer_already_has_active_booking_error;
+        }
+
+        if(code == Errors.UNAUTHORIZED_VIEW_ERROR.getErrorCode()){
+            return R.string.unauthorized_view_error;
+        }
+
+        if(code == Errors.INVALID_ROLE_ERROR.getErrorCode()){
+            return R.string.invalid_role_error;
+        }
+
         // Default Case
         return R.string.internal_server_error;
     }
