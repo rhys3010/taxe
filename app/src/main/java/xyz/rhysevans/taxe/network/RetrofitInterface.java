@@ -7,6 +7,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import rx.Observable;
+import xyz.rhysevans.taxe.model.Booking;
 import xyz.rhysevans.taxe.model.LoginResponse;
 import xyz.rhysevans.taxe.model.Response;
 import xyz.rhysevans.taxe.model.User;
@@ -22,6 +23,10 @@ import xyz.rhysevans.taxe.model.User;
  * @version 0.1
  */
 public interface RetrofitInterface {
+
+    /////////////////////
+    //     USERS      //
+    ////////////////////
 
     /**
      * Get a specific user by their ID
@@ -55,4 +60,33 @@ public interface RetrofitInterface {
      */
     @PUT("users/{id}")
     Observable<Response> editUser(@Path("id") String id, @Body User user);
+
+    /////////////////////
+    //     BOOKINGS    //
+    ////////////////////
+
+    /**
+     * Get a specific booking by its ID
+     * @param id
+     * @return
+     */
+    @GET("bookings/{id}")
+    Observable<Booking> getBooking(@Path("id") String id);
+
+    /**
+     * Create a new booking with a booking model as the request body
+     * @param booking
+     * @return
+     */
+    @POST("bookings")
+    Observable<Response> createBooking(@Body Booking booking);
+
+    /**
+     * Edit a current booking
+     * @param id
+     * @param booking
+     * @return
+     */
+    @PUT("bookings/{id}")
+    Observable<Booking> editBooking(@Path("id") String id, @Body Booking booking);
 }
