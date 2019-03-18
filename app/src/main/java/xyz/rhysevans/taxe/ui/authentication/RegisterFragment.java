@@ -111,7 +111,7 @@ public class RegisterFragment extends Fragment {
         subscriptions = new CompositeSubscription();
 
         // Initialize Error Handler
-        errorHandler = new ErrorHandler(this);
+        errorHandler = new ErrorHandler();
     }
 
 
@@ -240,7 +240,7 @@ public class RegisterFragment extends Fragment {
         progressIndicator.setVisibility(View.GONE);
 
         // Handle Errors using util class and save the error code
-        int errorCode = errorHandler.handle(error);
+        int errorCode = errorHandler.handle(error, this.getContext(), this.getView());
 
         // If the error was caused by pre-existing users, mark that field as errored
         if(errorCode == Errors.USER_ALREADY_EXISTS_ERROR.getErrorCode()){

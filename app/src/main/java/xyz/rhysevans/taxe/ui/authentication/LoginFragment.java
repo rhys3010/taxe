@@ -101,7 +101,7 @@ public class LoginFragment extends Fragment {
         subscriptions = new CompositeSubscription();
 
         // Initialize Error Handler
-        errorHandler = new ErrorHandler(this);
+        errorHandler = new ErrorHandler();
     }
 
 
@@ -230,7 +230,7 @@ public class LoginFragment extends Fragment {
         progressIndicator.setVisibility(View.GONE);
 
         // Handle the error using the util classs
-        int errorCode = errorHandler.handle(error);
+        int errorCode = errorHandler.handle(error, this.getContext(), this.getView());
 
         // Show errors on form if auth error occurs
         if(errorCode == Errors.AUTHENTICATION_FAILED_ERROR.getErrorCode()){

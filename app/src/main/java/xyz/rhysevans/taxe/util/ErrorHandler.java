@@ -1,9 +1,11 @@
 package xyz.rhysevans.taxe.util;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+import android.view.View;
 import android.widget.Button;
 
 import com.google.gson.Gson;
@@ -27,35 +29,17 @@ import xyz.rhysevans.taxe.ui.authentication.TaxeAuthenticationActivity;
  */
 public class ErrorHandler {
 
-    /**
-     * The fragment that the error handle request came from
-     */
-    Fragment fragment;
-
-    /**
-     * The shared preference manager for deleting tokens
-     */
-    SharedPreferencesManager sharedPreferencesManager;
-
-    /**
-     * Constructor to initialize fragment
-     *
-     * @param fragment
-     */
-    public ErrorHandler(Fragment fragment) {
-        this.fragment = fragment;
-        sharedPreferencesManager = SharedPreferencesManager.getInstance(fragment.getContext());
-    }
-
 
     /**
      * Based on the error provided, perform the relevant actions
      * (show dialog, snackbar, etc)
      *
      * @param error
+     * @param context
+     * @param view
      * @returns errorCode - The error code that was found
      */
-    public int handle(Throwable error) {
+    public int handle(Throwable error, Context context, View view) {
 
         int errorCode = 0;
 
@@ -70,17 +54,17 @@ public class ErrorHandler {
                 // Use the json response to get the error code thrown
                 errorCode = response.get("code").getAsInt();
                 // Get the correct error message, given the code displayed.
-                String errorString = fragment.getString(parseErrorMessage(errorCode));
+                String errorString = context.getString(parseErrorMessage(errorCode));
 
                 // If the error was a token error, show token expiry dialog
                 if (errorCode == Errors.INVALID_TOKEN_ERROR.getErrorCode() ||
                         errorCode == Errors.MISSING_TOKEN_ERROR.getErrorCode() ||
                         errorCode == Errors.TOKEN_EXPIRED_ERROR.getErrorCode()) {
-                    handleExpiredToken();
+                    handleExpiredToken(context);
                 } else {
                     // If the error was not a token error or network error,
                     // show a snackbar.
-                    showSnackbarMessage(errorString);
+                    showSnackbarMessage(errorString, view);
                 }
 
             } catch (IOException e) {
@@ -88,7 +72,7 @@ public class ErrorHandler {
             }
             // If the error wasn't a HTTP error, show network issues dialog
         } else {
-            showNetworkErrorDialog();
+            showNetworkErrorDialog(context);
         }
 
         return errorCode;
@@ -96,12 +80,14 @@ public class ErrorHandler {
 
     /**
      * Show a dialog indicating network issues to user
+     *
+     * @param context
      */
-    private void showNetworkErrorDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getContext());
+    private void showNetworkErrorDialog(Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-        builder.setTitle(fragment.getString(R.string.network_error));
-        builder.setMessage(fragment.getString(R.string.network_error_long));
+        builder.setTitle(context.getString(R.string.network_error));
+        builder.setMessage(context.getString(R.string.network_error_long));
         builder.setIcon(R.drawable.ic_signal_cellular_connected_no_internet_0_bar_black_24dp);
         builder.setPositiveButton(android.R.string.ok, null);
 
@@ -110,30 +96,32 @@ public class ErrorHandler {
 
         // Change button colors
         Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        positiveButton.setTextColor(fragment.getActivity().getColor(R.color.colorPrimary));
+        positiveButton.setTextColor(context.getColor(R.color.colorPrimary));
     }
 
     /**
      * Show a dialog to the user, indicating that their token or 'session'
      * has expired and redirect them to the login screen. Delete token
      * from shared prefs
+     *
+     * @param context
      */
-    private void handleExpiredToken() {
+    private void handleExpiredToken(Context context) {
         // Delete token from shared prefs
-        sharedPreferencesManager.deleteToken();
+        SharedPreferencesManager.getInstance(context).deleteAll();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-        builder.setTitle(fragment.getString(R.string.token_expiry));
-        builder.setMessage(fragment.getString(R.string.token_expired_error));
+        builder.setTitle(context.getString(R.string.token_expiry));
+        builder.setMessage(context.getString(R.string.token_expired_error));
         builder.setIcon(R.drawable.ic_vpn_key_black_24dp);
         builder.setCancelable(false);
         // When users confirms dialog, send theem back to login screen
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
             // Send user to login screen
-            Intent intent = new Intent(fragment.getActivity(), TaxeAuthenticationActivity.class);
-            fragment.startActivity(intent);
-            fragment.getActivity().finish();
+            Intent intent = new Intent(context, TaxeAuthenticationActivity.class);
+            context.startActivity(intent);
+            ((Activity)context).finish();
         });
 
         AlertDialog dialog = builder.create();
@@ -142,19 +130,17 @@ public class ErrorHandler {
 
         // Change button colors
         Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-        positiveButton.setTextColor(fragment.getActivity().getColor(R.color.colorPrimary));
-
-
+        positiveButton.setTextColor(context.getColor(R.color.colorPrimary));
     }
 
     /**
      * Show the user a snackbar messagge to display any other errors.
-     *
+     * @param view - the view to show the snackbar on
      * @param message
      */
-    private void showSnackbarMessage(String message) {
-        if (fragment.getView() != null) {
-            Snackbar.make(fragment.getView(), message, Snackbar.LENGTH_SHORT).show();
+    private void showSnackbarMessage(String message, View view) {
+        if (view != null) {
+            Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
         }
     }
 

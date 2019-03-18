@@ -40,6 +40,7 @@
 
     <!-- Success Strings -->
     <string name="register_success">Successfully Registered</string>
+    <string name="create_booking_success">Booking Created Successfully</string>
 
     <!-- Validation Errors -->
     <string name="name_error">Name must be at least 3 characters long, and not contain any numbers.</string>
@@ -47,6 +48,10 @@
     <string name="password_error">Password must contain at least 1 number and must be at least 8 characters long.</string>
     <string name="password_confirmation_error">Passwords do not Match</string>
     <string name="empty_password_error">Please enter password.</string>
+    <string name="no_passengers_error">There must be at least one passenger to create a booking</string>
+    <string name="pickup_location_error">Please provide a pickup location</string>
+    <string name="destination_error">Please provide a destination</string>
+    <string name="booking_time_error">Booking times cannot be in the past, further than 3 hours away, or sooner than  10 minutes away.</string>
 
     <!-- Errors -->
     <string name="invalid_token_error">Invalid token provided, try logging in again.</string>

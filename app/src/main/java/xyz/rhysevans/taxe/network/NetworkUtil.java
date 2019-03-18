@@ -101,7 +101,7 @@ public class NetworkUtil {
             Request original = chain.request();
 
             Request.Builder builder = original.newBuilder()
-                    .addHeader("x-access-token", token)
+                    .addHeader("Authorization", "Bearer " + token)
                     .method(original.method(), original.body());
 
             return chain.proceed(builder.build());
