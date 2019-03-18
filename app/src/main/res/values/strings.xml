@@ -68,11 +68,10 @@
     <string name="unauthorized_view_error">You are not authorized to view this record</string>
     <string name="invalid_role_error">The user provided does not have the needed permissions for this task</string>
 
-
-
     <string name="internal_server_error">Something Went Wrong :/</string>
     <string name="network_error">Network Error</string>
     <string name="token_expiry">Token Expired</string>
+    <string name="booking_not_created">Booking not Created</string>
     <string name="network_error_long">A network error has occurred. Please make sure you are connected to the internet</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="title_home">Home</string>

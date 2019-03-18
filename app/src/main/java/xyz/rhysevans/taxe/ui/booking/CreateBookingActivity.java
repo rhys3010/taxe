@@ -1,5 +1,6 @@
 package xyz.rhysevans.taxe.ui.booking;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -176,6 +178,15 @@ public class CreateBookingActivity extends AppCompatActivity {
         noPassengersInput.setError(null);
         notesInput.setError(null);
 
+        // Hide the keyboard
+        InputMethodManager inputManager = (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = getCurrentFocus();
+        if(view == null){
+            view = new View(this);
+        }
+
+        inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
         // Retrieve entered values from the form
         String pickupLocation = pickupLocationInput.getText().toString();
         String destination = destinationInput.getText().toString();
@@ -248,6 +259,11 @@ public class CreateBookingActivity extends AppCompatActivity {
 
         // Handle Errors using util class and save the error code
         int errorCode = errorHandler.handle(error, this, view);
+
+        // If error is Code 11, show dialog
+        if(errorCode == Errors.CUSTOMER_ALREADY_HAS_ACTIVE_BOOKING_ERROR.getErrorCode()){
+            showErrorDialog();
+        }
     }
 
     /**
@@ -280,6 +296,32 @@ public class CreateBookingActivity extends AppCompatActivity {
         if(view != null){
             Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * Show a dialog to inform the user they already have an active booking and end the
+     * activity.
+     */
+    private void showErrorDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(getString(R.string.booking_not_created));
+        builder.setMessage(getString(R.string.customer_already_has_active_booking_error));
+        builder.setIcon(R.drawable.ic_error_black_24dp);
+        builder.setCancelable(false);
+        // When users confirms dialog, close the activity
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            // Close the Activity..
+            finish();
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+        // Change button colors
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setTextColor(getColor(R.color.colorPrimary));
     }
 
     /**
