@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -76,6 +77,11 @@ public class CreateBookingActivity extends AppCompatActivity {
      * Notes input view
      */
     private EditText notesInput;
+
+    /**
+     * The progress bar
+     */
+    private ProgressBar progressIndicator;
 
     /**
      * rxJava subscription object
@@ -148,6 +154,7 @@ public class CreateBookingActivity extends AppCompatActivity {
         timeInput = findViewById(R.id.time_input);
         noPassengersInput = findViewById(R.id.number_of_passengers_input);
         notesInput = findViewById(R.id.notes_input);
+        progressIndicator = findViewById(R.id.progress_indicator);
 
         // TEMP
         noPassengersInput.setText("1");
@@ -204,7 +211,8 @@ public class CreateBookingActivity extends AppCompatActivity {
         if(validateFields(pickupLocation, destination, time, noPassengers, notes)){
             // Disable button
             createBtn.setEnabled(false);
-            // TODO: Show progress bar
+            // Show progress bar
+            progressIndicator.setVisibility(View.VISIBLE);
 
             // Create new booking object to send
             Booking booking = new Booking(pickupLocation, destination, timeToUse, noPassengers);
@@ -255,7 +263,8 @@ public class CreateBookingActivity extends AppCompatActivity {
     private void handleError(Throwable error){
         // Re-enable  button
         createBtn.setEnabled(true);
-        // TODO Hide Progress Bar
+        // Hide Progress Bar
+        progressIndicator.setVisibility(View.GONE);
 
         // Handle Errors using util class and save the error code
         int errorCode = errorHandler.handle(error, this, view);
@@ -273,7 +282,8 @@ public class CreateBookingActivity extends AppCompatActivity {
     private void handleSuccess(Response response){
         // Re-enable  button
         createBtn.setEnabled(true);
-        // TODO Hide Progress Bar
+        // Hide Progress Bar
+        progressIndicator.setVisibility(View.GONE);
 
         // Clear the text inputs
         pickupLocationInput.setText(null);

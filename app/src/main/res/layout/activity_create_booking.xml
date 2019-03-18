@@ -144,10 +144,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/notes_input_hint"
-                android:inputType="textMultiLine"
-                android:maxLength="200"
-                android:maxLines="4"/>
+                android:inputType="textCapSentences|textMultiLine"
+                android:maxLength="400"
+                android:maxLines="8"/>
         </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <!-- Progress Bar -->
+    <LinearLayout
+        android:id="@+id/progress_indicator_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/form_margin_register"
+        app:layout_constraintTop_toBottomOf="@id/create_booking_form"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progress_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="20dp"
+            android:indeterminate="true"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyleHorizontal"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
