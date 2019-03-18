@@ -391,4 +391,14 @@ public class CreateBookingActivity extends AppCompatActivity {
 
         return true;
     }
+
+    /**
+     * Unsubscribe all the composite subscriptions
+     * when activity is destroyed
+     */
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        subscriptions.unsubscribe();
+    }
 }
