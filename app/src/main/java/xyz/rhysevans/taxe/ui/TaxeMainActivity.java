@@ -31,9 +31,19 @@ import xyz.rhysevans.taxe.util.SharedPreferencesManager;
 public class TaxeMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     /**
+     * The key under which to save the page title in instance state bundle
+     */
+    private final String PAGE_TITLE_KEY = "PAGE_TITLE_KEY";
+
+    /**
      * Instance of shared preference manager
      */
     private SharedPreferencesManager sharedPreferencesManager;
+
+    /**
+     * The string resource of the title of the currently loaded fragment (page)
+     */
+    private int currentPageTitle;
 
 
     /**
@@ -64,8 +74,19 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
         FloatingActionButton fab = findViewById(R.id.new_booking_fab);
         fab.setOnClickListener(v -> showCreateBooking());
 
-        // Load the default fragment
-        loadFragment(new HomeFragment());
+        // Load the default fragment if opening for first time
+        if(savedInstanceState == null){
+            loadFragment(new HomeFragment());
+        }else{
+            // Initialize page title
+            currentPageTitle = savedInstanceState.getInt(PAGE_TITLE_KEY);
+            // If current page title is uninitialized, just default to app's name
+            if(currentPageTitle == 0){
+                currentPageTitle = R.string.app_name;
+            }else {
+                getSupportActionBar().setTitle(currentPageTitle);
+            }
+        }
     }
 
     /**
@@ -76,32 +97,40 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
-        // Get the action bar
-        ActionBar actionBar = getSupportActionBar();
+        // The return value
+        boolean ret = false;
 
+        // Depending on the page selected, set the title of the action bar
+        // and load the correct fragment
         switch(item.getItemId()){
             case R.id.nav_home:
-                actionBar.setTitle(R.string.app_name);
+                currentPageTitle = R.string.app_name;
                 loadFragment(new HomeFragment());
-                return true;
+                ret = true;
+                break;
 
             case R.id.nav_booking:
-                actionBar.setTitle(R.string.nav_booking);
+                currentPageTitle = R.string.nav_booking;
                 loadFragment(new BookingOverviewFragment());
-                return true;
+                ret = true;
+                break;
 
             case R.id.nav_history:
-                actionBar.setTitle(R.string.nav_history);
+                currentPageTitle = R.string.nav_history;
                 loadFragment(new BookingHistoryFragment());
-                return true;
+                ret = true;
+                break;
 
             case R.id.nav_account:
-                actionBar.setTitle(R.string.nav_account);
+                currentPageTitle = R.string.nav_account;
                 loadFragment(new AccountOverviewFragment());
-                return true;
+                ret = true;
+                break;
         }
 
-        return false;
+        getSupportActionBar().setTitle(currentPageTitle);
+
+        return ret;
     }
 
     /**
@@ -121,5 +150,17 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
     private void showCreateBooking(){
         Intent intent = new Intent(this, CreateBookingActivity.class);
         startActivity(intent);
+    }
+
+    /**
+     * Called to save the state of the activity, just before the activity is destroyed
+     * @param outState
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        // Save the title of the loaded fragment
+        outState.putInt(PAGE_TITLE_KEY, currentPageTitle);
+
+        super.onSaveInstanceState(outState);
     }
 }

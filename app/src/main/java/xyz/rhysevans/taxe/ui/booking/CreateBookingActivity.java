@@ -3,7 +3,10 @@ package xyz.rhysevans.taxe.ui.booking;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -56,27 +59,27 @@ public class CreateBookingActivity extends AppCompatActivity {
     /**
      * Pickup location view
      */
-    private EditText pickupLocationInput;
+    private TextInputEditText pickupLocationInput;
 
     /**
      * Destination location view
      */
-    private EditText destinationInput;
+    private TextInputEditText destinationInput;
 
     /**
      * Desired Time input view
      */
-    private EditText timeInput;
+    private TextInputEditText timeInput;
 
     /**
      * Number of passengers input view
      */
-    private EditText noPassengersInput;
+    private TextInputEditText noPassengersInput;
 
     /**
      * Notes input view
      */
-    private EditText notesInput;
+    private TextInputEditText notesInput;
 
     /**
      * The progress bar
@@ -156,9 +159,8 @@ public class CreateBookingActivity extends AppCompatActivity {
         notesInput = findViewById(R.id.notes_input);
         progressIndicator = findViewById(R.id.progress_indicator);
 
-        // TEMP
+        // Set Default Value of No_Passengers to 1
         noPassengersInput.setText("1");
-        noPassengersInput.setEnabled(false);
 
         // Get reasonable time
         Calendar cal = Calendar.getInstance();
@@ -199,7 +201,11 @@ public class CreateBookingActivity extends AppCompatActivity {
         String destination = destinationInput.getText().toString();
         String notes = notesInput.getText().toString();
         String time = timeInput.getText().toString();
-        int noPassengers = Integer.parseInt(noPassengersInput.getText().toString());
+        int noPassengers = 0;
+        if(!noPassengersInput.getText().toString().isEmpty()){
+            noPassengers = Integer.parseInt(noPassengersInput.getText().toString());
+        }
+
 
         // TEMP: Override Time (for now)
         Calendar cal = Calendar.getInstance();
@@ -209,6 +215,15 @@ public class CreateBookingActivity extends AppCompatActivity {
 
         // Validate fields
         if(validateFields(pickupLocation, destination, time, noPassengers, notes)){
+            // Lock Screen Orientation
+            int currentOrientation = getResources().getConfiguration().orientation;
+            if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+            }
+            else {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+            }
+
             // Disable button
             createBtn.setEnabled(false);
             // Show progress bar
@@ -265,6 +280,8 @@ public class CreateBookingActivity extends AppCompatActivity {
         createBtn.setEnabled(true);
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
+        // Unlock screen orientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
         // Handle Errors using util class and save the error code
         int errorCode = errorHandler.handle(error, this, view);
@@ -284,6 +301,8 @@ public class CreateBookingActivity extends AppCompatActivity {
         createBtn.setEnabled(true);
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
+        // Unlock screen orientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
         // Clear the text inputs
         pickupLocationInput.setText(null);
@@ -373,7 +392,7 @@ public class CreateBookingActivity extends AppCompatActivity {
             return false;
         }
 
-        if (destinationInput.getText().toString().length() != 0){
+        if(destinationInput.getText().toString().length() != 0){
             return false;
         }
 
@@ -381,9 +400,6 @@ public class CreateBookingActivity extends AppCompatActivity {
             return false;
         }
 
-        if(noPassengersInput.getText().toString().length() != 0){
-            return false;
-        }
 
         if(notesInput.getText().toString().length() != 0){
             return false;

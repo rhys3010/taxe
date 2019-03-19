@@ -1,7 +1,9 @@
 package xyz.rhysevans.taxe.ui.authentication;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.ui.authentication.LoginFragment;
@@ -24,8 +26,12 @@ public class TaxeAuthenticationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_taxe_authentication);
 
-        // Show login fragment
-        LoginFragment loginFragment = new LoginFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.authentication_fragment_container, loginFragment, LoginFragment.TAG).commit();
+        // If the activity is opening for the first time
+        if(savedInstanceState == null){
+            // Show login fragment
+            LoginFragment loginFragment = new LoginFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.authentication_fragment_container, loginFragment, LoginFragment.TAG).commit();
+        }
     }
+
 }

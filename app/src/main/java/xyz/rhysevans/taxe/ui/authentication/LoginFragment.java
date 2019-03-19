@@ -2,8 +2,12 @@ package xyz.rhysevans.taxe.ui.authentication;
 
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -49,14 +53,19 @@ public class LoginFragment extends Fragment {
     public static final String TAG = LoginFragment.class.getSimpleName();
 
     /**
+     * The Key under which to save enterred email
+     */
+    private final String EMAIL_KEY = "EMAIL";
+
+    /**
      * Input Field for Email
      */
-    private EditText emailInput;
+    private TextInputEditText emailInput;
 
     /**
      * Input Field for password
      */
-    private EditText passwordInput;
+    private TextInputEditText passwordInput;
 
     /**
      * The Login Button
@@ -127,6 +136,7 @@ public class LoginFragment extends Fragment {
 
     /**
      * Initialize the fragment's UI views and declare button behaviour
+     * @param view - the parent view of the fragment
      */
     private void initViews(View view) {
         // Initialize all the views
@@ -155,6 +165,15 @@ public class LoginFragment extends Fragment {
 
         // If all fields are successfully validated, begin login process
         if(validateFields(email, password)){
+            // Lock Screen Orientation
+            int currentOrientation = getResources().getConfiguration().orientation;
+            if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+            }
+            else {
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+            }
+
             // Disable button
             loginBtn.setEnabled(false);
             // Show Progress bar
@@ -201,6 +220,8 @@ public class LoginFragment extends Fragment {
         loginBtn.setEnabled(true);
         // Hide Progress bar
         progressIndicator.setVisibility(View.GONE);
+        // Unlock screen orientation
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
         // Create a new user object to store non-sensitive data in shared prefs
         User user = new User(response.getId(), response.getName(), response.getEmail(), response.getRole(), response.getCreated_at());
@@ -228,6 +249,8 @@ public class LoginFragment extends Fragment {
         loginBtn.setEnabled(true);
         // Hide Progress bar
         progressIndicator.setVisibility(View.GONE);
+        // Unlock screen orientation
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
         // Handle the error using the util classs
         int errorCode = errorHandler.handle(error, this.getContext(), this.getView());
@@ -249,6 +272,7 @@ public class LoginFragment extends Fragment {
         ft.replace(R.id.authentication_fragment_container, registerFragment, RegisterFragment.TAG).addToBackStack(TAG);
         ft.commit();
     }
+
 
     /**
      * When fragment is destroyed, unsubscribe all rx subscriptions

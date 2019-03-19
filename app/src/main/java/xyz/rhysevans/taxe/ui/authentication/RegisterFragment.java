@@ -1,9 +1,10 @@
 package xyz.rhysevans.taxe.ui.authentication;
 
-
-import android.app.AlertDialog;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -14,12 +15,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import java.io.IOException;
-
-import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -51,22 +46,22 @@ public class RegisterFragment extends Fragment {
     /**
      * The EditText element for name
      */
-    private EditText nameInput;
+    private TextInputEditText nameInput;
 
     /**
      * The EditText element for email
      */
-    private EditText emailInput;
+    private TextInputEditText emailInput;
 
     /**
      * The EditText element for password
      */
-    private EditText passwordInput;
+    private TextInputEditText passwordInput;
 
     /**
      * The EditText element for password confirmation
      */
-    private EditText confirmPasswordInput;
+    private TextInputEditText confirmPasswordInput;
 
     /**
      * The Button to register
@@ -173,6 +168,15 @@ public class RegisterFragment extends Fragment {
 
         // If all fields are successfully validated, begin registration process
         if(validateFields(name, email, password, confirmPassword)){
+            // Lock Screen Orientation
+            int currentOrientation = getResources().getConfiguration().orientation;
+            if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+            }
+            else {
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+            }
+
             // Disable Register Button
             registerBtn.setEnabled(false);
 
@@ -238,6 +242,8 @@ public class RegisterFragment extends Fragment {
         registerBtn.setEnabled(true);
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
+        // Unlock screen orientation
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
         // Handle Errors using util class and save the error code
         int errorCode = errorHandler.handle(error, this.getContext(), this.getView());
@@ -257,6 +263,8 @@ public class RegisterFragment extends Fragment {
         registerBtn.setEnabled(true);
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
+        // Unlock screen orientation
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
         // Clear the text inputs
         emailInput.setText(null);
