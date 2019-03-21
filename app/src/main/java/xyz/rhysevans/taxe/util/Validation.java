@@ -2,6 +2,9 @@ package xyz.rhysevans.taxe.util;
 
 import android.util.Log;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.Date;
 
 /**
@@ -75,8 +78,7 @@ public class Validation {
         final int MIN_MINUTES_NOTICE = 10;
 
         // Get the number of hours between the booking time and NOW
-        // Cast to int
-        int hoursDiff = (int) (time.getTime() - new Date().getTime()) / MILLIS_PER_HOUR;
+        float hoursDiff = (float)(time.getTime() - new Date().getTime()) / MILLIS_PER_HOUR;
 
         // Make sure booking isn't too far away
         if(hoursDiff > MAX_HOURS_FUTURE){

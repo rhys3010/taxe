@@ -2,11 +2,13 @@ package xyz.rhysevans.taxe.ui.booking;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -48,65 +51,39 @@ import xyz.rhysevans.taxe.util.Validation;
  */
 public class CreateBookingActivity extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
 
-    /**
-     * Close button
+    private final String BOOKING_HOUR_KEY = "BOOKING_HOUR";
+    private final String BOOKING_MINUTE_KEY = "BOOKING_MINUTE";
+
+    /*
+     * All of the view elements for inputs
      */
     private ImageButton cancelBtn;
-
-    /**
-     * The 'create' button
-     */
     private TextView createBtn;
-
-    /**
-     * Pickup location view
-     */
     private TextInputEditText pickupLocationInput;
-
-    /**
-     * Destination location view
-     */
     private TextInputEditText destinationInput;
-
-    /**
-     * Desired Time input view
-     */
     private TextInputEditText timeInput;
-
-    /**
-     * Number of passengers input view
-     */
     private TextInputEditText noPassengersInput;
-
-    /**
-     * Notes input view
-     */
     private TextInputEditText notesInput;
 
-    /**
-     * The progress bar
+    /*
+     * All of the view elements for input containers
      */
+    private TextInputLayout pickupLocationInputContainer;
+    private TextInputLayout destinationInputContainer;
+    private TextInputLayout timeInputContainer;
+    private TextInputLayout noPassengersInputContainer;
+    private TextInputLayout notesInputContainer;
+
     private ProgressBar progressIndicator;
 
-    /**
-     * rxJava subscription object
-     */
+    // rxJava subscription object
     private CompositeSubscription subscriptions;
-
-    /**
-     * Shared Preferences
-     */
     private SharedPreferencesManager sharedPreferencesManager;
-
-    /**
-     * Error Handler
-     */
     private ErrorHandler errorHandler;
-
-    /**
-     * The view object
-     */
     private View view;
+
+    private int bookingHour;
+    private int bookingMinute;
 
     /**
      * Called when the activity is created to initialize all the views and needed behaviour
@@ -128,6 +105,13 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
 
         // Initialize all views
         initViews();
+
+        // Initialize variables from saved instance state
+        if(savedInstanceState != null){
+            bookingHour = savedInstanceState.getInt(BOOKING_HOUR_KEY);
+            bookingMinute = savedInstanceState.getInt(BOOKING_MINUTE_KEY);
+        }
+
 
         // Initialize Toolbar
         Toolbar toolbar = findViewById(R.id.create_booking_toolbar);
@@ -161,20 +145,27 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
         notesInput = findViewById(R.id.notes_input);
         progressIndicator = findViewById(R.id.progress_indicator);
 
+        pickupLocationInputContainer = findViewById(R.id.pickup_location_input_container);
+        destinationInputContainer = findViewById(R.id.destination_input_container);
+        timeInputContainer = findViewById(R.id.time_input_container);
+        noPassengersInputContainer = findViewById(R.id.number_of_passengers_input_container);
+        notesInputContainer = findViewById(R.id.notes_input_container);
+
+
         // Set Default Value of No_Passengers to 1
         noPassengersInput.setText("1");
 
-        // Get reasonable time
+        // Set the default value of desired time to 15 mins from NOW
         Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        cal.add(Calendar.HOUR, 1);
-        Date timeToUse = cal.getTime();
+        cal.add(Calendar.MINUTE, 15);
+        bookingHour = cal.get(Calendar.HOUR_OF_DAY);
+        bookingMinute = cal.get(Calendar.MINUTE);
 
-        timeInput.setText(timeToUse.toString());
-        timeInput.setEnabled(false);
+        timeInput.setText(getString(R.string.desired_time_format, bookingHour, bookingMinute));
 
         // Add behaviour to relevant views
         noPassengersInput.setOnClickListener(this::showNumberPickerDialog);
+        timeInput.setOnClickListener(v -> showTimePicker());
         cancelBtn.setOnClickListener(v -> cancel());
         createBtn.setOnClickListener(v -> createBooking());
     }
@@ -184,11 +175,11 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
      */
     private void createBooking(){
         // Reset any errors
-        pickupLocationInput.setError(null);
-        destinationInput.setError(null);
-        timeInput.setError(null);
-        noPassengersInput.setError(null);
-        notesInput.setError(null);
+        pickupLocationInputContainer.setError(null);
+        destinationInputContainer.setError(null);
+        timeInputContainer.setError(null);
+        noPassengersInputContainer.setError(null);
+        notesInputContainer.setError(null);
 
         // Hide the keyboard
         InputMethodManager inputManager = (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -203,18 +194,18 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
         String pickupLocation = pickupLocationInput.getText().toString();
         String destination = destinationInput.getText().toString();
         String notes = notesInput.getText().toString();
-        String time = timeInput.getText().toString();
         int noPassengers = 0;
         if(!noPassengersInput.getText().toString().isEmpty()){
             noPassengers = Integer.parseInt(noPassengersInput.getText().toString());
         }
 
-
-        // TEMP: Override Time (for now)
+        // Create a new date object with the selected hours and minutes
+        // to send in HTTP request
         Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        cal.add(Calendar.HOUR, 1);
-        Date timeToUse = cal.getTime();
+        cal.set(Calendar.HOUR_OF_DAY, bookingHour);
+        cal.set(Calendar.MINUTE, bookingMinute);
+
+        Date time = cal.getTime();
 
         // Validate fields
         if(validateFields(pickupLocation, destination, time, noPassengers, notes)){
@@ -233,7 +224,7 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
             progressIndicator.setVisibility(View.VISIBLE);
 
             // Create new booking object to send
-            Booking booking = new Booking(pickupLocation, destination, timeToUse, noPassengers);
+            Booking booking = new Booking(pickupLocation, destination, time, noPassengers);
 
             // Send HTTP request
             subscriptions.add(NetworkUtil.getRetrofit(sharedPreferencesManager.getToken()).createBooking(booking)
@@ -250,25 +241,28 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
      * @param noPassengers
      * @param notes
      */
-    private boolean validateFields(String pickupLocation, String destination, String time, int noPassengers, String notes){
+    private boolean validateFields(String pickupLocation, String destination, Date time, int noPassengers, String notes){
         int errors = 0;
 
         if(!Validation.isValidNoPassengers(noPassengers)){
             errors++;
-            noPassengersInput.setError(getString(R.string.no_passengers_error));
+            noPassengersInputContainer.setError(getString(R.string.no_passengers_error));
         }
 
         if(pickupLocation.length() < 3){
             errors++;
-            pickupLocationInput.setError(getString(R.string.pickup_location_error));
+            pickupLocationInputContainer.setError(getString(R.string.pickup_location_error));
         }
 
         if(destination.length() < 3){
             errors++;
-            destinationInput.setError(getString(R.string.destination_error));
+            destinationInputContainer.setError(getString(R.string.destination_error));
         }
 
-        // TODO: Validate Time
+        if(!Validation.isValidBookingTime(time)){
+            errors++;
+            timeInputContainer.setError(getString(R.string.booking_time_error));
+        }
 
         return errors == 0;
     }
@@ -326,7 +320,7 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
      * @param view
      */
     private void showNumberPickerDialog(View view){
-        // Create the dialoog fragment
+        // Create the dialog fragment
         NumberPickerDialog dialog = new NumberPickerDialog();
 
         // Create new bundle to store args
@@ -337,6 +331,33 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
 
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), NumberPickerDialog.TAG);
+    }
+
+    /**
+     * Display a time picker dialog to prompt user for
+     * desired booking time
+     */
+    private void showTimePicker(){
+
+        // Create new time picker instance
+        TimePickerDialog timePicker = new TimePickerDialog(this, (view, hourOfDay, minute) -> {
+            // Update booking time
+            bookingHour = hourOfDay;
+            bookingMinute = minute;
+
+            // Set the contents of the edit text to the relevant hours / minutes
+            timeInput.setText(getString(R.string.desired_time_format, bookingHour, bookingMinute));
+
+        }, bookingHour, bookingMinute, true);
+
+        timePicker.setTitle(getString(R.string.desired_time_selection));
+        timePicker.show();
+
+        // Change button colors
+        Button positiveButton = timePicker.getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setTextColor(getColor(R.color.colorPrimary));
+        Button negativeButton = timePicker.getButton(AlertDialog.BUTTON_NEGATIVE);
+        negativeButton.setTextColor(getColor(R.color.colorPrimary));
     }
 
     /**
@@ -418,11 +439,6 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
             return false;
         }
 
-        if(timeInput.getText().toString().length() != 0){
-            return false;
-        }
-
-
         if(notesInput.getText().toString().length() != 0){
             return false;
         }
@@ -450,5 +466,18 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
     @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
         noPassengersInput.setText(String.valueOf(picker.getValue()));
+    }
+
+    /**
+     * Called just before the activity is destroyed
+     * @param outState
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        // Save current booking times to outstate
+        outState.putInt(BOOKING_HOUR_KEY, bookingHour);
+        outState.putInt(BOOKING_MINUTE_KEY, bookingMinute);
+
+        super.onSaveInstanceState(outState);
     }
 }

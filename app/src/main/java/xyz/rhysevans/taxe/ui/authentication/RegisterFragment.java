@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -43,55 +44,22 @@ public class RegisterFragment extends Fragment {
      */
     public static final String TAG = RegisterFragment.class.getSimpleName();
 
-    /**
-     * The EditText element for name
-     */
+
     private TextInputEditText nameInput;
-
-    /**
-     * The EditText element for email
-     */
     private TextInputEditText emailInput;
-
-    /**
-     * The EditText element for password
-     */
     private TextInputEditText passwordInput;
-
-    /**
-     * The EditText element for password confirmation
-     */
     private TextInputEditText confirmPasswordInput;
-
-    /**
-     * The Button to register
-     */
     private Button registerBtn;
-
-    /**
-     * The TextView element for 'login' at the bottom of the form
-     */
     private TextView loginText;
-
-    /**
-     * The progress indicator
-     */
     private ProgressBar progressIndicator;
 
-    /**
-     * The shared preference manager singleton instance
-     */
+    private TextInputLayout nameInputContainer;
+    private TextInputLayout emailInputContainer;
+    private TextInputLayout passwordInputContainer;
+    private TextInputLayout confirmPasswordInputContainer;
+
     private SharedPreferencesManager sharedPreferencesManager;
-
-    /**
-     * Error handler util class
-     */
     private ErrorHandler errorHandler;
-
-    /**
-     * rxJava Composite subscription to subscribe to
-     * observables returned from HTTP response
-     */
     private CompositeSubscription subscriptions;
 
 
@@ -143,6 +111,11 @@ public class RegisterFragment extends Fragment {
         loginText = view.findViewById(R.id.login_text);
         progressIndicator = view.findViewById(R.id.progress_indicator);
 
+        nameInputContainer = view.findViewById(R.id.name_input_container);
+        emailInputContainer = view.findViewById(R.id.email_input_container);
+        passwordInputContainer = view.findViewById(R.id.password_input_container);
+        confirmPasswordInputContainer = view.findViewById(R.id.confirm_password_input_container);
+
         // Initailize view behaviour
         registerBtn.setOnClickListener(v -> register());
         loginText.setOnClickListener(v -> goToLogin());
@@ -155,10 +128,10 @@ public class RegisterFragment extends Fragment {
      */
     private void register(){
         // New registration attempt, so remove all errors from input fields
-        nameInput.setError(null);
-        emailInput.setError(null);
-        passwordInput.setError(null);
-        confirmPasswordInput.setError(null);
+        nameInputContainer.setError(null);
+        emailInputContainer.setError(null);
+        passwordInputContainer.setError(null);
+        confirmPasswordInputContainer.setError(null);
 
         // Get values from fields
         String name = nameInput.getText().toString();
@@ -209,23 +182,23 @@ public class RegisterFragment extends Fragment {
 
         if(!Validation.isValidName(name)){
             errors++;
-            nameInput.setError(getString(R.string.name_error));
+            nameInputContainer.setError(getString(R.string.name_error));
         }
 
         if(!Validation.isValidEmail(email)){
             errors++;
-            emailInput.setError(getString(R.string.email_error));
+            emailInputContainer.setError(getString(R.string.email_error));
         }
 
         if(!Validation.isValidPassword(password)){
             errors++;
-            passwordInput.setError(getString(R.string.password_error));
+            passwordInputContainer.setError(getString(R.string.password_error));
         }
 
         if(!Validation.isValidPasswordConfirmation(password, confirmPassword)){
             errors++;
-            passwordInput.setError(getString(R.string.password_confirmation_error));
-            confirmPasswordInput.setError(getString(R.string.password_confirmation_error));
+            passwordInputContainer.setError(getString(R.string.password_confirmation_error));
+            confirmPasswordInputContainer.setError(getString(R.string.password_confirmation_error));
         }
 
         return errors == 0;
