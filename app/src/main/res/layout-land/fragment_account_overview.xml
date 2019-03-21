@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.TaxeMainActivity"
+    android:orientation="horizontal">
+
+    <!-- 'avatar' and Name Block -->
+    <LinearLayout
+        android:id="@+id/account_masthead"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Frame View For 'Avatar'-->
+        <FrameLayout
+            android:id="@+id/account_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorLightGrey">
+            </View>
+
+            <TextView
+                android:id="@+id/account_avatar_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textSize="@dimen/text_size_header_3"/>
+        </FrameLayout>
+
+        <!-- User's Name -->
+        <TextView
+            android:id="@+id/account_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_body_1"
+            android:layout_marginTop="@dimen/header_2_margin"
+            android:fontFamily="sans-serif-medium"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/account_actions_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="50dp"
+        android:layout_weight="5">
+    </ListView>
+
+</LinearLayout>
