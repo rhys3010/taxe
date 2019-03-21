@@ -7,6 +7,7 @@
     <dimen name="form_margin">30dp</dimen>
     <dimen name="form_margin_register">5dp</dimen>
     <dimen name="form_input_margin">20dp</dimen>
+    <dimen name="form_margin_create_booking">10dp</dimen>
     <dimen name="register_text_margin">20dp</dimen>
     <dimen name="register_text_padding">3dp</dimen>
     <dimen name="fab_marign">16dp</dimen>
@@ -15,6 +16,7 @@
     <dimen name="account_action_entry_margin">10dp</dimen>
     <dimen name="account_action_entry_margin_top">20dp</dimen>
     <dimen name="account_action_entry_icon_margin">10dp</dimen>
+    <dimen name="edit_text_icon_margin">10dp</dimen>
 
 
     <!-- Text Sizes -->

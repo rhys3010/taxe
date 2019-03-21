@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ import xyz.rhysevans.taxe.model.Booking;
 import xyz.rhysevans.taxe.model.Response;
 import xyz.rhysevans.taxe.network.NetworkUtil;
 import xyz.rhysevans.taxe.ui.authentication.TaxeAuthenticationActivity;
+import xyz.rhysevans.taxe.ui.dialogs.NumberPickerDialog;
 import xyz.rhysevans.taxe.util.ErrorHandler;
 import xyz.rhysevans.taxe.util.Errors;
 import xyz.rhysevans.taxe.util.SharedPreferencesManager;
@@ -44,7 +46,7 @@ import xyz.rhysevans.taxe.util.Validation;
  * @author Rhys Evans
  * @version 0.1
  */
-public class CreateBookingActivity extends AppCompatActivity {
+public class CreateBookingActivity extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
 
     /**
      * Close button
@@ -172,6 +174,7 @@ public class CreateBookingActivity extends AppCompatActivity {
         timeInput.setEnabled(false);
 
         // Add behaviour to relevant views
+        noPassengersInput.setOnClickListener(this::showNumberPickerDialog);
         cancelBtn.setOnClickListener(v -> cancel());
         createBtn.setOnClickListener(v -> createBooking());
     }
@@ -318,6 +321,25 @@ public class CreateBookingActivity extends AppCompatActivity {
     }
 
     /**
+     * Display a number picker dialog to prompt user for the
+     * number of passengers
+     * @param view
+     */
+    private void showNumberPickerDialog(View view){
+        // Create the dialoog fragment
+        NumberPickerDialog dialog = new NumberPickerDialog();
+
+        // Create new bundle to store args
+        Bundle args = new Bundle();
+        args.putInt(NumberPickerDialog.MAX_VALUE_KEY, getResources().getInteger(R.integer.max_no_passengers));
+        args.putInt(NumberPickerDialog.MIN_VALUE_KEY, getResources().getInteger(R.integer.min_no_passengers));
+        args.putString(NumberPickerDialog.MESSAGE_KEY, getResources().getString(R.string.number_of_passengers_selection));
+
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), NumberPickerDialog.TAG);
+    }
+
+    /**
      * Send a snackbar message, checking for a null view
      * @param message
      */
@@ -416,5 +438,17 @@ public class CreateBookingActivity extends AppCompatActivity {
     public void onDestroy(){
         super.onDestroy();
         subscriptions.unsubscribe();
+    }
+
+    /**
+     * Implementing the number picker's onvaluechange listener to update edittext content with
+     * number of passnegers
+     * @param picker
+     * @param oldVal
+     * @param newVal
+     */
+    @Override
+    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        noPassengersInput.setText(String.valueOf(picker.getValue()));
     }
 }

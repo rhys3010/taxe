@@ -22,6 +22,8 @@
     <string name="number_of_passengers_input_hint">Number of Passengers</string>
     <string name="notes_input_hint">Additional Notes (optional)</string>
     <string name="cancel_booking_creation_confirmation">Are you sure you wish to abandon this booking?</string>
+    <string name="select_number">Choose a Number</string>
+    <string name="number_of_passengers_selection">Select Number of Passengers</string>
 
     <!-- Nav Options -->
     <string name="nav_home">Home</string>
