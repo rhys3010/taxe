@@ -115,37 +115,16 @@
                 android:text="@string/login_button_text"/>
         </LinearLayout>
 
-        <!-- Progress Bar -->
-        <LinearLayout
-            android:id="@+id/progress_indicator_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:layout_margin="@dimen/form_margin"
-            app:layout_constraintTop_toBottomOf="@id/login_form"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <ProgressBar
-                android:id="@+id/progress_indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxHeight="20dp"
-                android:indeterminate="true"
-                android:visibility="gone"
-                style="?android:attr/progressBarStyleHorizontal"/>
-        </LinearLayout>
-
         <!-- Registration Text -->
         <LinearLayout
             android:id="@+id/register_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/register_text_margin"
+            android:layout_marginTop="@dimen/register_text_margin"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/progress_indicator_container"
+            app:layout_constraintTop_toBottomOf="@id/login_form"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -166,6 +145,9 @@
                 android:layout_marginStart="@dimen/register_text_padding"
                 android:layout_marginEnd="@dimen/register_text_padding"/>
         </LinearLayout>
+
+        <!-- Progress Bar -->
+        <include layout="@layout/progress_indicator_overlay"/>
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

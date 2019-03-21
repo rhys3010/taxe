@@ -51,7 +51,7 @@ public class RegisterFragment extends Fragment {
     private TextInputEditText confirmPasswordInput;
     private Button registerBtn;
     private TextView loginText;
-    private ProgressBar progressIndicator;
+    private View progressIndicator;
 
     private TextInputLayout nameInputContainer;
     private TextInputLayout emailInputContainer;
@@ -109,7 +109,7 @@ public class RegisterFragment extends Fragment {
         confirmPasswordInput = view.findViewById(R.id.confirm_password_input);
         registerBtn = view.findViewById(R.id.register_btn);
         loginText = view.findViewById(R.id.login_text);
-        progressIndicator = view.findViewById(R.id.progress_indicator);
+        progressIndicator = view.findViewById(R.id.progress_indicator_overlay);
 
         nameInputContainer = view.findViewById(R.id.name_input_container);
         emailInputContainer = view.findViewById(R.id.email_input_container);

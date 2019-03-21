@@ -46,18 +46,17 @@
             android:textAlignment="viewEnd"/>
 
         <!-- Create 'Button' -->
-        <TextView
+        <ImageButton
             android:id="@+id/create_booking_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_check_black_24dp"
+            android:tint="@android:color/white"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/create_booking_toolbar_title"
             android:layout_marginEnd="20dp"
-            android:text="@string/create_new_booking_submit"
-            android:textColor="@android:color/white"
-            android:textAllCaps="true"
-            android:textAlignment="textEnd"/>
+            android:layout_gravity="end"/>
     </android.support.v7.widget.Toolbar>
 
     <!-- Booking Creation Form -->
@@ -243,25 +242,6 @@
     </ScrollView>
 
     <!-- Progress Bar -->
-    <LinearLayout
-        android:id="@+id/progress_indicator_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:layout_margin="@dimen/form_margin_register"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ProgressBar
-            android:id="@+id/progress_indicator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxHeight="20dp"
-            android:indeterminate="true"
-            android:visibility="gone"
-            style="?android:attr/progressBarStyleHorizontal"/>
-    </LinearLayout>
+    <include layout="@layout/progress_indicator_overlay"/>
 
 </android.support.constraint.ConstraintLayout>

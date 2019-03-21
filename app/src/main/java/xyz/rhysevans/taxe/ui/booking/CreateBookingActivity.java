@@ -12,21 +12,15 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.TimePicker;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -34,7 +28,6 @@ import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.model.Booking;
 import xyz.rhysevans.taxe.model.Response;
 import xyz.rhysevans.taxe.network.NetworkUtil;
-import xyz.rhysevans.taxe.ui.authentication.TaxeAuthenticationActivity;
 import xyz.rhysevans.taxe.ui.dialogs.NumberPickerDialog;
 import xyz.rhysevans.taxe.util.ErrorHandler;
 import xyz.rhysevans.taxe.util.Errors;
@@ -58,7 +51,7 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
      * All of the view elements for inputs
      */
     private ImageButton cancelBtn;
-    private TextView createBtn;
+    private ImageButton createBtn;
     private TextInputEditText pickupLocationInput;
     private TextInputEditText destinationInput;
     private TextInputEditText timeInput;
@@ -74,7 +67,7 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
     private TextInputLayout noPassengersInputContainer;
     private TextInputLayout notesInputContainer;
 
-    private ProgressBar progressIndicator;
+    private View progressIndicator;
 
     // rxJava subscription object
     private CompositeSubscription subscriptions;
@@ -143,7 +136,7 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
         timeInput = findViewById(R.id.time_input);
         noPassengersInput = findViewById(R.id.number_of_passengers_input);
         notesInput = findViewById(R.id.notes_input);
-        progressIndicator = findViewById(R.id.progress_indicator);
+        progressIndicator = findViewById(R.id.progress_indicator_overlay);
 
         pickupLocationInputContainer = findViewById(R.id.pickup_location_input_container);
         destinationInputContainer = findViewById(R.id.destination_input_container);

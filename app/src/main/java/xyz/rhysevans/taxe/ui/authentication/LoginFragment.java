@@ -80,7 +80,7 @@ public class LoginFragment extends Fragment {
     /**
      * The progress indicator
      */
-    private ProgressBar progressIndicator;
+    private View progressIndicator;
 
 
     /**
@@ -144,7 +144,7 @@ public class LoginFragment extends Fragment {
         passwordInput = view.findViewById(R.id.password_input);
         loginBtn = view.findViewById(R.id.login_btn);
         registerText = view.findViewById(R.id.register_text);
-        progressIndicator = view.findViewById(R.id.progress_indicator);
+        progressIndicator = view.findViewById(R.id.progress_indicator_overlay);
 
         // Declare button actions
         loginBtn.setOnClickListener(v -> login());
