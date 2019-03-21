@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -107,7 +108,7 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
 
 
         // Initialize Toolbar
-        Toolbar toolbar = findViewById(R.id.create_booking_toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
@@ -128,9 +129,12 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
         // Parent View
         view = findViewById(android.R.id.content);
 
-        // Initialize all the variables
-        cancelBtn = findViewById(R.id.create_booking_close_button);
-        createBtn = findViewById(R.id.create_booking_button);
+        // Initialize toolbar
+        cancelBtn = findViewById(R.id.close_btn);
+        createBtn = findViewById(R.id.submit_btn);
+        TextView toolbarTitle = findViewById(R.id.title);
+        toolbarTitle.setText(getString(R.string.create_new_booking));
+
         pickupLocationInput = findViewById(R.id.pickup_location_input);
         destinationInput = findViewById(R.id.destination_input);
         timeInput = findViewById(R.id.time_input);

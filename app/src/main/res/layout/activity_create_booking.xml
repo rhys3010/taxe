@@ -7,57 +7,11 @@
     tools:context=".ui.booking.CreateBookingActivity">
 
     <!-- Toolbar -->
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/create_booking_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/Theme.AppCompat.Light"
+    <include layout="@layout/two_button_toolbar"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/create_booking_form">
-
-        <!-- Close Button -->
-        <ImageButton
-            android:id="@+id/create_booking_close_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_close_black_24dp"
-            android:tint="@android:color/white"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"/>
-
-        <!-- Page Title -->
-        <TextView
-            android:id="@+id/create_booking_toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="30dp"
-            android:layout_toEndOf="@+id/create_booking_close_button"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/create_new_booking"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_subtitle_1"
-            android:textAlignment="viewEnd"/>
-
-        <!-- Create 'Button' -->
-        <ImageButton
-            android:id="@+id/create_booking_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_check_black_24dp"
-            android:tint="@android:color/white"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/create_booking_toolbar_title"
-            android:layout_marginEnd="20dp"
-            android:layout_gravity="end"/>
-    </android.support.v7.widget.Toolbar>
+        app:layout_constraintBottom_toTopOf="@id/create_booking_form"/>
 
     <!-- Booking Creation Form -->
     <ScrollView
@@ -67,7 +21,7 @@
         android:layout_margin="@dimen/form_margin_create_booking"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/create_booking_toolbar">
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"

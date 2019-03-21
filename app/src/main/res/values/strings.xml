@@ -26,6 +26,9 @@
     <string name="number_of_passengers_selection">Select Number of Passengers</string>
     <string name="desired_time_selection">Select Desired Time</string>
     <string name="desired_time_format">%1$02d:%2$02d</string>
+    <string name="current_password_input_hint">Current Password</string>
+    <string name="new_password_input_hint">New Password</string>
+    <string name="confirm_new_password_input_hint">Confirm New Password</string>
 
     <!-- Nav Options -->
     <string name="nav_home">Home</string>
