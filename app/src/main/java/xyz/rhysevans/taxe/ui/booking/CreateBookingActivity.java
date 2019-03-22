@@ -308,6 +308,8 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
         noPassengersInput.setText(null);
         notesInput.setText(null);
 
+        // TODO: Save Booking ID to Shared Prefs?
+
         // Show Toast
         Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.booking_created_successfully), Toast.LENGTH_LONG);
         toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
@@ -316,8 +318,6 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
         // Force to Booking Screen and End
         setResult(TaxeMainActivity.CREATE_BOOKING_REQUEST_CODE);
         this.finish();
-
-        showSnackbarMessage(getString(R.string.create_booking_success));
     }
 
     /**

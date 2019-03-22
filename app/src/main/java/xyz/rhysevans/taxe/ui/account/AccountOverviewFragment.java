@@ -35,7 +35,7 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
 
 
     public static final String TAG = LoginFragment.class.getSimpleName();
-    public static final int CHANGE_NAME_REQUEST_CODE = 2;
+    public static final int CHANGE_NAME_REQUEST_CODE = 3;
 
     private SharedPreferencesManager sharedPreferencesManager;
 
