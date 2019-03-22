@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tax-E</string>
+    <string name="welcome_text">Croeso i Tax-E</string>
+    <string name="welcome_sub_text">Mewngofnodwch i fynd ymhellach</string>
+    <string name="email_input_hint">Ebost</string>
+    <string name="password_input_hint">Cyfrinair</string>
+    <string name="login_button_text">Mewngofnodi</string>
+    <string name="no_account_text">Nid oes gennych gyfrif?</string>
+    <string name="already_have_account_text">Oes gennych cyfrif?</string>
+    <string name="login">Mewngofnodi</string>
+    <string name="register">Cofrestru</string>
+    <string name="register_full">Creu Cyfrif</string>
+    <string name="name_input_hint">Enw</string>
+    <string name="confirm_password_input_hint">Cadarnhau Cyfrinair</string>
+    <string name="register_button_text">Cofrestru</string>
+    <string name="logout_confirmation">Allgofnodi?</string>
+    <string name="create_new_booking">Archeb Newydd</string>
+    <string name="create_new_booking_submit">Creu</string>
+    <string name="pickup_location_input_hint">Lleoliad Codi</string>
+    <string name="destination_input_hint">Ble wyt yn mynd?</string>
+    <string name="time_input_hint">Amser Dymunol</string>
+    <string name="number_of_passengers_input_hint">Nifer o Deithwyr</string>
+    <string name="notes_input_hint">Nodiadau Ychwanegol (dewisol)</string>
+    <string name="cancel_booking_creation_confirmation">Wyt yn siwr dy fod eisiau canslo?</string>
+    <string name="select_number">Dewis Rhif</string>
+    <string name="number_of_passengers_selection">Dewis Nifer o Deithwyr</string>
+    <string name="desired_time_selection">Dewis Amser Dymunol</string>
+    <string name="desired_time_format">%1$02d:%2$02d</string>
+    <string name="current_password_input_hint">Cyfrinair Cerrynt</string>
+    <string name="new_name_input_hint">Enw Newydd</string>
+    <string name="new_password_input_hint">Cyfrinair Newydd</string>
+    <string name="confirm_new_password_input_hint">Cadarnhau Cyfrinair Newydd</string>
+    <string name="author">Awdur: Rhys Evans</string>
+    <string name="learn_more">Dysgu Mwy</string>
+    <string name="version_name">Fersowm: %1$s</string>
+    <string name="name_successfully_changed">Enw wedi ei newid yn llwydddiannus</string>
+    <string name="logged_out_successfully">Wedi Allgofnodi</string>
+    <string name="booking_created_successfully">Archeb Wedi ei Chreu yn Llwyddiannus</string>
+
+    <!-- Nav Options -->
+    <string name="nav_home">Adra</string>
+    <string name="nav_booking">Archeb</string>
+    <string name="nav_history">Hanes</string>
+    <string name="nav_account">Cyfrif</string>
+
+    <!-- Account Action Options -->
+    <string name="account_action_change_password">Newid Cyfrinair</string>
+    <string name="account_action_change_name">Newid Enw</string>
+    <string name="account_action_language">Iaith</string>
+    <string name="account_action_log_out">Allgofnodi</string>
+    <string name="account_action_about">Gwybodaeth</string>
+
+    <string name="account_option_icon_content_description">Icon for account action</string>
+
+    <!-- Success Strings -->
+    <string name="register_success">Wedi Cofrestru yn Llwyddiannus</string>
+    <string name="create_booking_success">Archeb Wedi ei Chreu yn Llwyddiannus</string>
+
+    <!-- Validation Errors -->
+    <string name="name_error">Rhaid i enw fod o leiaf 3 llythrennau yn hir a ddim cynnwys rhifau nag symbolau.</string>
+    <string name="email_error">Rhowch Ebost Dilys</string>
+    <string name="password_error">Rhaid i cyfrinair cynnwys o leiaf 1 rhif ag fod 8 llythyren yn hir.</string>
+    <string name="password_confirmation_error">Nid yw\'r cyfrineiriau yn cydweddu</string>
+    <string name="empty_password_error">Rhowch Cyfrinair Dilys.</string>
+    <string name="no_passengers_error">Rhaid fod yna o leiaf un teithiwr i creu archeb</string>
+    <string name="pickup_location_error">Rhowch Lleoliad Codi</string>
+    <string name="destination_error">Rhowch Cyrchfan</string>
+    <string name="booking_time_error">Ni all amser archeb fod yn y gorffennol, pellach na 3 awr i ffwrdd nag yn gynt na 10 munud i ffwrdd.</string>
+
+    <!-- Errors -->
+    <string name="invalid_token_error">Tocyn annilys, plis mewngofnodwch eto.</string>
+    <string name="token_expired_error">Tocyn wedi allnadu, plis mewngofnodwch eto</string>
+    <string name="missing_token_error">Tocyn heb ei ganfod, plis mewngofnodwch eto.</string>
+    <string name="no_users_found_error">Ni ellid dod o hyd i unrhyw ddefnyddwyr.</string>
+    <string name="user_already_exists_error">Mae defnyddiwr gyda\'r ebost yna yn bodoli yn barod.</string>
+    <string name="authentication_failed_error">Ebost neu Cyfrinair Anghywir, triwch eto</string>
+    <string name="validation_error">Roedd un neu fwy o fewnbynnau yn annilys.</string>
+    <string name="invalid_object_id_error">ID Annilys.</string>
+    <string name="unauthorized_edit_error">Nid ydych wedi\'ch awdurdodi i golyu.</string>
+    <string name="booking_not_found_error">Ni ellid dod o hyd i unrhyw archebion</string>
+    <string name="customer_already_has_active_booking_error">Mae gennych archeb yn weithgar, rhaid canslo gyntaf.</string>
+    <string name="unauthorized_view_error">Nid ydych wedi\'ch awdurdodi i weld y cofnod hwn</string>
+    <string name="invalid_role_error">Nid oes gan y defnyddiwr yma y caniatad sydd angen i cyfiawnhau y dasg.</string>
+
+    <string name="internal_server_error">Aeth Rhywbeth o\'i Le :/</string>
+    <string name="network_error">Gwall Rhwydwaith</string>
+    <string name="token_expiry">Tocyn Wedi Allnadu</string>
+    <string name="booking_not_created">Archeb Heb Ei Greu</string>
+    <string name="network_error_long">Mae gwall rhwydwaith wedi digwydd, sicrhewch eich fod wedi cysylltu i\'r rhyngrwyd</string>
+</resources>
