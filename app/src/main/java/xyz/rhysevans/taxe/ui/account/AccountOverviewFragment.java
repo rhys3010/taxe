@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -35,6 +38,8 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
      */
     public static final String TAG = LoginFragment.class.getSimpleName();
 
+    public static final int CHANGE_NAME_REQUEST_CODE = 1;
+
     /**
      * Shared Preferences Manager
      */
@@ -44,6 +49,8 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
      * List of account actions
      */
     private ArrayList<AccountActionModel> accountActions;
+
+    private View view;
 
 
     /**
@@ -58,7 +65,7 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_account_overview, container, false);
+        view = inflater.inflate(R.layout.fragment_account_overview, container, false);
 
         // Init Shared prefs
         sharedPreferencesManager = SharedPreferencesManager.getInstance(getContext());
@@ -92,7 +99,9 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
                 break;
 
             case R.string.account_action_change_name:
-                // TODO
+                // Start an Activity With Result, to force refresh if successful
+                Intent changeNameIntent = new Intent(getActivity(), ChangeNameActivity.class);
+                startActivityForResult(changeNameIntent, CHANGE_NAME_REQUEST_CODE);
                 break;
 
             case R.string.account_action_language:
@@ -110,6 +119,23 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
 
             default:
                 // Do nothing
+        }
+    }
+
+    /**
+     * Called when the change name activity exits
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // If the request code is the same as we sent, it was successful
+        // and screen should be refreshed
+        if(requestCode == CHANGE_NAME_REQUEST_CODE){
+            initMasthead(view);
         }
     }
 
@@ -181,7 +207,11 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
             // Delete all shared prefs
             sharedPreferencesManager.deleteAll();
 
-            // Send user to login screen
+            // Send user to login screen and show toast messsage
+            Toast toast = Toast.makeText(getActivity().getApplicationContext(), getString(R.string.logged_out_successfully), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
+            toast.show();
+
             Intent intent = new Intent(getActivity(), TaxeAuthenticationActivity.class);
             startActivity(intent);
             getActivity().finish();

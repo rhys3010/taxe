@@ -27,11 +27,15 @@
     <string name="desired_time_selection">Select Desired Time</string>
     <string name="desired_time_format">%1$02d:%2$02d</string>
     <string name="current_password_input_hint">Current Password</string>
+    <string name="new_name_input_hint">New Name</string>
     <string name="new_password_input_hint">New Password</string>
     <string name="confirm_new_password_input_hint">Confirm New Password</string>
     <string name="author">Author: Rhys Evans</string>
     <string name="learn_more">Learn More</string>
     <string name="version_name">Version: %1$s</string>
+    <string name="name_successfully_changed">Name Successfully Changed</string>
+    <string name="logged_out_successfully">Logged Out</string>
+    <string name="booking_created_successfully">Booking Successfully Created</string>
 
     <!-- Nav Options -->
     <string name="nav_home">Home</string>

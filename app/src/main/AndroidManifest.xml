@@ -29,9 +29,13 @@
             android:name=".ui.account.ChangePasswordActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.account.AboutActivity"
+        <activity
+            android:name=".ui.account.AboutActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.account.ChangeNameActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -12,12 +12,14 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -304,6 +306,13 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
         timeInput.setText(null);
         noPassengersInput.setText(null);
         notesInput.setText(null);
+
+        // Show Toast
+        Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.booking_created_successfully), Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
+        toast.show();
+
+        // TODO: Force to Booking Screen (and refresh)
 
         // End Activity
         this.finish();
