@@ -29,6 +29,9 @@
     <string name="current_password_input_hint">Current Password</string>
     <string name="new_password_input_hint">New Password</string>
     <string name="confirm_new_password_input_hint">Confirm New Password</string>
+    <string name="author">Author: Rhys Evans</string>
+    <string name="learn_more">Learn More</string>
+    <string name="version_name">Version: %1$s</string>
 
     <!-- Nav Options -->
     <string name="nav_home">Home</string>

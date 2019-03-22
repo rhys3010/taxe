@@ -18,6 +18,7 @@
     <dimen name="account_action_entry_margin_top">20dp</dimen>
     <dimen name="account_action_entry_icon_margin">10dp</dimen>
     <dimen name="edit_text_icon_margin">10dp</dimen>
+    <dimen name="about_margin">50dp</dimen>
 
 
     <!-- Text Sizes -->

@@ -98,7 +98,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         confirmNewPasswordInputContainer = findViewById(R.id.confirm_new_password_input_container);
 
         progressIndicator = findViewById(R.id.progress_indicator_overlay);
-        
+
         // Add Behaviour to Buttons
         closeBtn.setOnClickListener(v -> finish());
         // TODO: Submit Button

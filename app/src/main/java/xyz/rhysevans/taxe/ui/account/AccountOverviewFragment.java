@@ -87,8 +87,8 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
         // Depending on the value of the string, perform relevant action
         switch(itemId){
             case R.string.account_action_change_password:
-                Intent intent = new Intent(getActivity(), ChangePasswordActivity.class);
-                startActivity(intent);
+                Intent changePasswordIntent = new Intent(getActivity(), ChangePasswordActivity.class);
+                startActivity(changePasswordIntent);
                 break;
 
             case R.string.account_action_change_name:
@@ -104,7 +104,8 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
                 break;
 
             case R.string.account_action_about:
-                // TODO
+                Intent aboutIntent = new Intent(getActivity(), AboutActivity.class);
+                startActivity(aboutIntent);
                 break;
 
             default:

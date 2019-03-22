@@ -25,7 +25,11 @@
             android:name=".ui.booking.CreateBookingActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.account.ChangePasswordActivity"
+        <activity
+            android:name=".ui.account.ChangePasswordActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.account.AboutActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
