@@ -30,19 +30,13 @@ import xyz.rhysevans.taxe.util.SharedPreferencesManager;
  */
 public class TaxeMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    /**
-     * The key under which to save the page title in instance state bundle
-     */
-    private final String PAGE_TITLE_KEY = "PAGE_TITLE_KEY";
 
-    /**
-     * Instance of shared preference manager
-     */
+    private final String PAGE_TITLE_KEY = "PAGE_TITLE_KEY";
+    public static final int CREATE_BOOKING_REQUEST_CODE = 2;
+
     private SharedPreferencesManager sharedPreferencesManager;
 
-    /**
-     * The string resource of the title of the currently loaded fragment (page)
-     */
+    private BottomNavigationView navMenu;
     private int currentPageTitle;
 
 
@@ -67,7 +61,7 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
         }
 
         // Initialize Nav Menu
-        BottomNavigationView navMenu = findViewById(R.id.navigation_menu);
+        navMenu = findViewById(R.id.navigation_menu);
         navMenu.setOnNavigationItemSelectedListener(this::onNavigationItemSelected);
 
         // Initalize FAB
@@ -149,7 +143,24 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
      */
     private void showCreateBooking(){
         Intent intent = new Intent(this, CreateBookingActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, CREATE_BOOKING_REQUEST_CODE);
+    }
+
+    /**
+     * Called when the create booking activity exits
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // If the request code is the same as we sent
+        if(resultCode == CREATE_BOOKING_REQUEST_CODE){
+            // Force nav menu to booking screen
+            navMenu.setSelectedItemId(R.id.nav_booking);
+        }
     }
 
     /**

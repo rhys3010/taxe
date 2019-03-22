@@ -33,23 +33,13 @@ import xyz.rhysevans.taxe.util.SharedPreferencesManager;
  */
 public class AccountOverviewFragment extends Fragment implements ListView.OnItemClickListener{
 
-    /**
-     * The fragment's TAG, for use in fragment transactions
-     */
+
     public static final String TAG = LoginFragment.class.getSimpleName();
+    public static final int CHANGE_NAME_REQUEST_CODE = 2;
 
-    public static final int CHANGE_NAME_REQUEST_CODE = 1;
-
-    /**
-     * Shared Preferences Manager
-     */
     private SharedPreferencesManager sharedPreferencesManager;
 
-    /**
-     * List of account actions
-     */
     private ArrayList<AccountActionModel> accountActions;
-
     private View view;
 
 
@@ -134,7 +124,7 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
 
         // If the request code is the same as we sent, it was successful
         // and screen should be refreshed
-        if(requestCode == CHANGE_NAME_REQUEST_CODE){
+        if(resultCode == CHANGE_NAME_REQUEST_CODE){
             initMasthead(view);
         }
     }
