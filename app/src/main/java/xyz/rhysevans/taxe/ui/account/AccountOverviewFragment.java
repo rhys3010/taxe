@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,10 +96,6 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
                 startActivityForResult(changeNameIntent, CHANGE_NAME_REQUEST_CODE);
                 break;
 
-            case R.string.account_action_language:
-                // TODO
-                break;
-
             case R.string.account_action_log_out:
                 logout();
                 break;
@@ -169,7 +167,6 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
         // Create account options list
         accountActions.add(new AccountActionModel(R.drawable.ic_vpn_key_black_24dp, R.string.account_action_change_password));
         accountActions.add(new AccountActionModel(R.drawable.ic_edit_black_24dp, R.string.account_action_change_name));
-        accountActions.add(new AccountActionModel(R.drawable.ic_language_black_24dp, R.string.account_action_language));
         accountActions.add(new AccountActionModel(R.drawable.ic_exit_to_app_black_24dp, R.string.account_action_log_out));
         accountActions.add(new AccountActionModel(R.drawable.ic_info_black_24dp, R.string.account_action_about));
 
@@ -181,7 +178,6 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
         accountActionsList.setOnItemClickListener(this);
 
     }
-
 
     /**
      * Ask user for confirmation, if confirmed, delete any user-related

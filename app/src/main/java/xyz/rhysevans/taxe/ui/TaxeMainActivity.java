@@ -120,6 +120,10 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
                 loadFragment(new AccountOverviewFragment());
                 ret = true;
                 break;
+
+            default:
+                currentPageTitle = R.string.app_name;
+                // Do nothing
         }
 
         getSupportActionBar().setTitle(currentPageTitle);

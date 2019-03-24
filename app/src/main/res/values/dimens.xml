@@ -20,6 +20,9 @@
     <dimen name="edit_text_icon_margin">10dp</dimen>
     <dimen name="about_margin">50dp</dimen>
 
+    <dimen name="booking_info_row_margin">10dp</dimen>
+    <dimen name="booking_info_icon_margin">10dp</dimen>
+
 
     <!-- Text Sizes -->
     <dimen name="text_size_header_1">123sp</dimen>

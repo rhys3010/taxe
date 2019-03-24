@@ -36,6 +36,15 @@
     <string name="name_successfully_changed">Name Successfully Changed</string>
     <string name="logged_out_successfully">Logged Out</string>
     <string name="booking_created_successfully">Booking Successfully Created</string>
+    <string name="pickup_location">Pickup Location</string>
+    <string name="destination">Destination</string>
+    <string name="due_at">Due At</string>
+    <string name="driver">Driver</string>
+    <string name="status">Status</string>
+    <string name="no_passengers">No. Passengers</string>
+    <string name="cancel">Cancel</string>
+    <string name="no_active_booking">No Active Booking</string>
+    <string name="get_started">Click the + below to get started</string>
 
     <!-- Nav Options -->
     <string name="nav_home">Home</string>
@@ -46,7 +55,6 @@
     <!-- Account Action Options -->
     <string name="account_action_change_password">Change Password</string>
     <string name="account_action_change_name">Change Name</string>
-    <string name="account_action_language">Language</string>
     <string name="account_action_log_out">Log Out</string>
     <string name="account_action_about">About</string>
 
@@ -87,12 +95,4 @@
     <string name="token_expiry">Token Expired</string>
     <string name="booking_not_created">Booking not Created</string>
     <string name="network_error_long">A network error has occurred. Please make sure you are connected to the internet</string>
-    <string name="title_activity_test">TestActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_activity_main">MainActivity</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

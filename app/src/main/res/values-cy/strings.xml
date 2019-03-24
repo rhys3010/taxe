@@ -37,6 +37,15 @@
     <string name="name_successfully_changed">Enw wedi ei newid yn llwydddiannus</string>
     <string name="logged_out_successfully">Wedi Allgofnodi</string>
     <string name="booking_created_successfully">Archeb Wedi ei Chreu yn Llwyddiannus</string>
+    <string name="pickup_location">Lleoliad Codi</string>
+    <string name="destination">Cyrchfan</string>
+    <string name="due_at">Amser</string>
+    <string name="driver">Gyrrwr</string>
+    <string name="status">Statws</string>
+    <string name="no_passengers">Nifer of Teithwyr</string>
+    <string name="cancel">Canslo</string>
+    <string name="no_active_booking">Dim Archeb Actif</string>
+    <string name="get_started">Cliciwch y + isod i ddechrau</string>
 
     <!-- Nav Options -->
     <string name="nav_home">Adra</string>
@@ -47,7 +56,6 @@
     <!-- Account Action Options -->
     <string name="account_action_change_password">Newid Cyfrinair</string>
     <string name="account_action_change_name">Newid Enw</string>
-    <string name="account_action_language">Iaith</string>
     <string name="account_action_log_out">Allgofnodi</string>
     <string name="account_action_about">Gwybodaeth</string>
 
