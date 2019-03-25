@@ -14,17 +14,6 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
     </FrameLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/new_booking_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/fab_marign"
-        android:layout_marginBottom="70dp"
-        android:src="@drawable/ic_add_black_24dp"
-        android:tint="@android:color/white"
-        android:layout_gravity="bottom|end"
-        />
-
     <!-- Navigation Bar -->
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation_menu"

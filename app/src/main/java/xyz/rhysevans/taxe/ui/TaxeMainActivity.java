@@ -64,10 +64,6 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
         navMenu = findViewById(R.id.navigation_menu);
         navMenu.setOnNavigationItemSelectedListener(this::onNavigationItemSelected);
 
-        // Initalize FAB
-        FloatingActionButton fab = findViewById(R.id.new_booking_fab);
-        fab.setOnClickListener(v -> showCreateBooking());
-
         // Load the default fragment if opening for first time
         if(savedInstanceState == null){
             loadFragment(new HomeFragment());
@@ -98,35 +94,33 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
         // and load the correct fragment
         switch(item.getItemId()){
             case R.id.nav_home:
-                currentPageTitle = R.string.app_name;
+                getSupportActionBar().setTitle(R.string.app_name);
                 loadFragment(new HomeFragment());
                 ret = true;
                 break;
 
             case R.id.nav_booking:
-                currentPageTitle = R.string.nav_booking;
+                getSupportActionBar().setTitle(R.string.nav_booking);
                 loadFragment(new BookingOverviewFragment());
                 ret = true;
                 break;
 
+            case R.id.nav_new:
+                showCreateBooking();
+                break;
+
             case R.id.nav_history:
-                currentPageTitle = R.string.nav_history;
+                getSupportActionBar().setTitle(R.string.nav_history);
                 loadFragment(new BookingHistoryFragment());
                 ret = true;
                 break;
 
             case R.id.nav_account:
-                currentPageTitle = R.string.nav_account;
+                getSupportActionBar().setTitle(R.string.nav_account);
                 loadFragment(new AccountOverviewFragment());
                 ret = true;
                 break;
-
-            default:
-                currentPageTitle = R.string.app_name;
-                // Do nothing
         }
-
-        getSupportActionBar().setTitle(currentPageTitle);
 
         return ret;
     }

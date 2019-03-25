@@ -49,6 +49,7 @@
     <!-- Nav Options -->
     <string name="nav_home">Home</string>
     <string name="nav_booking">Booking</string>
+    <string name="nav_new_booking">New</string>
     <string name="nav_history">History</string>
     <string name="nav_account">Account</string>
 

@@ -50,6 +50,7 @@
     <!-- Nav Options -->
     <string name="nav_home">Adra</string>
     <string name="nav_booking">Archeb</string>
+    <string name="nav_new_booking">Newydd</string>
     <string name="nav_history">Hanes</string>
     <string name="nav_account">Cyfrif</string>
 

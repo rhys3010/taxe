@@ -12,6 +12,11 @@
         android:title="@string/nav_booking"/>
 
     <item
+        android:id="@+id/nav_new"
+        android:icon="@drawable/ic_add_box_black_24dp"
+        android:title="@string/nav_new_booking"/>
+
+    <item
         android:id="@+id/nav_history"
         android:icon="@drawable/ic_history_black_24dp"
         android:title="@string/nav_history"/>
