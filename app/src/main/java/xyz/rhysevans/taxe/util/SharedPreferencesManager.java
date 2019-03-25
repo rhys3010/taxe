@@ -102,6 +102,15 @@ public class SharedPreferencesManager {
     }
 
     /**
+     * Save the ID of the currently active booking to the shared prefs
+     * @param id
+     */
+    public void putActiveBooking(String id){
+        editor.putString(Constants.ACTIVE_BOOKING_KEY, id);
+        editor.apply();
+    }
+
+    /**
      * Retrieve the token from the shared preferences
      * @return
      */
@@ -110,11 +119,35 @@ public class SharedPreferencesManager {
     }
 
     /**
+     * Retrieve the ID of the currently active booking from the shared prefs
+     * @return
+     */
+    public String getActiveBooking(){
+        return sharedPreferences.getString(Constants.ACTIVE_BOOKING_KEY, "NO_ACTIVE_BOOKINGS");
+    }
+
+    /**
+     * Check if an active booking is present in the shared prefs
+     * @return
+     */
+    public boolean isActiveBooking(){
+        return sharedPreferences.contains(Constants.ACTIVE_BOOKING_KEY);
+    }
+
+    /**
      * Check if token is saved, (if user is logged in)
      * @return
      */
     public boolean isTokenPresent(){
         return sharedPreferences.contains(Constants.TOKEN_KEY);
+    }
+
+    /**
+     * Delete the currently active booking from shared prefs
+     */
+    public void deleteActiveBooking(){
+        editor.remove(Constants.ACTIVE_BOOKING_KEY);
+        editor.apply();
     }
 
     /**

@@ -94,8 +94,7 @@
                     <TextView
                         android:id="@+id/pickup_location_label"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Fferm Penglais"/>
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -132,8 +131,7 @@
                     <TextView
                         android:id="@+id/destination_label"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Bow Street"/>
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -170,8 +168,7 @@
                     <TextView
                         android:id="@+id/due_at_label"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="12:03"/>
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -208,8 +205,7 @@
                     <TextView
                         android:id="@+id/driver_label"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="N/A"/>
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -247,8 +243,7 @@
                     <TextView
                         android:id="@+id/status_label"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Pending"/>
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -285,8 +280,7 @@
                     <TextView
                         android:id="@+id/no_passengers_label"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="1"/>
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>
 
