@@ -1,11 +1,14 @@
 package xyz.rhysevans.taxe.network;
 
 
+import java.util.ArrayList;
+
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 import xyz.rhysevans.taxe.model.Booking;
 import xyz.rhysevans.taxe.model.LoginResponse;
@@ -60,6 +63,15 @@ public interface RetrofitInterface {
      */
     @PUT("users/{id}")
     Observable<Response> editUser(@Path("id") String id, @Body User user);
+
+    /**
+     * Gets a list of a given user's bookings (output number can be limited)
+     * @param limit
+     * @param id
+     * @return
+     */
+    @GET("users/{id}/bookings")
+    Observable<ArrayList<Booking>> getUserBookings(@Query("limit") int limit, @Path("id") String id);
 
     /////////////////////
     //     BOOKINGS    //

@@ -37,6 +37,7 @@ import xyz.rhysevans.taxe.util.ErrorHandler;
 import xyz.rhysevans.taxe.util.Errors;
 import xyz.rhysevans.taxe.util.SharedPreferencesManager;
 import xyz.rhysevans.taxe.util.Validation;
+import xyz.rhysevans.taxe.viewmodel.UserViewModel;
 
 /**
  * LoginFragment.java
@@ -47,57 +48,19 @@ import xyz.rhysevans.taxe.util.Validation;
  */
 public class LoginFragment extends Fragment {
 
-    /**
-     * The fragment's TAG, for use in fragment transactions
-     */
+
     public static final String TAG = LoginFragment.class.getSimpleName();
 
-    /**
-     * The Key under which to save enterred email
-     */
-    private final String EMAIL_KEY = "EMAIL";
-
-    /**
-     * Input Field for Email
-     */
     private TextInputEditText emailInput;
-
-    /**
-     * Input Field for password
-     */
     private TextInputEditText passwordInput;
-
-    /**
-     * The Login Button
-     */
     private Button loginBtn;
-
-    /**
-     * The 'register' link at the bottom of the form
-     */
     private TextView registerText;
-
-    /**
-     * The progress indicator
-     */
     private View progressIndicator;
 
-
-    /**
-     * Instance of SharedPreferenceManager
-     */
     private SharedPreferencesManager sharedPreferencesManager;
-
-    /**
-     * Error Handler
-     */
     private ErrorHandler errorHandler;
-
-    /**
-     * rxJava Composite subscription to subscribe to
-     * observables returned from HTTP response
-     */
     private CompositeSubscription subscriptions;
+    private UserViewModel userViewModel;
 
     /**
      * Initialize all the helper classess
@@ -108,6 +71,9 @@ public class LoginFragment extends Fragment {
 
         // Initialize subscriptions
         subscriptions = new CompositeSubscription();
+
+        // Initialize View Model
+        userViewModel = new UserViewModel();
 
         // Initialize Error Handler
         errorHandler = new ErrorHandler();
@@ -179,11 +145,8 @@ public class LoginFragment extends Fragment {
             // Show Progress bar
             progressIndicator.setVisibility(View.VISIBLE);
 
-            // Send login request
-            subscriptions.add(NetworkUtil.getRetrofit(email, password).login()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(this::handleSuccess, this::handleError));
+            // Send login request via viewmodel
+            subscriptions.add(userViewModel.login(email, password).subscribe(this::handleSuccess, this::handleError));
         }
     }
 

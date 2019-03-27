@@ -27,6 +27,7 @@ import xyz.rhysevans.taxe.ui.TaxeMainActivity;
 import xyz.rhysevans.taxe.util.ErrorHandler;
 import xyz.rhysevans.taxe.util.SharedPreferencesManager;
 import xyz.rhysevans.taxe.util.Validation;
+import xyz.rhysevans.taxe.viewmodel.UserViewModel;
 
 /**
  * ChangeNameActivity.java
@@ -48,6 +49,7 @@ public class ChangeNameActivity extends AppCompatActivity {
     private SharedPreferencesManager sharedPreferencesManager;
     private ErrorHandler errorHandler;
     private CompositeSubscription subscriptions;
+    private UserViewModel userViewmodel;
 
     private String newName;
 
@@ -65,6 +67,9 @@ public class ChangeNameActivity extends AppCompatActivity {
 
         // Initialize Error Handler
         errorHandler = new ErrorHandler();
+
+        // Initialize View Model
+        userViewmodel = new UserViewModel();
 
         // Initialize rxJava Subscriptions
         subscriptions = new CompositeSubscription();
@@ -132,10 +137,8 @@ public class ChangeNameActivity extends AppCompatActivity {
             updatedUser.setName(newName);
 
             // Send HTTP Request
-            subscriptions.add(NetworkUtil.getRetrofit(sharedPreferencesManager.getToken())
-                    .editUser(sharedPreferencesManager.getUser().getId(), updatedUser)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            subscriptions.add(userViewmodel.editUser(sharedPreferencesManager.getToken(),
+                    sharedPreferencesManager.getUser().getId(), updatedUser)
                     .subscribe(this::handleSuccess, this::handleError));
 
         }else{

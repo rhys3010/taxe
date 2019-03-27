@@ -37,6 +37,7 @@ import xyz.rhysevans.taxe.util.ErrorHandler;
 import xyz.rhysevans.taxe.util.Errors;
 import xyz.rhysevans.taxe.util.SharedPreferencesManager;
 import xyz.rhysevans.taxe.util.Validation;
+import xyz.rhysevans.taxe.viewmodel.BookingViewModel;
 
 /**
  * CreateBookingActivity.java
@@ -77,6 +78,7 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
     private CompositeSubscription subscriptions;
     private SharedPreferencesManager sharedPreferencesManager;
     private ErrorHandler errorHandler;
+    private BookingViewModel bookingViewModel;
     private View view;
 
     private int bookingHour;
@@ -99,6 +101,9 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
 
         // Initialize Subscriptions
         subscriptions = new CompositeSubscription();
+
+        // Initialize View Model
+        bookingViewModel = new BookingViewModel();
 
         // Initialize all views
         initViews();
@@ -227,9 +232,7 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
             Booking booking = new Booking(pickupLocation, destination, time, noPassengers);
 
             // Send HTTP request
-            subscriptions.add(NetworkUtil.getRetrofit(sharedPreferencesManager.getToken()).createBooking(booking)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
+            subscriptions.add(bookingViewModel.createBooking(sharedPreferencesManager.getToken(), booking)
                     .subscribe(this::handleSuccess, this::handleError));
         }
     }
@@ -307,8 +310,6 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
         timeInput.setText(null);
         noPassengersInput.setText(null);
         notesInput.setText(null);
-
-        // TODO: Save Booking ID to Shared Prefs?
 
         // Show Toast
         Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.booking_created_successfully), Toast.LENGTH_LONG);

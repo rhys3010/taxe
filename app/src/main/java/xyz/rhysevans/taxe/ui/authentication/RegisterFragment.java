@@ -27,6 +27,7 @@ import xyz.rhysevans.taxe.util.ErrorHandler;
 import xyz.rhysevans.taxe.util.Errors;
 import xyz.rhysevans.taxe.util.SharedPreferencesManager;
 import xyz.rhysevans.taxe.util.Validation;
+import xyz.rhysevans.taxe.viewmodel.UserViewModel;
 
 /**
  * RegisterFragment.java
@@ -61,6 +62,7 @@ public class RegisterFragment extends Fragment {
     private SharedPreferencesManager sharedPreferencesManager;
     private ErrorHandler errorHandler;
     private CompositeSubscription subscriptions;
+    private UserViewModel userViewModel;
 
 
     /**
@@ -72,6 +74,9 @@ public class RegisterFragment extends Fragment {
 
         // Initialize subscriptions
         subscriptions = new CompositeSubscription();
+
+        // Initialize View Model
+        userViewModel = new UserViewModel();
 
         // Initialize Error Handler
         errorHandler = new ErrorHandler();
@@ -160,10 +165,7 @@ public class RegisterFragment extends Fragment {
             User user = new User(name, email, password);
 
             // Add response from registration call to subscriptions
-            subscriptions.add(NetworkUtil.getRetrofit().register(user)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(this::handleSuccess, this::handleError));
+            subscriptions.add(userViewModel.register(user).subscribe(this::handleSuccess, this::handleError));
         }
     }
 
