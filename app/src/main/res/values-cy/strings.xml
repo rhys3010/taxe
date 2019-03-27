@@ -91,6 +91,7 @@
     <string name="customer_already_has_active_booking_error">Mae gennych archeb yn weithgar, rhaid canslo gyntaf.</string>
     <string name="unauthorized_view_error">Nid ydych wedi\'ch awdurdodi i weld y cofnod hwn</string>
     <string name="invalid_role_error">Nid oes gan y defnyddiwr yma y caniatad sydd angen i cyfiawnhau y dasg.</string>
+    <string name="missing_authentication_error">Cymwysterau dilysu yn anghyflawn neu ar goll</string>
 
     <string name="internal_server_error">Aeth Rhywbeth o\'i Le :/</string>
     <string name="network_error">Gwall Rhwydwaith</string>

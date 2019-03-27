@@ -205,6 +205,10 @@ public class ErrorHandler {
             return R.string.invalid_role_error;
         }
 
+        if(code == Errors.MISSING_AUTHENTICATION_ERROR.getErrorCode()){
+            return R.string.missing_authentication_error;
+        }
+
         // Default Case
         return R.string.internal_server_error;
     }

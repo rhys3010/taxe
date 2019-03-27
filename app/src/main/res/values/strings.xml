@@ -90,6 +90,7 @@
     <string name="customer_already_has_active_booking_error">You already have an active booking, please cancel it and try again.</string>
     <string name="unauthorized_view_error">You are not authorized to view this record</string>
     <string name="invalid_role_error">The user provided does not have the needed permissions for this task</string>
+    <string name="missing_authentication_error">Missing or incomplete authentication credentials provided</string>
 
     <string name="internal_server_error">Something Went Wrong :/</string>
     <string name="network_error">Network Error</string>
