@@ -1,5 +1,7 @@
 package xyz.rhysevans.taxe.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 import xyz.rhysevans.taxe.util.Roles;
@@ -14,39 +16,26 @@ import xyz.rhysevans.taxe.util.Roles;
  */
 public class User{
 
-    /**
-     * The user's Object ID
-     */
+
+    @SerializedName("_id")
     private String id;
 
-    /**
-     * The user's full name
-     */
+    @SerializedName("name")
     private String name;
 
-    /**
-     * The user's email
-     */
+    @SerializedName("email")
     private String email;
 
-    /**
-     * The user's password
-     */
+    @SerializedName("password")
     private String password;
 
-    /**
-     * The user's role
-     */
+    @SerializedName("role")
     private String role;
 
-    /**
-     * The date the user's record was created
-     */
-    private Date created_at;
+    @SerializedName("createdAt")
+    private Date createdAt;
 
-    /**
-     * The IDs of all of the user's bookings
-     */
+    @SerializedName("bookings")
     private String[] bookings;
 
 
@@ -74,14 +63,14 @@ public class User{
      * @param name
      * @param email
      * @param role
-     * @param created_at
+     * @param createdAt
      */
-    public User(String id, String name, String email, String role, Date created_at){
+    public User(String id, String name, String email, String role, Date createdAt){
         this.id = id;
         this.name = name;
         this.email = email;
         this.role = role;
-        this.created_at = created_at;
+        this.createdAt = createdAt;
     }
 
 
@@ -163,8 +152,8 @@ public class User{
      * Gets the creation date of the user
      * @return
      */
-    public Date getCreated_at(){
-        return this.created_at;
+    public Date getCreatedAt(){
+        return this.createdAt;
     }
 
     /**

@@ -28,7 +28,7 @@ public class BookingViewModel extends ViewModel {
      * @return
      */
     public Observable<Response> createBooking(String token, Booking newBooking){
-        return NetworkUtil.getRetrofit(token).createBooking(newBooking)
+        return NetworkUtil.getRetrofit(token, true).createBooking(newBooking)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -41,7 +41,7 @@ public class BookingViewModel extends ViewModel {
      * @return
      */
     public Observable<Booking> editBooking(String token, String bookingId, Booking updatedBooking){
-        return NetworkUtil.getRetrofit(token).editBooking(bookingId, updatedBooking)
+        return NetworkUtil.getRetrofit(token, true).editBooking(bookingId, updatedBooking)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -53,7 +53,7 @@ public class BookingViewModel extends ViewModel {
      * @return
      */
     public Observable<Booking> getBooking(String token, String bookingId){
-        return NetworkUtil.getRetrofit(token).getBooking(bookingId)
+        return NetworkUtil.getRetrofit(token, true).getBooking(bookingId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

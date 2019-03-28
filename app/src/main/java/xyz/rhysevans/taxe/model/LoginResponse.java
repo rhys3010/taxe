@@ -1,5 +1,7 @@
 package xyz.rhysevans.taxe.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 /**
@@ -13,39 +15,25 @@ import java.util.Date;
  */
 public class LoginResponse {
 
-    /**
-     * The access token returned by the API
-     */
+    @SerializedName("token")
     private String token;
 
-    /**
-     * User's Name returned in response
-     */
+    @SerializedName("name")
     private String name;
 
-    /**
-     * User's email returned in response
-     */
+    @SerializedName("email")
     private String email;
 
-    /**
-     * User's account creation date returned in response
-     */
-    private Date created_at;
+    @SerializedName("created_at")
+    private Date createdAt;
 
-    /**
-     * User's role returned in response
-     */
+    @SerializedName("role")
     private String role;
 
-    /**
-     * User's account ID returned in response
-     */
-    private String _id;
+    @SerializedName("_id")
+    private String id;
 
-    /**
-     * The ID of all of the user's bookings
-     */
+    @SerializedName("bookings")
     private String[] bookings;
 
     /**
@@ -83,7 +71,7 @@ public class LoginResponse {
      * @return
      */
     public String getId(){
-        return _id;
+        return id;
     }
 
     /**
@@ -95,11 +83,11 @@ public class LoginResponse {
     }
 
     /**
-     * Get the created_at date date of the user
-     * @return created_at
+     * Get the createdAt date date of the user
+     * @return createdAt
      */
-    public Date getCreated_at(){
-        return created_at;
+    public Date getCreatedAt(){
+        return createdAt;
     }
 
     /**

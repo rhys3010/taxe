@@ -1,5 +1,7 @@
 package xyz.rhysevans.taxe.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Response.java
  *
@@ -10,15 +12,12 @@ package xyz.rhysevans.taxe.model;
  */
 public class Response {
 
-    /**
-     * The message of the response, this is the json returned by the API
-     */
+
+    @SerializedName("message")
     private String message;
 
-    /**
-     * The ID of a newly created booking
-     */
-    private String booking_id;
+    @SerializedName("bookingId")
+    private String bookingId;
 
     /**
      * Default Constructor
@@ -38,7 +37,7 @@ public class Response {
      * Get the booking ID of a newly created booking
      * @return
      */
-    public String getBooking_id(){
-        return booking_id;
+    public String getBookingId(){
+        return bookingId;
     }
 }

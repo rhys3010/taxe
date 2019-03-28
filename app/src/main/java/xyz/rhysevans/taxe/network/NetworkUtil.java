@@ -4,12 +4,18 @@ package xyz.rhysevans.taxe.network;
 import android.util.Base64;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.schedulers.Schedulers;
+import xyz.rhysevans.taxe.model.Booking;
+import xyz.rhysevans.taxe.util.BookingDeserializer;
 import xyz.rhysevans.taxe.util.Constants;
 
 /**
@@ -89,9 +95,12 @@ public class NetworkUtil {
     /**
      * getRetrofit() method for sending access token as Authentication header for API requests.
      * @param token - The access token
+     * @param customGsonConverter - Boolean value to decide if custom GSON Converter should be used
      * @return
      */
-    public static RetrofitInterface getRetrofit(String token){
+    public static RetrofitInterface getRetrofit(String token, boolean customGsonConverter){
+
+        Converter.Factory converterFactory;
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
@@ -107,13 +116,32 @@ public class NetworkUtil {
             return chain.proceed(builder.build());
         });
 
+        // Load the correct converter
+        if(customGsonConverter){
+            converterFactory = createBookingsGsonConverter();
+        }else{
+            converterFactory = GsonConverterFactory.create();
+        }
+
         RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io());
 
         return new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .client(httpClient.build())
                 .addCallAdapterFactory(rxAdapter)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(converterFactory)
                 .build().create(RetrofitInterface.class);
+    }
+
+    /**
+     * Create a custom GSON Converter specifically for bookings
+     * (due to the dynamic nature of JSON fields)
+     * @return
+     */
+    private static Converter.Factory createBookingsGsonConverter(){
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(Booking.class, new BookingDeserializer());
+        Gson gson = gsonBuilder.create();
+        return  GsonConverterFactory.create(gson);
     }
 }

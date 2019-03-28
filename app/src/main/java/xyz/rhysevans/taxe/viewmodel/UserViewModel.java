@@ -12,7 +12,6 @@ import xyz.rhysevans.taxe.model.LoginResponse;
 import xyz.rhysevans.taxe.model.Response;
 import xyz.rhysevans.taxe.model.User;
 import xyz.rhysevans.taxe.network.NetworkUtil;
-import xyz.rhysevans.taxe.util.SharedPreferencesManager;
 
 /**
  * UserViewModel.java
@@ -54,7 +53,7 @@ public class UserViewModel extends ViewModel {
      * @return
      */
     public Observable<User> getUser(String token, String userId){
-        return NetworkUtil.getRetrofit(token).getUser(userId)
+        return NetworkUtil.getRetrofit(token, false).getUser(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -67,7 +66,7 @@ public class UserViewModel extends ViewModel {
      * @return
      */
     public Observable<Response> editUser(String token, String userId, User updatedUser){
-        return NetworkUtil.getRetrofit(token).editUser(userId, updatedUser)
+        return NetworkUtil.getRetrofit(token, false).editUser(userId, updatedUser)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -80,7 +79,22 @@ public class UserViewModel extends ViewModel {
      * @return
      */
     public Observable<ArrayList<Booking>> getUserBookings(String token, String userId, int limit){
-        return NetworkUtil.getRetrofit(token).getUserBookings(limit, userId)
+        return NetworkUtil.getRetrofit(token, true).getUserBookings(userId, limit)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Get the user's most recent booking by chaining two API requests
+     * 1. Get a list of the user's booking
+     * 2. Take the most recent booking and get its info
+     * @param token
+     * @param userId
+     * @return
+     */
+    public Observable<Booking> getMostRecentBooking(String token, String userId){
+        return NetworkUtil.getRetrofit(token, true).getUserBookings(userId, 1)
+                .flatMap(bookings -> NetworkUtil.getRetrofit(token, true).getBooking(bookings.get(0).getId()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

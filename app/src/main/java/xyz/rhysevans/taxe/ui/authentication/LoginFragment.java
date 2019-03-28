@@ -4,34 +4,20 @@ package xyz.rhysevans.taxe.ui.authentication;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-import xyz.rhysevans.taxe.BuildConfig;
 import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.model.LoginResponse;
-import xyz.rhysevans.taxe.model.Response;
 import xyz.rhysevans.taxe.model.User;
-import xyz.rhysevans.taxe.network.NetworkUtil;
 import xyz.rhysevans.taxe.ui.TaxeMainActivity;
 import xyz.rhysevans.taxe.util.ErrorHandler;
 import xyz.rhysevans.taxe.util.Errors;
@@ -187,7 +173,7 @@ public class LoginFragment extends Fragment {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
         // Create a new user object to store non-sensitive data in shared prefs
-        User user = new User(response.getId(), response.getName(), response.getEmail(), response.getRole(), response.getCreated_at());
+        User user = new User(response.getId(), response.getName(), response.getEmail(), response.getRole(), response.getCreatedAt());
 
         // Place all the values in the shared preferences
         sharedPreferencesManager.putToken(response.getToken());

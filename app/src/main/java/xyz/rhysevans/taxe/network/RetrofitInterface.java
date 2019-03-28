@@ -71,7 +71,7 @@ public interface RetrofitInterface {
      * @return
      */
     @GET("users/{id}/bookings")
-    Observable<ArrayList<Booking>> getUserBookings(@Query("limit") int limit, @Path("id") String id);
+    Observable<ArrayList<Booking>> getUserBookings(@Path("id") String id, @Query("limit") int limit);
 
     /////////////////////
     //     BOOKINGS    //

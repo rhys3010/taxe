@@ -1,5 +1,7 @@
 package xyz.rhysevans.taxe.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 /**
@@ -12,55 +14,35 @@ import java.util.Date;
  */
 public class Booking {
 
-    /**
-     * The pickup location of the booking
-     * (REQUIRED)
-     */
-    private String pickup_location;
+    @SerializedName("_id")
+    private String id;
 
-    /**
-     * The destination of the booking
-     * (REQUIRED)
-     */
+    @SerializedName("pickup_location")
+    private String pickupLocation;
+
+    @SerializedName("destination")
     private String destination;
 
-    /**
-     * The desired time of the booking
-     * (REQUIRED)
-     */
+    @SerializedName("time")
     private Date time;
 
-    /**
-     * The number of passengers for the booking
-     * (REQUIRED, Default = 1)
-     */
-    private int no_passengers;
+    @SerializedName("no_passengers")
+    private int noPassengers;
 
-    /**
-     * Any notes the user wants to add to booking i.e. child seat etc.
-     * (Optional)
-     */
+    @SerializedName("notes")
     private String notes;
 
-    /**
-     * The booking's status - not required for creation
-     */
+    @SerializedName("status")
     private String status;
 
-    /**
-     * The customer of the booking
-     */
-    private String customer;
+    @SerializedName("customer")
+    private User customer;
 
-    /**
-     * The driver responsible for the booking
-     */
-    private String driver;
+    @SerializedName("driver")
+    private User driver;
 
-    /**
-     * The creation date of the booking
-     */
-    private Date created_at;
+    @SerializedName("created_at")
+    private Date createdAt;
 
     /**
      * Default empty constructor
@@ -71,32 +53,32 @@ public class Booking {
 
     /**
      * Overloaded constructor to create a booking with the minimum required information
-     * @param pickup_location
+     * @param pickupLocation
      * @param destination
      * @param time
-     * @param no_passengers
+     * @param noPassengers
      */
-    public Booking(String pickup_location, String destination, Date time, int no_passengers){
-        this.pickup_location = pickup_location;
+    public Booking(String pickupLocation, String destination, Date time, int noPassengers){
+        this.pickupLocation = pickupLocation;
         this.destination = destination;
         this.time = time;
-        this.no_passengers = no_passengers;
+        this.noPassengers = noPassengers;
     }
 
     /**
      * Get the pickup location of the booking
      * @return
      */
-    public String getPickup_location() {
-        return pickup_location;
+    public String getPickupLocation() {
+        return pickupLocation;
     }
 
     /**
      * Set the pickup location of the booking
-     * @param pickup_location
+     * @param pickupLocation
      */
-    public void setPickup_location(String pickup_location) {
-        this.pickup_location = pickup_location;
+    public void setPickupLocation(String pickupLocation) {
+        this.pickupLocation = pickupLocation;
     }
 
     /**
@@ -136,16 +118,16 @@ public class Booking {
      * Get the number of passengers for the booking
      * @return
      */
-    public int getNo_passengers() {
-        return no_passengers;
+    public int getNoPassengers() {
+        return noPassengers;
     }
 
     /**
      * Set the number of passengers for the booking
-     * @param no_passengers
+     * @param noPassengers
      */
-    public void setNo_passengers(int no_passengers) {
-        this.no_passengers = no_passengers;
+    public void setNoPassengers(int noPassengers) {
+        this.noPassengers = noPassengers;
     }
 
     /**
@@ -184,7 +166,7 @@ public class Booking {
      * Get the customer of the booking (ID)
      * @return
      */
-    public String getCustomer() {
+    public User getCustomer() {
         return customer;
     }
 
@@ -192,7 +174,7 @@ public class Booking {
      * Set the customer of the booking (ID)
      * @param customer
      */
-    public void setCustomer(String customer) {
+    public void setCustomer(User customer) {
         this.customer = customer;
     }
 
@@ -200,7 +182,7 @@ public class Booking {
      * Get the driver responsible for the booking (ID)
      * @return
      */
-    public String getDriver() {
+    public User getDriver() {
         return driver;
     }
 
@@ -208,7 +190,7 @@ public class Booking {
      * Set the driver responsible for the booking (ID)
      * @param driver
      */
-    public void setDriver(String driver) {
+    public void setDriver(User driver) {
         this.driver = driver;
     }
 
@@ -216,7 +198,23 @@ public class Booking {
      * Get the date the booking was created
      * @return
      */
-    public Date getCreated_at() {
-        return created_at;
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * Set the ID of a booking
+     * @param id
+     */
+    public void setId(String id){
+        this.id = id;
+    }
+
+    /**
+     * Get the ID of the booking object
+     * @return
+     */
+    public String getId(){
+        return id;
     }
 }
