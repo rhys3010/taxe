@@ -13,10 +13,11 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import org.apache.commons.text.WordUtils;
 
 import rx.subscriptions.CompositeSubscription;
 import xyz.rhysevans.taxe.R;
+import xyz.rhysevans.taxe.databinding.FragmentBookingOverviewBinding;
 import xyz.rhysevans.taxe.model.Booking;
 import xyz.rhysevans.taxe.ui.authentication.LoginFragment;
 import xyz.rhysevans.taxe.util.ErrorHandler;
@@ -33,9 +34,6 @@ import xyz.rhysevans.taxe.viewmodel.UserViewModel;
 public class BookingOverviewFragment extends Fragment {
 
     public static final String TAG = LoginFragment.class.getSimpleName();
-    // Make sure only the most recent booking is loaded
-    private final int BOOKING_LIST_LIMIT = 1;
-
 
     // The container for the empty booking view
     private FrameLayout emptyBookingContainer;
@@ -60,6 +58,7 @@ public class BookingOverviewFragment extends Fragment {
     private ErrorHandler errorHandler;
     private CompositeSubscription subscriptions;
     private UserViewModel userViewModel;
+    private FragmentBookingOverviewBinding dataBinding;
 
     public BookingOverviewFragment() {
         // Required empty public constructor
@@ -78,8 +77,10 @@ public class BookingOverviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_booking_overview, container, false);
+        // Inflate the layout for this fragment using data binding
+        dataBinding = FragmentBookingOverviewBinding.inflate(inflater, container, false);
+
+        View view = dataBinding.getRoot();
 
         // Initialize all the components
         initViews(view);
@@ -157,11 +158,8 @@ public class BookingOverviewFragment extends Fragment {
         activeBookingContainer.setVisibility(View.VISIBLE);
         emptyBookingContainer.setVisibility(View.GONE);
 
-        pickupLocationLabel.setText(booking.getPickupLocation());
-        destinationLabel.setText(booking.getDestination());
-        dueAtLabel.setText(booking.getTime().toString());
-        statusLabel.setText(booking.getStatus());
-        noPassengersLabel.setText(String.valueOf(booking.getNoPassengers()));
+        // Send model to the view using Data Binding
+        dataBinding.setBooking(beautifyBooking(booking));
     }
 
     /**
@@ -169,6 +167,8 @@ public class BookingOverviewFragment extends Fragment {
      * @param error
      */
     private void handleError(Throwable error){
+        Log.d("ERROR", error.toString());
+
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
         // Unlock screen orientation
@@ -180,6 +180,29 @@ public class BookingOverviewFragment extends Fragment {
         // If an error has occurred, show the empty view
         activeBookingContainer.setVisibility(View.GONE);
         emptyBookingContainer.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Make all strings within a booking presentable
+     * (use proper casing etc)
+     * @param booking
+     */
+    private Booking beautifyBooking(Booking booking){
+        // Apply proper capitalization to destination and pickup location
+        String prettyPickupLocation = WordUtils.capitalizeFully(booking.getPickupLocation());
+        String prettyDestination = WordUtils.capitalizeFully(booking.getDestination());
+
+
+        // Apply proper capitalization to driver's name (if exists)
+        if(booking.getDriver() != null){
+            String prettyDriverName = WordUtils.capitalizeFully(booking.getDriver().getName());
+            booking.getDriver().setName(prettyDriverName);
+        }
+
+        booking.setPickupLocation(prettyPickupLocation);
+        booking.setDestination(prettyDestination);
+
+        return booking;
     }
 
     /**
