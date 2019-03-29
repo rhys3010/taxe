@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+import xyz.rhysevans.taxe.util.BookingStatus;
+
 /**
  * Booking.java
  *
@@ -33,7 +35,7 @@ public class Booking {
     private String notes;
 
     @SerializedName("status")
-    private String status;
+    private BookingStatus status;
 
     @SerializedName("customer")
     private User customer;
@@ -150,7 +152,7 @@ public class Booking {
      * Get the status of the booking
      * @return
      */
-    public String getStatus() {
+    public BookingStatus getStatus() {
         return status;
     }
 
@@ -158,7 +160,7 @@ public class Booking {
      * Set the status of the booking
      * @param status
      */
-    public void setStatus(String status) {
+    public void setStatus(BookingStatus status) {
         this.status = status;
     }
 

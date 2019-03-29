@@ -4,7 +4,9 @@ package xyz.rhysevans.taxe.ui.booking;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,8 +22,10 @@ import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.databinding.FragmentBookingOverviewBinding;
 import xyz.rhysevans.taxe.model.Booking;
 import xyz.rhysevans.taxe.ui.authentication.LoginFragment;
+import xyz.rhysevans.taxe.util.BookingStatus;
 import xyz.rhysevans.taxe.util.ErrorHandler;
 import xyz.rhysevans.taxe.util.SharedPreferencesManager;
+import xyz.rhysevans.taxe.viewmodel.BookingViewModel;
 import xyz.rhysevans.taxe.viewmodel.UserViewModel;
 
 /**
@@ -31,9 +35,13 @@ import xyz.rhysevans.taxe.viewmodel.UserViewModel;
  * @author Rhys Evans
  * @version 0.1
  */
-public class BookingOverviewFragment extends Fragment {
+public class BookingOverviewFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = LoginFragment.class.getSimpleName();
+    public static final String BOOKING_ID_KEY = "BOOKING_ID_KEY";
+
+    // A potential booking ID to display
+    private String id;
 
     // The container for the empty booking view
     private FrameLayout emptyBookingContainer;
@@ -41,15 +49,8 @@ public class BookingOverviewFragment extends Fragment {
     // The Container for the populate booking view
     private CardView activeBookingContainer;
 
-    // All of the labels needed to populate
-    private TextView pickupLocationLabel;
-    private TextView destinationLabel;
-    private TextView dueAtLabel;
-    private TextView driverLabel;
-    private TextView statusLabel;
-    private TextView noPassengersLabel;
-
     private View progressIndicator;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     // Cancel Button
     private TextView cancelBtn;
@@ -58,10 +59,13 @@ public class BookingOverviewFragment extends Fragment {
     private ErrorHandler errorHandler;
     private CompositeSubscription subscriptions;
     private UserViewModel userViewModel;
+    private BookingViewModel bookingViewModel;
     private FragmentBookingOverviewBinding dataBinding;
 
+    /**
+     * Default Constructor
+     */
     public BookingOverviewFragment() {
-        // Required empty public constructor
     }
 
 
@@ -74,7 +78,7 @@ public class BookingOverviewFragment extends Fragment {
      * @return
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment using data binding
@@ -93,9 +97,20 @@ public class BookingOverviewFragment extends Fragment {
 
         // Initialize View Model
         userViewModel = new UserViewModel();
+        bookingViewModel = new BookingViewModel();
 
         // Initialize subscriptions
         subscriptions = new CompositeSubscription();
+
+        // Check if ID is present in saved instance state
+        if(savedInstanceState != null){
+            id = savedInstanceState.getString(BOOKING_ID_KEY);
+        }
+
+        // Check if a booking ID has been passed as an argument to the fragment
+        if(getArguments() != null){
+            id = getArguments().getString(BOOKING_ID_KEY);
+        }
 
         // Load the booking
         loadBooking();
@@ -108,18 +123,15 @@ public class BookingOverviewFragment extends Fragment {
      * @param view
      */
     private void initViews(View view){
+        // Initialize Refresh Layout
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         emptyBookingContainer = view.findViewById(R.id.empty_booking);
         activeBookingContainer = view.findViewById(R.id.booking_overview);
 
-        pickupLocationLabel = view.findViewById(R.id.pickup_location_label);
-        destinationLabel = view.findViewById(R.id.destination_label);
-        dueAtLabel = view.findViewById(R.id.due_at_label);
-        driverLabel = view.findViewById(R.id.driver_label);
-        statusLabel = view.findViewById(R.id.status_label);
-        noPassengersLabel = view.findViewById(R.id.no_passengers_label);
-
-        progressIndicator = view.findViewById(R.id.progress_indicator_overlay);
+        progressIndicator = view.findViewById(R.id.progress_indicator);
 
         cancelBtn = view.findViewById(R.id.cancel_btn);
     }
@@ -139,9 +151,15 @@ public class BookingOverviewFragment extends Fragment {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
         }
 
-        // Get most recent booking from View Model
-        subscriptions.add(userViewModel.getMostRecentBooking(sharedPreferencesManager.getToken(),
-                sharedPreferencesManager.getUser().getId()).subscribe(this::handleSuccess, this::handleError));
+        // Check if an ID is present, if so, just load that booking
+        if(id != null){
+            subscriptions.add(bookingViewModel.getBooking(sharedPreferencesManager.getToken(), id)
+            .subscribe(this::handleSuccess, this::handleError));
+        }else{
+            // Get most recent booking from View Model
+            subscriptions.add(userViewModel.getMostRecentBooking(sharedPreferencesManager.getToken(),
+                    sharedPreferencesManager.getUser().getId()).subscribe(this::handleSuccess, this::handleError));
+        }
     }
 
     /**
@@ -154,9 +172,19 @@ public class BookingOverviewFragment extends Fragment {
         // Unlock screen orientation
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
+        // If booking is no longer active, remove cancel button
+        if(booking.getStatus() == BookingStatus.Cancelled || booking.getStatus() == BookingStatus.Finished){
+            cancelBtn.setVisibility(View.GONE);
+        }else{
+            cancelBtn.setVisibility(View.VISIBLE);
+        }
+
         // If booking is successfully loaded, hide empty view
         activeBookingContainer.setVisibility(View.VISIBLE);
         emptyBookingContainer.setVisibility(View.GONE);
+
+        // Store the ID of the booking for easier reloading
+        this.id = booking.getId();
 
         // Send model to the view using Data Binding
         dataBinding.setBooking(beautifyBooking(booking));
@@ -167,8 +195,6 @@ public class BookingOverviewFragment extends Fragment {
      * @param error
      */
     private void handleError(Throwable error){
-        Log.d("ERROR", error.toString());
-
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
         // Unlock screen orientation
@@ -203,6 +229,25 @@ public class BookingOverviewFragment extends Fragment {
         booking.setDestination(prettyDestination);
 
         return booking;
+    }
+
+    /**
+     * Called just before the fragment is destroyed to save booking ID
+     * @param outState
+     */
+    public void onSaveInstanceState(@NonNull Bundle outState){
+        if(id != null){
+            outState.putString(BOOKING_ID_KEY, id);
+        }
+    }
+
+    /**
+     * Called when the screen is refreshed by SwipeRefreshLayout
+     */
+    @Override
+    public void onRefresh(){
+        loadBooking();
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     /**

@@ -57,7 +57,9 @@ public class BookingDeserializer implements JsonDeserializer<Booking> {
         final String pickupLocation = jsonObject.get(PICKUP_LOCATION_KEY).getAsString();
         final String destination = jsonObject.get(DESTINATION_KEY).getAsString();
         final int noPassengers = jsonObject.get(NO_PASSENGERS_KEY).getAsInt();
-        final String status = jsonObject.get(STATUS_KEY).getAsString();
+        final BookingStatus status = BookingStatus.valueOf(jsonObject.get(STATUS_KEY).getAsString());
+
+        // Read
 
         // OPTIONAL Fields
         String notes = "";
