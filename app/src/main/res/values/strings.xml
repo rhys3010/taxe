@@ -46,6 +46,7 @@
     <string name="cancel">Cancel</string>
     <string name="no_active_booking">No Active Booking</string>
     <string name="get_started">Click the + below to get started</string>
+    <string name="cancel_booking_confirmation">Are you sure you wish to cancel this booking?</string>
 
     <!-- Nav Options -->
     <string name="nav_home">Home</string>
@@ -65,6 +66,7 @@
     <!-- Success Strings -->
     <string name="register_success">Successfully Registered</string>
     <string name="create_booking_success">Booking Created Successfully</string>
+    <string name="booking_cancelled">Booking Successfully Cancelled</string>
 
     <!-- Validation Errors -->
     <string name="name_error">Name must be at least 3 characters long, and not contain any numbers.</string>

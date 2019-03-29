@@ -40,7 +40,7 @@ public class BookingViewModel extends ViewModel {
      * @param updatedBooking
      * @return
      */
-    public Observable<Booking> editBooking(String token, String bookingId, Booking updatedBooking){
+    public Observable<Response> editBooking(String token, String bookingId, Booking updatedBooking){
         return NetworkUtil.getRetrofit(token, true).editBooking(bookingId, updatedBooking)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

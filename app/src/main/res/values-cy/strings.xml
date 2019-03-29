@@ -47,6 +47,7 @@
     <string name="cancel">Canslo</string>
     <string name="no_active_booking">Dim Archeb Actif</string>
     <string name="get_started">Cliciwch y + isod i ddechrau</string>
+    <string name="cancel_booking_confirmation">Wyt yn siwr dy fod eisiau canslo?</string>
 
     <!-- Nav Options -->
     <string name="nav_home">Adra</string>
@@ -66,6 +67,7 @@
     <!-- Success Strings -->
     <string name="register_success">Wedi Cofrestru yn Llwyddiannus</string>
     <string name="create_booking_success">Archeb Wedi ei Chreu yn Llwyddiannus</string>
+    <string name="booking_cancelled">Archeb Wedi eu Canslo yn Llwyddiannus</string>
 
     <!-- Validation Errors -->
     <string name="name_error">Rhaid i enw fod o leiaf 3 llythrennau yn hir a ddim cynnwys rhifau nag symbolau.</string>

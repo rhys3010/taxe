@@ -1,6 +1,7 @@
 package xyz.rhysevans.taxe.ui.booking;
 
 
+import android.app.AlertDialog;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -9,11 +10,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.commons.text.WordUtils;
 
@@ -21,6 +25,7 @@ import rx.subscriptions.CompositeSubscription;
 import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.databinding.FragmentBookingOverviewBinding;
 import xyz.rhysevans.taxe.model.Booking;
+import xyz.rhysevans.taxe.model.Response;
 import xyz.rhysevans.taxe.ui.authentication.LoginFragment;
 import xyz.rhysevans.taxe.util.BookingStatus;
 import xyz.rhysevans.taxe.util.ErrorHandler;
@@ -134,6 +139,8 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         progressIndicator = view.findViewById(R.id.progress_indicator);
 
         cancelBtn = view.findViewById(R.id.cancel_btn);
+
+        cancelBtn.setOnClickListener(v -> onCancelClick());
     }
 
     /**
@@ -154,19 +161,74 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         // Check if an ID is present, if so, just load that booking
         if(id != null){
             subscriptions.add(bookingViewModel.getBooking(sharedPreferencesManager.getToken(), id)
-            .subscribe(this::handleSuccess, this::handleError));
+            .subscribe(this::handleBookingLoad, this::handleError));
         }else{
             // Get most recent booking from View Model
             subscriptions.add(userViewModel.getMostRecentBooking(sharedPreferencesManager.getToken(),
-                    sharedPreferencesManager.getUser().getId()).subscribe(this::handleSuccess, this::handleError));
+                    sharedPreferencesManager.getUser().getId()).subscribe(this::handleBookingLoad, this::handleError));
         }
+    }
+
+    /**
+     * Called when the cancel button is pressed to show confirmation dialog
+     */
+    private void onCancelClick(){
+        // Show Confirmation Dialog
+        // Confirmation dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setTitle(getString(R.string.cancel_booking_confirmation));
+        // When users confirms dialog, end activity
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            cancelBooking();
+        });
+
+        // Do nothing if cancel
+        builder.setNegativeButton(android.R.string.cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Change button colors
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setTextColor(getActivity().getColor(R.color.colorPrimary));
+        Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        negativeButton.setTextColor(getActivity().getColor(R.color.colorPrimary));
+
+    }
+
+    /**
+     * Actually Cancel a Booking (Send API Request Etc)
+     */
+    private void cancelBooking(){
+        // Disable Cancel Button
+        cancelBtn.setEnabled(false);
+        // Lock Screen Orientation
+        int currentOrientation = getResources().getConfiguration().orientation;
+        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        }
+        else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        }
+
+        // Show Progress Bar
+        activeBookingContainer.setVisibility(View.GONE);
+        emptyBookingContainer.setVisibility(View.GONE);
+        progressIndicator.setVisibility(View.VISIBLE);
+
+        // Send Request
+        Booking updatedBooking = new Booking();
+        updatedBooking.setStatus(BookingStatus.Cancelled);
+        subscriptions.add(bookingViewModel.editBooking(sharedPreferencesManager.getToken(), id, updatedBooking)
+            .subscribe(this::handleBookingCancellation, this::handleError));
     }
 
     /**
      * Handle successful retrieval of bookings
      * @param booking
      */
-    private void handleSuccess(Booking booking){
+    private void handleBookingLoad(Booking booking){
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
         // Unlock screen orientation
@@ -188,6 +250,26 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
 
         // Send model to the view using Data Binding
         dataBinding.setBooking(beautifyBooking(booking));
+    }
+
+    /**
+     * Handle successful cancellation of booking
+     * @param response
+     */
+    private void handleBookingCancellation(Response response){
+        // Re-enable Buton
+        cancelBtn.setEnabled(true);
+        // Unlock Screen Orientation
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        // Hide Progress Bar
+        progressIndicator.setVisibility(View.GONE);
+
+        // Refresh View
+        loadBooking();
+        // Show Toast
+        Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.booking_cancelled, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 150);
+        toast.show();
     }
 
     /**

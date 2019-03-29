@@ -100,5 +100,5 @@ public interface RetrofitInterface {
      * @return
      */
     @PUT("bookings/{id}")
-    Observable<Booking> editBooking(@Path("id") String id, @Body Booking booking);
+    Observable<Response> editBooking(@Path("id") String id, @Body Booking booking);
 }
