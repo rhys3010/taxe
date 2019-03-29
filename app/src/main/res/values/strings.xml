@@ -35,6 +35,7 @@
     <string name="learn_more">Learn More</string>
     <string name="version_name">Version: %1$s</string>
     <string name="name_successfully_changed">Name Successfully Changed</string>
+    <string name="password_successfully_changed">Password Successfully Changed</string>
     <string name="logged_out_successfully">Logged Out</string>
     <string name="booking_created_successfully">Booking Successfully Created</string>
     <string name="pickupLocation">Pickup Location</string>
@@ -100,4 +101,5 @@
     <string name="token_expiry">Token Expired</string>
     <string name="booking_not_created">Booking not Created</string>
     <string name="network_error_long">A network error has occurred. Please make sure you are connected to the internet</string>
+    <string name="incorrect_password_error">The password you entered is incorrect, try again.</string>
 </resources>

@@ -38,6 +38,7 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
 
     public static final String TAG = LoginFragment.class.getSimpleName();
     public static final int CHANGE_NAME_REQUEST_CODE = 3;
+    public static final int CHANGE_PASSWORD_REQUEST_CODE = 4;
 
     private SharedPreferencesManager sharedPreferencesManager;
 
@@ -87,7 +88,7 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
         switch(itemId){
             case R.string.account_action_change_password:
                 Intent changePasswordIntent = new Intent(getActivity(), ChangePasswordActivity.class);
-                startActivity(changePasswordIntent);
+                startActivityForResult(changePasswordIntent, CHANGE_PASSWORD_REQUEST_CODE);
                 break;
 
             case R.string.account_action_change_name:

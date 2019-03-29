@@ -229,7 +229,7 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
             progressIndicator.setVisibility(View.VISIBLE);
 
             // Create new booking object to send
-            Booking booking = new Booking(pickupLocation, destination, time, noPassengers);
+            Booking booking = new Booking(pickupLocation, destination, time, noPassengers, notes);
 
             // Send HTTP request
             subscriptions.add(bookingViewModel.createBooking(sharedPreferencesManager.getToken(), booking)

@@ -68,6 +68,22 @@ public class Booking {
     }
 
     /**
+     * Overloaded constructor to create a booking with notes
+     * @param pickupLocation
+     * @param destination
+     * @param time
+     * @param noPassengers
+     * @param notes
+     */
+    public Booking(String pickupLocation, String destination, Date time, int noPassengers, String notes){
+        this.pickupLocation = pickupLocation;
+        this.destination = destination;
+        this.time = time;
+        this.noPassengers = noPassengers;
+        this.notes = notes;
+    }
+
+    /**
      * Get the pickup location of the booking
      * @return
      */

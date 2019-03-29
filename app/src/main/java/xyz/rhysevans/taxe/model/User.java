@@ -29,6 +29,9 @@ public class User{
     @SerializedName("password")
     private String password;
 
+    @SerializedName("old_password")
+    private String oldPassword;
+
     @SerializedName("role")
     private String role;
 
@@ -104,6 +107,14 @@ public class User{
      */
     public void setPassword(String password){
         this.password = password;
+    }
+
+    /**
+     * Set the user's old password for changing password
+     * @param oldPassword
+     */
+    public void setOldPassword(String oldPassword){
+        this.oldPassword = oldPassword;
     }
 
     /**

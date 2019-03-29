@@ -36,6 +36,7 @@
     <string name="learn_more">Dysgu Mwy</string>
     <string name="version_name">Fersowm: %1$s</string>
     <string name="name_successfully_changed">Enw wedi ei newid yn llwydddiannus</string>
+    <string name="password_successfully_changed">Cyfrinair wedi ei newid yn llwydddiannus</string>
     <string name="logged_out_successfully">Wedi Allgofnodi</string>
     <string name="booking_created_successfully">Archeb Wedi ei Chreu yn Llwyddiannus</string>
     <string name="pickupLocation">Lleoliad Codi</string>
@@ -101,4 +102,5 @@
     <string name="token_expiry">Tocyn Wedi Allnadu</string>
     <string name="booking_not_created">Archeb Heb Ei Greu</string>
     <string name="network_error_long">Mae gwall rhwydwaith wedi digwydd, sicrhewch eich fod wedi cysylltu i\'r rhyngrwyd</string>
+    <string name="incorrect_password_error">Cyfrinair Anghywir, triwch eto</string>
 </resources>
