@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="booking"
+            type="xyz.rhysevans.taxe.model.Booking"/>
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/booking_history_entry_margin"
+        android:layout_marginBottom="@dimen/booking_history_entry_margin"
+        android:orientation="vertical">
+
+        <!-- Pickup Location + Date Container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Icon -->
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_my_location_black_24dp"
+                android:tint="@color/colorPrimary"/>
+
+            <!-- Pickup Location -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:layout_gravity="center"
+                android:text="@{booking.pickupLocation}"/>
+
+            <!-- Date -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:layout_marginEnd="@dimen/booking_info_icon_margin"
+                android:textAlignment="viewEnd"
+                android:text="@{@string/date_display_format(booking.time)}"/>
+
+        </LinearLayout>
+
+        <!-- Destination Container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/booking_info_row_margin"
+            android:orientation="horizontal">
+
+            <!-- Icon -->
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_location_on_black_24dp"
+                android:tint="@color/colorPrimary"/>
+
+            <!-- Destination -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:layout_gravity="center"
+                android:text="@{booking.destination}"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

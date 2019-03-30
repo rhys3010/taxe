@@ -73,6 +73,14 @@ public interface RetrofitInterface {
     @GET("users/{id}/bookings")
     Observable<ArrayList<Booking>> getUserBookings(@Path("id") String id, @Query("limit") int limit);
 
+    /**
+     * Override getUserBookings method to support request without limit param
+     * @param id
+     * @return
+     */
+    @GET("users/{id}/bookings")
+    Observable<ArrayList<Booking>> getUserBookings(@Path("id") String id);
+
     /////////////////////
     //     BOOKINGS    //
     ////////////////////

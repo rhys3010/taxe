@@ -75,11 +75,10 @@ public class UserViewModel extends ViewModel {
      * Get a list of all of a user's bookings
      * @param token
      * @param userId
-     * @param limit
      * @return
      */
-    public Observable<ArrayList<Booking>> getUserBookings(String token, String userId, int limit){
-        return NetworkUtil.getRetrofit(token, true).getUserBookings(userId, limit)
+    public Observable<ArrayList<Booking>> getUserBookings(String token, String userId){
+        return NetworkUtil.getRetrofit(token, true).getUserBookings(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
