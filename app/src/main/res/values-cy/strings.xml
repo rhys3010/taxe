@@ -47,7 +47,7 @@
     <string name="status">Statws</string>
     <string name="noPassengers">Nifer of Teithwyr</string>
     <string name="cancel">Canslo</string>
-    <string name="no_active_booking">Dim Archeb Actif</string>
+    <string name="no_active_booking">Dim Archeb Ar Gael</string>
     <string name="get_started">Cliciwch y + isod i ddechrau</string>
     <string name="cancel_booking_confirmation">Wyt yn siwr dy fod eisiau canslo?</string>
 

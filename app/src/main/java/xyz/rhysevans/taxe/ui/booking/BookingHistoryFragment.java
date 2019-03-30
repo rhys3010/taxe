@@ -31,7 +31,7 @@ import xyz.rhysevans.taxe.viewmodel.UserViewModel;
  * @author Rhys Evans
  * @version 0.1
  */
-public class BookingHistoryFragment extends Fragment {
+public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
     /**
      * The fragment's TAG, for use in fragment transactions
@@ -47,7 +47,7 @@ public class BookingHistoryFragment extends Fragment {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView bookingHistoryList;
-
+    private View emptyBookingView;
     private View view;
 
 
@@ -79,21 +79,36 @@ public class BookingHistoryFragment extends Fragment {
         // Initialize Shared Prefs
         sharedPreferencesManager = SharedPreferencesManager.getInstance(getContext());
 
-        // Initialize List View
-        bookingHistoryList = view.findViewById(R.id.booking_history_list);
-        bookingHistoryList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-
-
         // Initialize View model
         userViewModel = new UserViewModel();
 
-        // Initialize Refresh
-        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        initViews(view);
 
         // Load the bookings
         loadBookings();
 
         return view;
+    }
+
+    /**
+     * Initialize all of the Views needed
+     * @param view
+     */
+    private void initViews(View view){
+        // Initialize List View
+        bookingHistoryList = view.findViewById(R.id.booking_history_list);
+        bookingHistoryList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        bookingHistoryListAdapter = new BookingHistoryListAdapter();
+        bookingHistoryList.setAdapter(bookingHistoryListAdapter);
+        bookingHistoryList.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Initialize Empty Booking View
+        emptyBookingView = view.findViewById(R.id.empty_booking);
+
+        // Initialize Refresh
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     /**
@@ -110,6 +125,10 @@ public class BookingHistoryFragment extends Fragment {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
         }
 
+        // Show Progress Indicator
+        swipeRefreshLayout.setRefreshing(true);
+
+
         subscriptions.add(userViewModel.getUserBookings(sharedPreferencesManager.getToken(),
                 sharedPreferencesManager.getUser().getId()).subscribe(this::handleSuccess, this::handleError));
     }
@@ -122,10 +141,20 @@ public class BookingHistoryFragment extends Fragment {
         // Unlock Screen Orientation
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
-        // Initialize Adapter
-        bookingHistoryListAdapter = new BookingHistoryListAdapter(bookings);
-        bookingHistoryList.setAdapter(bookingHistoryListAdapter);
-        bookingHistoryList.setLayoutManager(new LinearLayoutManager(getContext()));
+        // Hide Progress Indicator
+        swipeRefreshLayout.setRefreshing(false);
+
+        // If list is empty, show empty view
+        if(bookings.size() == 0){
+            emptyBookingView.setVisibility(View.VISIBLE);
+            bookingHistoryList.setVisibility(View.GONE);
+        }else{
+            emptyBookingView.setVisibility(View.GONE);
+            bookingHistoryList.setVisibility(View.VISIBLE);
+        }
+
+        // Populate Bookings
+        bookingHistoryListAdapter.populateList(bookings);
     }
 
     /**
@@ -135,6 +164,13 @@ public class BookingHistoryFragment extends Fragment {
     private void handleError(Throwable error){
         // Unlock Screen Orientation
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
+        // Hide Progress Indicator
+        swipeRefreshLayout.setRefreshing(false);
+
+        // If error occurred, show empty view instead
+        emptyBookingView.setVisibility(View.VISIBLE);
+        bookingHistoryList.setVisibility(View.GONE);
 
         errorHandler.handle(error, getContext(), view);
     }
@@ -149,4 +185,12 @@ public class BookingHistoryFragment extends Fragment {
         super.onDestroy();
     }
 
+    /**
+     * Called when the swipe refresh is triggered
+     */
+    @Override
+    public void onRefresh() {
+        loadBookings();
+        swipeRefreshLayout.setRefreshing(false);
+    }
 }

@@ -26,11 +26,28 @@ public class BookingHistoryListAdapter extends RecyclerView.Adapter<BookingHisto
     private ArrayList<Booking> bookings;
 
     /**
-     * Constructor to initialize bookings list
+     * Default Constructor to initialize empty booking list
+     */
+    public BookingHistoryListAdapter(){
+        bookings = new ArrayList<>();
+
+    }
+
+    /**
+     * Overloaded Constructor to initialize bookings list
      * @param bookings
      */
     public BookingHistoryListAdapter(ArrayList<Booking> bookings){
         this.bookings = bookings;
+    }
+
+    /**
+     * Populate the list of bookings
+     * @param bookings
+     */
+    public void populateList(ArrayList<Booking> bookings){
+        this.bookings = bookings;
+        notifyDataSetChanged();
     }
 
     /**

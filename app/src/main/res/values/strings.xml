@@ -46,7 +46,7 @@
     <string name="status">Status</string>
     <string name="noPassengers">No. Passengers</string>
     <string name="cancel">Cancel</string>
-    <string name="no_active_booking">No Active Booking</string>
+    <string name="no_active_booking">No Bookings Found</string>
     <string name="get_started">Click the + below to get started</string>
     <string name="cancel_booking_confirmation">Are you sure you wish to cancel this booking?</string>
 
