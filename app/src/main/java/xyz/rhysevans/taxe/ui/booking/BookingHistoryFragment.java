@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,6 +100,7 @@ public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayo
         bookingHistoryList = view.findViewById(R.id.booking_history_list);
         bookingHistoryList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         bookingHistoryListAdapter = new BookingHistoryListAdapter();
+        bookingHistoryListAdapter.setHasStableIds(true);
         bookingHistoryList.setAdapter(bookingHistoryListAdapter);
         bookingHistoryList.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -127,7 +129,6 @@ public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayo
 
         // Show Progress Indicator
         swipeRefreshLayout.setRefreshing(true);
-
 
         subscriptions.add(userViewModel.getUserBookings(sharedPreferencesManager.getToken(),
                 sharedPreferencesManager.getUser().getId()).subscribe(this::handleSuccess, this::handleError));

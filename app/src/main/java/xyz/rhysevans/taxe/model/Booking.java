@@ -2,6 +2,8 @@ package xyz.rhysevans.taxe.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.util.Date;
 
 import xyz.rhysevans.taxe.util.BookingStatus;
@@ -234,5 +236,26 @@ public class Booking {
      */
     public String getId(){
         return id;
+    }
+
+    /**
+     * Generate a unique id (long) for this booking object, based on the mongoDB object id
+     * Used in recyclerview to fix the blinking update issue
+     * @return
+     */
+    public long getUniqueId() {
+        // TODO: Look into making the generated long smaller..
+        // Convert all characters within the mongodb to integers (ASCII values)
+        // and create a string
+        StringBuilder sb = new StringBuilder();
+        for(char c : id.toCharArray()){
+            sb.append((int)c);
+        }
+
+        // Convert string to BigInteger
+        BigInteger uniqueId = new BigInteger(sb.toString());
+
+        // Return BigInteger as long
+        return uniqueId.longValue();
     }
 }

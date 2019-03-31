@@ -3,10 +3,12 @@ package xyz.rhysevans.taxe.ui.booking;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import xyz.rhysevans.taxe.R;
@@ -67,6 +69,17 @@ public class BookingHistoryListAdapter extends RecyclerView.Adapter<BookingHisto
     public int getItemCount(){
         return bookings.size();
     }
+
+    /**
+     * Returns the unique ID of the item
+     * @param position
+     * @return
+     */
+    @Override
+    public long getItemId(int position){
+        return bookings.get(position).getUniqueId();
+    }
+
 
     /**
      * Create the individual entry's views using view holder
