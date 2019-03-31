@@ -11,7 +11,7 @@
     <string name="login">Mewngofnodi</string>
     <string name="register">Cofrestru</string>
     <string name="register_full">Creu Cyfrif</string>
-    <string name="name_input_hint">Enw</string>
+    <string name="name_input_hint">Enw Llawn</string>
     <string name="confirm_password_input_hint">Cadarnhau Cyfrinair</string>
     <string name="register_button_text">Cofrestru</string>
     <string name="logout_confirmation">Allgofnodi?</string>
@@ -30,13 +30,13 @@
     <string name="time_display_format">%1$tH:%1$tM | %1$td/%1$tm/%1$tY</string>
     <string name="date_display_format">%1$td %1$tb</string>
     <string name="current_password_input_hint">Cyfrinair Cerrynt</string>
-    <string name="new_name_input_hint">Enw Newydd</string>
+    <string name="new_name_input_hint">Enw Llawn Newydd</string>
     <string name="new_password_input_hint">Cyfrinair Newydd</string>
     <string name="confirm_new_password_input_hint">Cadarnhau Cyfrinair Newydd</string>
     <string name="author">Awdur: Rhys Evans</string>
     <string name="learn_more">Dysgu Mwy</string>
     <string name="version_name">Fersowm: %1$s</string>
-    <string name="name_successfully_changed">Enw wedi ei newid yn llwydddiannus</string>
+    <string name="name_successfully_changed">Enw Llawn wedi ei newid yn llwydddiannus</string>
     <string name="password_successfully_changed">Cyfrinair wedi ei newid yn llwydddiannus</string>
     <string name="logged_out_successfully">Wedi Allgofnodi</string>
     <string name="booking_created_successfully">Archeb Wedi ei Chreu yn Llwyddiannus</string>
@@ -60,7 +60,7 @@
 
     <!-- Account Action Options -->
     <string name="account_action_change_password">Newid Cyfrinair</string>
-    <string name="account_action_change_name">Newid Enw</string>
+    <string name="account_action_change_name">Newid Enw Llawn</string>
     <string name="account_action_log_out">Allgofnodi</string>
     <string name="account_action_about">Gwybodaeth</string>
 

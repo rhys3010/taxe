@@ -10,7 +10,7 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="register_full">Create an Account</string>
-    <string name="name_input_hint">Name</string>
+    <string name="name_input_hint">Full Name</string>
     <string name="confirm_password_input_hint">Confirm Password</string>
     <string name="register_button_text">Register</string>
     <string name="logout_confirmation">Are you sure you wish to log out?</string>
@@ -29,7 +29,7 @@
     <string name="time_display_format">%1$tH:%1$tM | %1$td/%1$tm/%1$tY</string>
     <string name="date_display_format">%1$td %1$tb</string>
     <string name="current_password_input_hint">Current Password</string>
-    <string name="new_name_input_hint">New Name</string>
+    <string name="new_name_input_hint">New Full Name</string>
     <string name="new_password_input_hint">New Password</string>
     <string name="confirm_new_password_input_hint">Confirm New Password</string>
     <string name="author">Author: Rhys Evans</string>
@@ -59,7 +59,7 @@
 
     <!-- Account Action Options -->
     <string name="account_action_change_password">Change Password</string>
-    <string name="account_action_change_name">Change Name</string>
+    <string name="account_action_change_name">Change Full Name</string>
     <string name="account_action_log_out">Log Out</string>
     <string name="account_action_about">About</string>
 
@@ -71,7 +71,7 @@
     <string name="booking_cancelled">Booking Successfully Cancelled</string>
 
     <!-- Validation Errors -->
-    <string name="name_error">Name must be at least 3 characters long, and not contain any numbers.</string>
+    <string name="name_error">Full Name must be at least 3 characters long, and not contain any numbers.</string>
     <string name="email_error">Please enter a valid email</string>
     <string name="password_error">Password must contain at least 1 number and must be at least 8 characters long.</string>
     <string name="password_confirmation_error">Passwords do not Match</string>
