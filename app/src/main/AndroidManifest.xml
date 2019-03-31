@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.authentication.TaxeAuthenticationActivity"
+            android:name=".ui.authentication.AuthenticationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.booking.CreateBookingActivity"
@@ -33,9 +33,14 @@
             android:name=".ui.account.AboutActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.account.ChangeNameActivity"
+        <activity
+            android:name=".ui.account.ChangeNameActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.booking.BookingViewActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

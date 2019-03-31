@@ -3,18 +3,16 @@ package xyz.rhysevans.taxe.ui;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.ui.account.AccountOverviewFragment;
-import xyz.rhysevans.taxe.ui.authentication.TaxeAuthenticationActivity;
+import xyz.rhysevans.taxe.ui.authentication.AuthenticationActivity;
 import xyz.rhysevans.taxe.ui.booking.BookingHistoryFragment;
 import xyz.rhysevans.taxe.ui.booking.BookingOverviewFragment;
 import xyz.rhysevans.taxe.ui.booking.CreateBookingActivity;
@@ -55,7 +53,7 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
         // Check if token is saved
         if(!sharedPreferencesManager.isTokenPresent()){
             // If token is not saved, user is not authed and should be sent to login
-            Intent intent = new Intent(this, TaxeAuthenticationActivity.class);
+            Intent intent = new Intent(this, AuthenticationActivity.class);
             startActivity(intent);
             finish();
         }

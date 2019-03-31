@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +19,7 @@ import java.util.ArrayList;
 
 import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.model.User;
-import xyz.rhysevans.taxe.ui.authentication.TaxeAuthenticationActivity;
+import xyz.rhysevans.taxe.ui.authentication.AuthenticationActivity;
 import xyz.rhysevans.taxe.ui.authentication.LoginFragment;
 import xyz.rhysevans.taxe.util.SharedPreferencesManager;
 
@@ -199,7 +196,7 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
             toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
             toast.show();
 
-            Intent intent = new Intent(getActivity(), TaxeAuthenticationActivity.class);
+            Intent intent = new Intent(getActivity(), AuthenticationActivity.class);
             startActivity(intent);
             getActivity().finish();
         });

@@ -8,12 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.databinding.ListViewBookingEntryBinding;
 import xyz.rhysevans.taxe.model.Booking;
+import xyz.rhysevans.taxe.util.RecyclerViewItemClickListener;
 
 /**
  * BookingHistoryListAdapter.java
@@ -26,6 +26,7 @@ import xyz.rhysevans.taxe.model.Booking;
 public class BookingHistoryListAdapter extends RecyclerView.Adapter<BookingHistoryListAdapter.ViewHolder> {
 
     private ArrayList<Booking> bookings;
+    private RecyclerViewItemClickListener itemClickListener;
 
     /**
      * Default Constructor to initialize empty booking list
@@ -80,6 +81,13 @@ public class BookingHistoryListAdapter extends RecyclerView.Adapter<BookingHisto
         return bookings.get(position).getUniqueId();
     }
 
+    /**
+     * Initialize the adapter's item click listener
+     * @param itemClickListener
+     */
+    public void setItemClickListener(RecyclerViewItemClickListener itemClickListener){
+        this.itemClickListener = itemClickListener;
+    }
 
     /**
      * Create the individual entry's views using view holder
@@ -91,7 +99,16 @@ public class BookingHistoryListAdapter extends RecyclerView.Adapter<BookingHisto
     public @NonNull BookingHistoryListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         // Create a new booking entry view
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_view_booking_entry, parent, false);
-        return new ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view);
+
+        // Initialize the onClickListener for the view
+        if(itemClickListener != null){
+            view.setOnClickListener(v -> {
+                itemClickListener.onItemClick(v, viewHolder.getAdapterPosition());
+            });
+        }
+
+        return viewHolder;
     }
 
     /**
@@ -124,7 +141,7 @@ public class BookingHistoryListAdapter extends RecyclerView.Adapter<BookingHisto
         }
 
         /**
-         * Defaulty Constructor
+         * Default Constructor
          * @param itemView
          */
         ViewHolder(@NonNull View itemView) {

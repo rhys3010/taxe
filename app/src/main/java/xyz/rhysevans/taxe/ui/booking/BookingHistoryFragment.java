@@ -1,6 +1,7 @@
 package xyz.rhysevans.taxe.ui.booking;
 
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -9,8 +10,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +37,8 @@ public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayo
      * The fragment's TAG, for use in fragment transactions
      */
     public static final String TAG = LoginFragment.class.getSimpleName();
+
+    private ArrayList<Booking> bookings;
 
     private ErrorHandler errorHandler;
     private CompositeSubscription subscriptions;
@@ -99,10 +100,24 @@ public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayo
         // Initialize List View
         bookingHistoryList = view.findViewById(R.id.booking_history_list);
         bookingHistoryList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        // Initialize Adapter
         bookingHistoryListAdapter = new BookingHistoryListAdapter();
         bookingHistoryListAdapter.setHasStableIds(true);
         bookingHistoryList.setAdapter(bookingHistoryListAdapter);
         bookingHistoryList.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Initialize Click Listener
+        bookingHistoryListAdapter.setItemClickListener((v, position) -> {
+            // Open a new activity to show the booking overview
+            Intent intent = new Intent(getActivity(), BookingViewActivity.class);
+            Bundle args = new Bundle();
+
+            // Pass Booking ID to the view
+            args.putString(BookingOverviewFragment.BOOKING_ID_KEY, bookings.get(position).getId());
+            intent.putExtras(args);
+
+            startActivity(intent);
+        });
 
         // Initialize Empty Booking View
         emptyBookingView = view.findViewById(R.id.empty_booking);
@@ -144,6 +159,9 @@ public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayo
 
         // Hide Progress Indicator
         swipeRefreshLayout.setRefreshing(false);
+
+        // Set the local list of bookings
+        this.bookings = bookings;
 
         // If list is empty, show empty view
         if(bookings.size() == 0){

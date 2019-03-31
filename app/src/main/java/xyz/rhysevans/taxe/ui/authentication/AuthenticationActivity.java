@@ -9,13 +9,13 @@ import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.ui.authentication.LoginFragment;
 
 /**
- * TaxeAuthenticationActivity.java
+ * AuthenticationActivity.java
  * The authentication activity of the app, to house the login and registration fragments
  * users must authenticate successfully in order to get to the main activity.
  * @author Rhys Evans
  * @version 0.1
  */
-public class TaxeAuthenticationActivity extends AppCompatActivity {
+public class AuthenticationActivity extends AppCompatActivity {
 
     /**
      * Initialize activity by displaying the login fragment

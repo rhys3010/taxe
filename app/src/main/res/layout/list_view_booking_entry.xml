@@ -34,6 +34,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
                 android:layout_gravity="center"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@{booking.pickupLocation}"/>
 
             <!-- Date -->
@@ -69,6 +71,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="9"
                 android:layout_gravity="center"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@{booking.destination}"/>
 
 

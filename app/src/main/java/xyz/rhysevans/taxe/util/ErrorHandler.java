@@ -15,7 +15,7 @@ import java.io.IOException;
 
 import retrofit2.adapter.rxjava.HttpException;
 import xyz.rhysevans.taxe.R;
-import xyz.rhysevans.taxe.ui.authentication.TaxeAuthenticationActivity;
+import xyz.rhysevans.taxe.ui.authentication.AuthenticationActivity;
 
 /**
  * ErrorHandler.java
@@ -119,7 +119,7 @@ public class ErrorHandler {
         // When users confirms dialog, send theem back to login screen
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
             // Send user to login screen
-            Intent intent = new Intent(context, TaxeAuthenticationActivity.class);
+            Intent intent = new Intent(context, AuthenticationActivity.class);
             context.startActivity(intent);
             ((Activity)context).finish();
         });

@@ -23,7 +23,7 @@
     <dimen name="booking_info_row_margin">10dp</dimen>
     <dimen name="booking_info_icon_margin">10dp</dimen>
 
-    <dimen name="booking_history_entry_margin">10dp</dimen>
+    <dimen name="booking_history_entry_margin">15dp</dimen>
 
 
     <!-- Text Sizes -->
