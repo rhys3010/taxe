@@ -209,7 +209,7 @@
                                     android:id="@+id/driver_label"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text='@{booking.driver.name ?? "N/A"}'/>
+                                    android:text='@{booking.driver.name ?? @string/not_applicable}'/>
                             </LinearLayout>
                         </LinearLayout>
 

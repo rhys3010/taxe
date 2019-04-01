@@ -26,9 +26,6 @@
     <string name="select_number">Dewis Rhif</string>
     <string name="number_of_passengers_selection">Dewis Nifer o Deithwyr</string>
     <string name="desired_time_selection">Dewis Amser Dymunol</string>
-    <string name="desired_time_format">%1$02d:%2$02d</string>
-    <string name="time_display_format">%1$tH:%1$tM | %1$td/%1$tm/%1$tY</string>
-    <string name="date_display_format">%1$td %1$tb</string>
     <string name="current_password_input_hint">Cyfrinair Cerrynt</string>
     <string name="new_name_input_hint">Enw Llawn Newydd</string>
     <string name="new_password_input_hint">Cyfrinair Newydd</string>
@@ -50,6 +47,18 @@
     <string name="no_active_booking">Dim Archeb Ar Gael</string>
     <string name="get_started">Cliciwch y + isod i ddechrau</string>
     <string name="cancel_booking_confirmation">Wyt yn siwr dy fod eisiau canslo?</string>
+    <string name="view_account">Dy Gyfrif</string>
+    <string name="bookings_made">Archebion</string>
+    <string name="active">Actif</string>
+    <string name="member_since">Aelod Ers</string>
+    <string name="last_booking">Archeb Diwethaf</string>
+    <string name="not_applicable">D/B</string>
+
+    <!-- Time Formats -->
+    <string name="desired_time_format">%1$02d:%2$02d</string>
+    <string name="time_display_format">%1$tH:%1$tM | %1$td/%1$tm/%1$tY</string>
+    <string name="date_display_format">%1$td %1$tb</string>
+    <string name="member_since_display_format">%1$td/%1$tm/%1$tY</string>
 
     <!-- Nav Options -->
     <string name="nav_home">Adra</string>

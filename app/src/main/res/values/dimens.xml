@@ -22,8 +22,12 @@
 
     <dimen name="booking_info_row_margin">10dp</dimen>
     <dimen name="booking_info_icon_margin">10dp</dimen>
-
     <dimen name="booking_history_entry_margin">15dp</dimen>
+
+    <dimen name="user_info_margin">15dp</dimen>
+    <dimen name="home_card_view_margin">10dp</dimen>
+    <dimen name="home_card_view_text_margin">20dp</dimen>
+    <dimen name="home_card_view_top_margin">40dp</dimen>
 
 
     <!-- Text Sizes -->

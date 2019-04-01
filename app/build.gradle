@@ -66,5 +66,4 @@ dependencies {
     // rxJava
     implementation 'io.reactivex:rxjava:1.2.0'
     implementation 'io.reactivex:rxandroid:1.2.1'
-
 }
