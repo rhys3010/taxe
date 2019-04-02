@@ -40,13 +40,13 @@
             android:layout_marginTop="@dimen/header_2_margin"
             android:textAlignment="center" />
 
-        <!-- Placeholder Logo -->
-        <View
+        <!-- Logo -->
+        <ImageView
             android:id="@+id/logo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="108dp"
+            android:layout_height="108dp"
             android:layout_marginTop="@dimen/header_1_margin"
-            android:background="@color/colorPrimary"/>
+            android:src="@mipmap/ic_launcher"/>
 
         <!-- Author -->
         <TextView

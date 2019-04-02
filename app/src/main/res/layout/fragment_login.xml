@@ -24,12 +24,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/login_form">
 
-            <!-- Placeholder Logo -->
-            <View
+            <!-- Logo -->
+            <ImageView
                 android:id="@+id/logo"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@color/colorPrimary"/>
+                android:src="@mipmap/ic_launcher"/>
+
 
             <!-- Welcome Text -->
             <TextView
