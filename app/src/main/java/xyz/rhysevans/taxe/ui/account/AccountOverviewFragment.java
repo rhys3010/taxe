@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.commons.text.WordUtils;
+
 import java.util.ArrayList;
 
 import xyz.rhysevans.taxe.R;
@@ -140,7 +142,7 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
 
         // If user isn't null, get their name
         if(user != null){
-            name = user.getName();
+            name = WordUtils.capitalizeFully(user.getName());
         }
 
         // Get user's initial

@@ -35,7 +35,7 @@ public class User{
     @SerializedName("role")
     private String role;
 
-    @SerializedName("createdAt")
+    @SerializedName("created_at")
     private Date createdAt;
 
     @SerializedName("bookings")

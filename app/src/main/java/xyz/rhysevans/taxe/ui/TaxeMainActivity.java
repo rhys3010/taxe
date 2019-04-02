@@ -143,6 +143,14 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
     }
 
     /**
+     * Navigate to a given screen
+     * @param id
+     */
+    public void navTo(int id){
+        navMenu.setSelectedItemId(id);
+    }
+
+    /**
      * Called when the create booking activity exits
      * @param requestCode
      * @param resultCode
