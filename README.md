@@ -1,4 +1,4 @@
-<img src="https://i.imgur.com/ZpCtOo4.png" width="120" height="120">
+<img src="https://i.imgur.com/EK1RSH9.png" width="120" height="120">
 
 # Tax-E
 
@@ -14,6 +14,7 @@ Coming Soon
 Android, Retrofit, rxJava
 
 ### Prerequisites
+Java 8
 
 ## Story Board
 [Trello Project Page](https://trello.com/rhe24_mmp)
@@ -25,13 +26,11 @@ Android, Retrofit, rxJava
 Project uses [Semantic Versioning 2.0.0](https://semver.org/)
 
 ## Configuration ##
-Coming Soon
+Simple alter any necessary values in /util/Constants.java
 
 ## Tests
+Coming Soon
 
 ## Api Reference ##
-Coming Soon
+[https://github.com/rhys3010/taxe-api/blob/master/routes/README.md](https://github.com/rhys3010/taxe-api/blob/master/routes/README.md)
 
-
-## Database ##
-Coming Soon

@@ -1,3 +1,7 @@
+<!--
+   * Copyright (c) Rhys Evans
+   * All Rights Reserved -->
+
 <resources>
     <string name="app_name">Tax-E</string>
     <string name="welcome_text">Welcome to Tax-E</string>

@@ -1,5 +1,9 @@
-package xyz.rhysevans.taxe.ui.account;
+/*
+ * Copyright (c) Rhys Evans
+ * All Rights Reserved
+ */
 
+package xyz.rhysevans.taxe.ui.account;
 
 import android.app.AlertDialog;
 import android.content.Intent;

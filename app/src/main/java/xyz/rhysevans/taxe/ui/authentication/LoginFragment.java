@@ -1,5 +1,9 @@
-package xyz.rhysevans.taxe.ui.authentication;
+/*
+ * Copyright (c) Rhys Evans
+ * All Rights Reserved
+ */
 
+package xyz.rhysevans.taxe.ui.authentication;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -27,7 +31,9 @@ import xyz.rhysevans.taxe.viewmodel.UserViewModel;
 
 /**
  * LoginFragment.java
+ *
  * Fragment to display all the UI elements needed to login and send
+ *
  * credentials to API.
  * @author Rhys Evans
  * @version 0.1

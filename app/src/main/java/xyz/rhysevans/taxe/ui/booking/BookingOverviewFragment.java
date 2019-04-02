@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) Rhys Evans
+ * All Rights Reserved
+ */
+
 package xyz.rhysevans.taxe.ui.booking;
 
 
@@ -37,6 +42,7 @@ import xyz.rhysevans.taxe.viewmodel.UserViewModel;
  * BookingOverviewFragment.java
  *
  * Manage the booking overview screen. By getting info through API using View Model
+ *
  * @author Rhys Evans
  * @version 0.1
  */

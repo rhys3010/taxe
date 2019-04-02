@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+   * Copyright (c) Rhys Evans
+   * All Rights Reserved -->
+
 <resources>
     <integer name="min_no_passengers">1</integer>
     <integer name="max_no_passengers">8</integer>

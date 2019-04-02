@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+   * Copyright (c) Rhys Evans
+   * All Rights Reserved -->
+
 <resources>
     <color name="ic_launcher_background">#FFB300</color>
 </resources>

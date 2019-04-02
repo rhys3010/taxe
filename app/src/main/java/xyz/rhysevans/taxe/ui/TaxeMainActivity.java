@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) Rhys Evans
+ * All Rights Reserved
+ */
+
 package xyz.rhysevans.taxe.ui;
 
 import android.content.Intent;
@@ -27,7 +32,6 @@ import xyz.rhysevans.taxe.util.SharedPreferencesManager;
  * @version 0.1
  */
 public class TaxeMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
 
     private final String PAGE_TITLE_KEY = "PAGE_TITLE_KEY";
     public static final int CREATE_BOOKING_REQUEST_CODE = 2;

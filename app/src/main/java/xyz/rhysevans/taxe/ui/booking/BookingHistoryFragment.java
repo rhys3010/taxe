@@ -1,5 +1,9 @@
-package xyz.rhysevans.taxe.ui.booking;
+/*
+ * Copyright (c) Rhys Evans
+ * All Rights Reserved
+ */
 
+package xyz.rhysevans.taxe.ui.booking;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -28,6 +32,7 @@ import xyz.rhysevans.taxe.viewmodel.UserViewModel;
  * BookingHistoryFragment.java
  *
  * Manage the booking history screen
+ *
  * @author Rhys Evans
  * @version 0.1
  */

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) Rhys Evans
+ * All Rights Reserved
+ */
+
 package xyz.rhysevans.taxe.ui.authentication;
 
 import android.content.pm.ActivityInfo;
@@ -31,6 +36,7 @@ import xyz.rhysevans.taxe.viewmodel.UserViewModel;
 
 /**
  * RegisterFragment.java
+ *
  * A fragment to display all the needed UI elements to register a new user
  * with the API.
  *

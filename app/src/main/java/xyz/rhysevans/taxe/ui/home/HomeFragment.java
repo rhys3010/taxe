@@ -1,5 +1,9 @@
-package xyz.rhysevans.taxe.ui.home;
+/*
+ * Copyright (c) Rhys Evans
+ * All Rights Reserved
+ */
 
+package xyz.rhysevans.taxe.ui.home;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;

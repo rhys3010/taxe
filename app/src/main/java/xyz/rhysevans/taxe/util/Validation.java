@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) Rhys Evans
+ * All Rights Reserved
+ */
+
 package xyz.rhysevans.taxe.util;
 
 import android.util.Log;

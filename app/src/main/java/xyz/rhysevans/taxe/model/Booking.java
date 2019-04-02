@@ -1,8 +1,12 @@
+/*
+ * Copyright (c) Rhys Evans
+ * All Rights Reserved
+ */
+
 package xyz.rhysevans.taxe.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.Date;
 

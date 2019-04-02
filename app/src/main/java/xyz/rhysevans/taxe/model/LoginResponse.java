@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) Rhys Evans
+ * All Rights Reserved
+ */
+
 package xyz.rhysevans.taxe.model;
 
 import com.google.gson.annotations.SerializedName;
@@ -8,7 +13,7 @@ import java.util.Date;
  * LoginResponse.java
  *
  * Custom Response Object for User Login to retrieve
- * information about user and the user's access token
+ * information about user and the user's access token from JSON response
  *
  * @author Rhys Evans
  * @version 0.2
