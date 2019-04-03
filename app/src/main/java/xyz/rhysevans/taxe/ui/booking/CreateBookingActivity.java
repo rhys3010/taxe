@@ -223,10 +223,10 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
             // Lock Screen Orientation
             int currentOrientation = getResources().getConfiguration().orientation;
             if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
             }
             else {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
             }
 
             // Disable button
@@ -287,7 +287,7 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
         // Unlock screen orientation
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
         // Handle Errors using util class and save the error code
         int errorCode = errorHandler.handle(error, this, view);
@@ -308,7 +308,7 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
         // Unlock screen orientation
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
         // Clear the text inputs
         pickupLocationInput.setText(null);

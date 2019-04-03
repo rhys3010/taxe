@@ -158,10 +158,10 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         // Lock Screen Orientation
         int currentOrientation = getResources().getConfiguration().orientation;
         if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
         }
         else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
         }
 
         // Check if an ID is present, if so, just load that booking
@@ -212,10 +212,10 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         // Lock Screen Orientation
         int currentOrientation = getResources().getConfiguration().orientation;
         if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
         }
         else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
         }
 
         // Show Progress Bar
@@ -238,7 +238,7 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
         // Unlock screen orientation
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
         // If booking is no longer active, remove cancel button
         if(booking.getStatus() == BookingStatus.Cancelled || booking.getStatus() == BookingStatus.Finished){
@@ -266,7 +266,7 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         // Re-enable Buton
         cancelBtn.setEnabled(true);
         // Unlock Screen Orientation
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
 
@@ -286,7 +286,7 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
         // Unlock screen orientation
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
         // Handle Errors using Error Handler
         errorHandler.handle(error, getContext(), getView());

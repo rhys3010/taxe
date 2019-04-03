@@ -102,10 +102,10 @@ public class HomeFragment extends Fragment {
         // Lock Screen Orientation
         int currentOrientation = getResources().getConfiguration().orientation;
         if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
         }
         else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
         }
 
         // Load the current user
@@ -120,10 +120,10 @@ public class HomeFragment extends Fragment {
         // Lock Screen Orientation
         int currentOrientation = getResources().getConfiguration().orientation;
         if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
         }
         else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
         }
 
         // Load the most recent booking
@@ -137,7 +137,7 @@ public class HomeFragment extends Fragment {
      */
     private void handleUserLoad(User user){
         // Unlock Screen Orientation
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
         // Beautify user's name
         String beautyName = WordUtils.capitalizeFully(user.getName());
@@ -152,7 +152,7 @@ public class HomeFragment extends Fragment {
      */
     private void handleBookingLoad(Booking booking){
         // Unlock Screen Orientation
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
         // If the most recent booking is inactive, don't bind
         if(booking.getStatus() == BookingStatus.Finished || booking.getStatus() == BookingStatus.Cancelled){
@@ -169,7 +169,7 @@ public class HomeFragment extends Fragment {
      */
     private void handleError(Throwable error){
         // Unlock Screen Orientation
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
         // Handle Errors using Error Handler
         errorHandler.handle(error, getContext(), getView());

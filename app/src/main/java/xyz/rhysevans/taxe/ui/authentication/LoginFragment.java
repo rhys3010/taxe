@@ -126,10 +126,10 @@ public class LoginFragment extends Fragment {
             // Lock Screen Orientation
             int currentOrientation = getResources().getConfiguration().orientation;
             if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
             }
             else {
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
             }
 
             // Disable button
@@ -176,7 +176,7 @@ public class LoginFragment extends Fragment {
         // Hide Progress bar
         progressIndicator.setVisibility(View.GONE);
         // Unlock screen orientation
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
         // Create a new user object to store non-sensitive data in shared prefs
         User user = new User(response.getId(), response.getName(), response.getEmail(), response.getRole(), response.getCreatedAt());
@@ -205,7 +205,7 @@ public class LoginFragment extends Fragment {
         // Hide Progress bar
         progressIndicator.setVisibility(View.GONE);
         // Unlock screen orientation
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
         // Handle the error using the util classs
         int errorCode = errorHandler.handle(error, this.getContext(), this.getView());

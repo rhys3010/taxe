@@ -141,10 +141,10 @@ public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayo
         // Lock Screen Orientation
         int currentOrientation = getResources().getConfiguration().orientation;
         if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
         }
         else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
         }
 
         // Show Progress Indicator
@@ -160,7 +160,7 @@ public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayo
      */
     private void handleSuccess(ArrayList<Booking> bookings){
         // Unlock Screen Orientation
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
         // Hide Progress Indicator
         swipeRefreshLayout.setRefreshing(false);
@@ -187,7 +187,7 @@ public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayo
      */
     private void handleError(Throwable error){
         // Unlock Screen Orientation
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
         // Hide Progress Indicator
         swipeRefreshLayout.setRefreshing(false);
