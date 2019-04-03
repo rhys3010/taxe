@@ -155,9 +155,12 @@ public class HomeFragment extends Fragment {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
         // If the most recent booking is inactive, don't bind
-        if(booking.getStatus() != BookingStatus.Finished && booking.getStatus() != BookingStatus.Cancelled){
-            dataBinding.setBooking(booking);
+        if(booking.getStatus() == BookingStatus.Finished || booking.getStatus() == BookingStatus.Cancelled){
+            booking.setStatus(null);
+
         }
+
+        dataBinding.setBooking(booking);
     }
 
     /**
