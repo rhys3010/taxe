@@ -15,7 +15,7 @@
     <dimen name="form_margin_change_password">10dp</dimen>
     <dimen name="register_text_margin">20dp</dimen>
     <dimen name="register_text_padding">3dp</dimen>
-    <dimen name="fab_marign">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
     <dimen name="avatar_container_padding">20dp</dimen>
     <dimen name="account_actions_list_margin">10dp</dimen>
     <dimen name="account_action_entry_margin">10dp</dimen>

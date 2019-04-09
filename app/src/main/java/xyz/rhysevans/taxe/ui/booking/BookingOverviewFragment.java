@@ -7,6 +7,7 @@ package xyz.rhysevans.taxe.ui.booking;
 
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -65,6 +66,8 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
 
     // Cancel Button
     private TextView cancelBtn;
+    // Notes Button
+    private TextView notesBtn;
 
     private SharedPreferencesManager sharedPreferencesManager;
     private ErrorHandler errorHandler;
@@ -145,8 +148,10 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         progressIndicator = view.findViewById(R.id.progress_indicator);
 
         cancelBtn = view.findViewById(R.id.cancel_btn);
+        notesBtn = view.findViewById(R.id.view_notes_btn);
 
         cancelBtn.setOnClickListener(v -> onCancelClick());
+        notesBtn.setOnClickListener(v -> onNotesClick());
     }
 
     /**
@@ -200,7 +205,14 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         positiveButton.setTextColor(getActivity().getColor(R.color.colorPrimary));
         Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
         negativeButton.setTextColor(getActivity().getColor(R.color.colorPrimary));
+    }
 
+    /**
+     * Called when the notes button is pressed to show notes activity
+     */
+    private void onNotesClick(){
+        Intent intent = new Intent(getActivity(), BookingNotesViewActivity.class);
+        startActivity(intent);
     }
 
     /**

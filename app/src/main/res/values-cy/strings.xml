@@ -57,6 +57,7 @@
     <string name="member_since">Aelod Ers</string>
     <string name="last_booking">Archeb Diwethaf</string>
     <string name="not_applicable">D/B</string>
+    <string name="view_notes">Nodiadau</string>
 
     <!-- Time Formats -->
     <string name="desired_time_format">%1$02d:%2$02d</string>

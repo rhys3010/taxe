@@ -56,6 +56,7 @@
     <string name="member_since">Member Since</string>
     <string name="last_booking">Last Booking</string>
     <string name="not_applicable">N/A</string>
+    <string name="view_notes">Notes</string>
 
     <!-- Time Formats -->
     <string name="desired_time_format">%1$02d:%2$02d</string>
