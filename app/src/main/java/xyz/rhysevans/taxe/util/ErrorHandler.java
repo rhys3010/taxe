@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -77,6 +78,7 @@ public class ErrorHandler {
             }
             // If the error wasn't a HTTP error, show network issues dialog
         } else {
+            Log.d("TEST", error.toString());
             showNetworkErrorDialog(context);
         }
 
@@ -212,6 +214,14 @@ public class ErrorHandler {
 
         if(code == Errors.MISSING_AUTHENTICATION_ERROR.getErrorCode()){
             return R.string.missing_authentication_error;
+        }
+
+        if(code == Errors.COMPANY_NOT_FOUND_ERROR.getErrorCode()){
+            return R.string.company_not_found_error;
+        }
+
+        if(code == Errors.DRIVER_ALREADY_ADDED_ERROR.getErrorCode()){
+            return R.string.driver_already_added_error;
         }
 
         // Default Case

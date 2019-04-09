@@ -109,6 +109,8 @@
     <string name="unauthorized_view_error">You are not authorized to view this record</string>
     <string name="invalid_role_error">The user provided does not have the needed permissions for this task</string>
     <string name="missing_authentication_error">Missing or incomplete authentication credentials provided</string>
+    <string name="company_not_found_error">Company could not be found</string>
+    <string name="driver_already_added_error">That driver is already employed by a company</string>
 
     <string name="internal_server_error">Something Went Wrong :/</string>
     <string name="network_error">Network Error</string>

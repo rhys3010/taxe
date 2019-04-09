@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -66,7 +67,7 @@ public interface RetrofitInterface {
      * @param user
      * @return
      */
-    @PUT("users/{id}")
+    @PATCH("users/{id}")
     Observable<Response> editUser(@Path("id") String id, @Body User user);
 
     /**
@@ -112,6 +113,6 @@ public interface RetrofitInterface {
      * @param booking
      * @return
      */
-    @PUT("bookings/{id}")
+    @PATCH("bookings/{id}")
     Observable<Response> editBooking(@Path("id") String id, @Body Booking booking);
 }

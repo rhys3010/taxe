@@ -105,11 +105,13 @@
     <string name="validation_error">Roedd un neu fwy o fewnbynnau yn annilys.</string>
     <string name="invalid_object_id_error">ID Annilys.</string>
     <string name="unauthorized_edit_error">Nid ydych wedi\'ch awdurdodi i golyu.</string>
-    <string name="booking_not_found_error">Ni ellid dod o hyd i unrhyw archebion</string>
+    <string name="booking_not_found_error">Ni ellid ddod o hyd i unrhyw archebion</string>
     <string name="customer_already_has_active_booking_error">Mae gennych archeb yn weithgar, rhaid canslo gyntaf.</string>
     <string name="unauthorized_view_error">Nid ydych wedi\'ch awdurdodi i weld y cofnod hwn</string>
     <string name="invalid_role_error">Nid oes gan y defnyddiwr yma y caniatad sydd angen i cyfiawnhau y dasg.</string>
     <string name="missing_authentication_error">Cymwysterau dilysu yn anghyflawn neu ar goll</string>
+    <string name="company_not_found_error">Ni ellid ddod o hyd i unrhyw cwmniau</string>
+    <string name="driver_already_added_error">Mae\'r gyrrywr yma yn aelod o cwmni yn barod</string>
 
     <string name="internal_server_error">Aeth Rhywbeth o\'i Le :/</string>
     <string name="network_error">Gwall Rhwydwaith</string>
