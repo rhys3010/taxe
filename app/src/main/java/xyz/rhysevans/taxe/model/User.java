@@ -21,7 +21,6 @@ import xyz.rhysevans.taxe.util.Roles;
  */
 public class User{
 
-
     @SerializedName("_id")
     private String id;
 
@@ -40,12 +39,17 @@ public class User{
     @SerializedName("role")
     private String role;
 
+    @SerializedName("available")
+    private boolean available;
+
     @SerializedName("created_at")
     private Date createdAt;
 
+    @SerializedName("company")
+    private String company;
+
     @SerializedName("bookings")
     private String[] bookings;
-
 
     /**
      * Default user constructor to allow empty users
@@ -131,6 +135,21 @@ public class User{
         this.role = role.name();
     }
 
+    /**
+     * Set the company the user
+     * @param company
+     */
+    public void setCompany(String company){
+        this.company = company;
+    }
+
+    /**
+     * Sets the user's availability (driver only)
+     * @param available
+     */
+    public void setAvailable(boolean available){
+        this.available = available;
+    }
 
     /**
      * Gets the name of the user being created
@@ -186,6 +205,22 @@ public class User{
      */
     public String[] getBookings(){
         return this.bookings;
+    }
+
+    /**
+     * Gets the company of the user
+     * @return
+     */
+    public String getCompany(){
+        return this.company;
+    }
+
+    /**
+     * Returns the user's availability (driver only)
+     * @return
+     */
+    public boolean isAvailable(){
+        return this.available;
     }
 
 }

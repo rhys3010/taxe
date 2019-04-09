@@ -5,16 +5,23 @@
 
 package xyz.rhysevans.taxe.util;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import xyz.rhysevans.taxe.model.Booking;
@@ -42,6 +49,7 @@ public class BookingDeserializer implements JsonDeserializer<Booking> {
     private final String STATUS_KEY = "status";
     private final String CUSTOMER_KEY = "customer";
     private final String DRIVER_KEY = "driver";
+    private final String COMPANY_KEY = "company";
     private final String CREATED_AT_KEY = "created_at";
 
 
@@ -64,12 +72,16 @@ public class BookingDeserializer implements JsonDeserializer<Booking> {
         final int noPassengers = jsonObject.get(NO_PASSENGERS_KEY).getAsInt();
         final BookingStatus status = BookingStatus.valueOf(jsonObject.get(STATUS_KEY).getAsString());
 
-        // Read
-
-        // OPTIONAL Fields
-        String notes = "";
+        // Read the Optional Fields
+        ArrayList<String> notes = new ArrayList<>();
+        String company = "";
         if(jsonObject.get(NOTES_KEY) != null){
-            notes = jsonObject.get(NOTES_KEY).getAsString();
+            Gson gson = new Gson();
+            Type notesType = new TypeToken<ArrayList<String>>() {}.getType();
+            notes = gson.fromJson(jsonObject.get(NOTES_KEY).getAsJsonArray(), notesType);
+        }
+        if(jsonObject.get(COMPANY_KEY) != null){
+            company = jsonObject.get(COMPANY_KEY).getAsString();
         }
 
         // Read dynamic content (String OR Object)
@@ -99,6 +111,7 @@ public class BookingDeserializer implements JsonDeserializer<Booking> {
         booking.setDriver(driver);
         booking.setCustomer(customer);
         booking.setTime(time);
+        booking.setCompany(company);
 
         return booking;
     }

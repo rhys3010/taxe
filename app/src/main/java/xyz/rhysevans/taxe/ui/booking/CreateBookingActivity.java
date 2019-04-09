@@ -27,6 +27,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -204,7 +205,8 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
         // Retrieve entered values from the form
         String pickupLocation = pickupLocationInput.getText().toString();
         String destination = destinationInput.getText().toString();
-        String notes = notesInput.getText().toString();
+        ArrayList<String> notes = new ArrayList<>();
+        notes.add(notesInput.getText().toString());
         int noPassengers = 0;
         if(!noPassengersInput.getText().toString().isEmpty()){
             noPassengers = Integer.parseInt(noPassengersInput.getText().toString());
@@ -250,7 +252,7 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
      * @param noPassengers
      * @param notes
      */
-    private boolean validateFields(String pickupLocation, String destination, Date time, int noPassengers, String notes){
+    private boolean validateFields(String pickupLocation, String destination, Date time, int noPassengers, ArrayList<String> notes){
         int errors = 0;
 
         if(!Validation.isValidNoPassengers(noPassengers)){

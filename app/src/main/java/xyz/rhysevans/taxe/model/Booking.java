@@ -8,6 +8,7 @@ package xyz.rhysevans.taxe.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 
 import xyz.rhysevans.taxe.util.BookingStatus;
@@ -38,7 +39,7 @@ public class Booking {
     private int noPassengers;
 
     @SerializedName("notes")
-    private String notes;
+    private ArrayList<String> notes;
 
     @SerializedName("status")
     private BookingStatus status;
@@ -48,6 +49,9 @@ public class Booking {
 
     @SerializedName("driver")
     private User driver;
+
+    @SerializedName("company")
+    private String company;
 
     @SerializedName("created_at")
     private Date createdAt;
@@ -81,7 +85,7 @@ public class Booking {
      * @param noPassengers
      * @param notes
      */
-    public Booking(String pickupLocation, String destination, Date time, int noPassengers, String notes){
+    public Booking(String pickupLocation, String destination, Date time, int noPassengers, ArrayList<String> notes){
         this.pickupLocation = pickupLocation;
         this.destination = destination;
         this.time = time;
@@ -158,7 +162,7 @@ public class Booking {
      * Get any notes for the booking
      * @return
      */
-    public String getNotes() {
+    public ArrayList<String> getNotes() {
         return notes;
     }
 
@@ -166,7 +170,7 @@ public class Booking {
      * Set any notes for the booking
      * @param notes
      */
-    public void setNotes(String notes) {
+    public void setNotes(ArrayList<String> notes) {
         this.notes = notes;
     }
 
@@ -240,6 +244,22 @@ public class Booking {
      */
     public String getId(){
         return id;
+    }
+
+    /**
+     * Set the company responsible for a booking
+     * @param company
+     */
+    public void setCompany(String company){
+        this.company = company;
+    }
+
+    /**
+     * Gets the company responsible for a booking
+     * @return
+     */
+    public String getCompany(){
+        return this.company;
     }
 
     /**
