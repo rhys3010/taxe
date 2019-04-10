@@ -27,6 +27,8 @@ import android.widget.Toast;
 
 import org.apache.commons.text.WordUtils;
 
+import java.util.ArrayList;
+
 import rx.subscriptions.CompositeSubscription;
 import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.databinding.FragmentBookingOverviewBinding;
@@ -51,6 +53,8 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
 
     public static final String TAG = LoginFragment.class.getSimpleName();
     public static final String BOOKING_ID_KEY = "BOOKING_ID_KEY";
+    public static final String BOOKING_NOTES_KEY = "BOOKING_NOTES_KEY";
+    public static final int BOOKING_NOTES_REQUEST_CODE = 5;
 
     // A potential booking ID to display
     private String id;
@@ -75,6 +79,9 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
     private UserViewModel userViewModel;
     private BookingViewModel bookingViewModel;
     private FragmentBookingOverviewBinding dataBinding;
+
+    // The booking object
+    private Booking booking;
 
     /**
      * Default Constructor
@@ -211,8 +218,15 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
      * Called when the notes button is pressed to show notes activity
      */
     private void onNotesClick(){
+        // Pass notes array to the activity
         Intent intent = new Intent(getActivity(), BookingNotesViewActivity.class);
-        startActivity(intent);
+        Bundle args = new Bundle();
+
+        // Pass Booking Object to the view
+        args.putStringArrayList(BOOKING_NOTES_KEY, booking.getNotes());
+        intent.putExtras(args);
+
+        startActivityForResult(intent, BOOKING_NOTES_REQUEST_CODE);
     }
 
     /**
@@ -247,6 +261,8 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
      * @param booking
      */
     private void handleBookingLoad(Booking booking){
+        this.booking = booking;
+
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
         // Unlock screen orientation
@@ -329,6 +345,20 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         booking.setDestination(prettyDestination);
 
         return booking;
+    }
+
+    /**
+     * Called when the booking notes activity is closed to refresh the booking
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == BOOKING_NOTES_REQUEST_CODE){
+            // Refresh
+            loadBooking();
+        }
     }
 
     /**

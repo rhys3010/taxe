@@ -33,6 +33,10 @@
     <dimen name="home_card_view_text_margin">20dp</dimen>
     <dimen name="home_card_view_top_margin">40dp</dimen>
 
+    <dimen name="note_card_view_text_margin">10dp</dimen>
+    <dimen name="note_card_view_horizontal_margin">10dp</dimen>
+    <dimen name="note_card_view_vertical_margin">20dp</dimen>
+
 
     <!-- Text Sizes -->
     <dimen name="text_size_header_1">123sp</dimen>
