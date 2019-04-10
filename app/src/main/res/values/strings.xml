@@ -58,6 +58,8 @@
     <string name="not_applicable">N/A</string>
     <string name="view_notes">Notes</string>
     <string name="booking_notes">Booking Notes</string>
+    <string name="new_note">Add Note to Booking</string>
+    <string name="note_successfully_added">Note added to booking</string>
 
     <!-- Time Formats -->
     <string name="desired_time_format">%1$02d:%2$02d</string>

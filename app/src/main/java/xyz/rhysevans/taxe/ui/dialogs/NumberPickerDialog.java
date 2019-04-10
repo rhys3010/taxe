@@ -30,42 +30,15 @@ import xyz.rhysevans.taxe.R;
  */
 public class NumberPickerDialog extends DialogFragment {
 
-    /**
-     * The fragment's 'tag'
-     */
     public static final String TAG = DialogFragment.class.getSimpleName();
 
-    /**
-     * The key to store in argument bundle to pass to number picker dialog
-     * that determines the minimum value of the picker
-     */
     public static final String MIN_VALUE_KEY = "MIN_VALUE";
-
-    /**
-     * The key to store in argument bundle to pass to number picker dialog
-     * that determines the max value of the picker
-     */
     public static final String MAX_VALUE_KEY = "MAX_VALUE";
-
-    /**
-     * The key to store in argument bundle to pass to number picker dialog
-     * that determines the message to be displayed
-     */
     public static final String MESSAGE_KEY = "MESSAGE";
-
-    /**
-     * The key to store the selected value under in saved instance state.
-     */
     public static final String SELECTED_NUMBER_KEY = "SELECTED_NUMBER_KEY";
 
-    /**
-     * The listener object
-     */
     private NumberPicker.OnValueChangeListener onValueChangeListener;
 
-    /**
-     * The number picker UI element
-     */
     private NumberPicker numberPicker;
 
     /**

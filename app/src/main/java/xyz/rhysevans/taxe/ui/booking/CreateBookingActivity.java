@@ -27,6 +27,8 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -206,7 +208,12 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
         String pickupLocation = pickupLocationInput.getText().toString();
         String destination = destinationInput.getText().toString();
         ArrayList<String> notes = new ArrayList<>();
-        notes.add(notesInput.getText().toString());
+        // Verify that note input wasnt empty
+        String note = notesInput.getText().toString();
+        if(!StringUtils.isEmpty(note) && note.trim().length() > 0) {
+            notes.add(notesInput.getText().toString());
+        }
+
         int noPassengers = 0;
         if(!noPassengersInput.getText().toString().isEmpty()){
             noPassengers = Integer.parseInt(noPassengersInput.getText().toString());
@@ -260,12 +267,12 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
             noPassengersInputContainer.setError(getString(R.string.no_passengers_error));
         }
 
-        if(pickupLocation.length() < 3){
+        if(pickupLocation.length() < 3 || pickupLocation.trim().length() == 0){
             errors++;
             pickupLocationInputContainer.setError(getString(R.string.pickup_location_error));
         }
 
-        if(destination.length() < 3){
+        if(destination.length() < 3 || pickupLocation.trim().length() == 0){
             errors++;
             destinationInputContainer.setError(getString(R.string.destination_error));
         }
@@ -274,6 +281,7 @@ public class CreateBookingActivity extends AppCompatActivity implements NumberPi
             errors++;
             timeInputContainer.setError(getString(R.string.booking_time_error));
         }
+
 
         return errors == 0;
     }

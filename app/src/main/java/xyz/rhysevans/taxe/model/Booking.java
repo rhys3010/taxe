@@ -41,6 +41,10 @@ public class Booking {
     @SerializedName("notes")
     private ArrayList<String> notes;
 
+    // Used to add singular note to booking
+    @SerializedName("note")
+    private String note;
+
     @SerializedName("status")
     private BookingStatus status;
 
@@ -260,6 +264,14 @@ public class Booking {
      */
     public String getCompany(){
         return this.company;
+    }
+
+    /**
+     * Set note of booking
+     * @param note
+     */
+    public void setNote(String note){
+        this.note = note;
     }
 
     /**

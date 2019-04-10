@@ -222,8 +222,9 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         Intent intent = new Intent(getActivity(), BookingNotesViewActivity.class);
         Bundle args = new Bundle();
 
-        // Pass Booking Object to the view
+        // Pass info to the notes activity
         args.putStringArrayList(BOOKING_NOTES_KEY, booking.getNotes());
+        args.putString(BOOKING_ID_KEY, booking.getId());
         intent.putExtras(args);
 
         startActivityForResult(intent, BOOKING_NOTES_REQUEST_CODE);
