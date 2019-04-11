@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,8 +69,13 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
     private View progressIndicator;
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    // Edit Status Button
+    private ImageView editStatusBtn;
+
     // Cancel Button
     private TextView cancelBtn;
+    // Release Button
+    private TextView releaseBtn;
     // Notes Button
     private TextView notesBtn;
 
@@ -156,6 +162,7 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
 
         cancelBtn = view.findViewById(R.id.cancel_btn);
         notesBtn = view.findViewById(R.id.view_notes_btn);
+        releaseBtn = view.findViewById(R.id.release_btn);
 
         cancelBtn.setOnClickListener(v -> onCancelClick());
         notesBtn.setOnClickListener(v -> onNotesClick());
@@ -270,11 +277,18 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
         // If booking is no longer active, remove cancel button
+        // and if user is a driver, handle release button
         if(booking.getStatus() == BookingStatus.Cancelled || booking.getStatus() == BookingStatus.Finished){
             cancelBtn.setVisibility(View.GONE);
+            releaseBtn.setVisibility(View.GONE);
         }else{
             cancelBtn.setVisibility(View.VISIBLE);
+            // If user is a driver, show release buttonn
+            if(sharedPreferencesManager.getUser().getRole().equals("Driver")){
+                releaseBtn.setVisibility(View.VISIBLE);
+            }
         }
+
 
         // If booking is successfully loaded, hide empty view
         activeBookingContainer.setVisibility(View.VISIBLE);
@@ -285,6 +299,8 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
 
         // Send model to the view using Data Binding
         dataBinding.setBooking(beautifyBooking(booking));
+        // Send user's role to the view
+        dataBinding.setUserRole(sharedPreferencesManager.getUser().getRole());
     }
 
     /**

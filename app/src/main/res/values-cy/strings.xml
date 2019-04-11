@@ -65,6 +65,8 @@
     <string name="resigned_successfully">Wedi Ymddiswyddo yn llwyddiannus, ailgofnodwch.</string>
     <string name="available">Ar Gael</string>
     <string name="unavailable">Ddim ar Gael</string>
+    <string name="release">Rhyddhau</string>
+    <string name="customer">Cwsmer</string>
 
     <!-- Time Formats -->
     <string name="desired_time_format">%1$02d:%2$02d</string>

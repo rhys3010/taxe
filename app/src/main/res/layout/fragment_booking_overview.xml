@@ -5,9 +5,15 @@
 
 <layout>
     <data>
+        <import type="android.view.View"/>
+
         <variable
             name="booking"
             type="xyz.rhysevans.taxe.model.Booking"/>
+
+        <variable
+            name="userRole"
+            type="String"/>
     </data>
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -207,13 +213,13 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_body_1"
-                                    android:text="@string/driver"/>
+                                    android:text='@{userRole.equals("Driver") ? @string/customer : @string/driver}'/>
 
                                 <TextView
                                     android:id="@+id/driver_label"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text='@{booking.driver.name ?? @string/not_applicable}'/>
+                                    android:text='@{userRole.equals("Driver") ? booking.customer.name : (booking.driver.name ?? @string/not_applicable)}'/>
                             </LinearLayout>
                         </LinearLayout>
 
@@ -238,7 +244,7 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="9"
+                                android:layout_weight="8"
                                 android:orientation="vertical"
                                 android:layout_marginStart="@dimen/booking_info_icon_margin">
 
@@ -254,6 +260,15 @@
                                     android:layout_height="wrap_content"
                                     android:text="@{booking.status.name()}"/>
                             </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:src="@drawable/ic_edit_black_24dp"
+                                android:tint="@color/colorPrimary"
+                                android:layout_gravity="center"
+                                android:visibility='@{userRole.equals("Driver") ? View.VISIBLE : View.GONE }'/>
                         </LinearLayout>
 
                         <!-- No Passengers Row -->
@@ -294,10 +309,17 @@
                             </LinearLayout>
                         </LinearLayout>
 
+                        <View
+                            android:id="@+id/button_bar_separator"
+                            android:layout_below="@id/no_passengers_row"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@android:color/darker_gray"/>
+
                         <!-- Button Bar -->
                         <RelativeLayout
                             android:id="@+id/button_bar"
-                            android:layout_below="@id/no_passengers_row"
+                            android:layout_below="@id/button_bar_separator"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/booking_info_row_margin"
@@ -308,11 +330,21 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
-                                android:layout_toStartOf="@id/cancel_btn"
                                 android:textColor="@color/colorPrimary"
                                 android:textAllCaps="true"
                                 android:textStyle="bold"
                                 android:text="@string/view_notes"/>
+
+                            <TextView
+                                android:id="@+id/release_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:textColor="@android:color/holo_red_light"
+                                android:textAllCaps="true"
+                                android:textStyle="bold"
+                                android:text="@string/release"
+                                android:visibility="gone"/>
 
                             <TextView
                                 android:id="@+id/cancel_btn"

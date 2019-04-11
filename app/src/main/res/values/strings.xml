@@ -64,6 +64,8 @@
     <string name="resigned_successfully">Resigned Successfully, please log in again.</string>
     <string name="available">Available</string>
     <string name="unavailable">Unavailable</string>
+    <string name="release">Release</string>
+    <string name="customer">Customer</string>
 
     <!-- Time Formats -->
     <string name="desired_time_format">%1$02d:%2$02d</string>
