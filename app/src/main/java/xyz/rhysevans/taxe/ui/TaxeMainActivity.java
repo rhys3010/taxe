@@ -64,6 +64,14 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
 
         // Initialize Nav Menu
         navMenu = findViewById(R.id.navigation_menu);
+
+        // If the logged in user is a driver, change the menu's XML source
+        if(sharedPreferencesManager.getUser().getRole().equals("Driver")){
+            navMenu.inflateMenu(R.menu.main_nav_driver);
+        }else{
+            navMenu.inflateMenu(R.menu.main_nav);
+        }
+
         navMenu.setOnNavigationItemSelectedListener(this::onNavigationItemSelected);
 
         // Load the default fragment if opening for first time
