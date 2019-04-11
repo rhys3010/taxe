@@ -73,7 +73,7 @@ public class BookingNotesViewActivity extends AppCompatActivity {
         bookingViewModel = new BookingViewModel();
         errorHandler = new ErrorHandler();
         sharedPreferencesManager = SharedPreferencesManager.getInstance(this);
-        
+
         if(savedInstanceState != null){
             notes = savedInstanceState.getStringArrayList(BookingOverviewFragment.BOOKING_NOTES_KEY);
         }
