@@ -199,6 +199,8 @@ public class BookingNotesViewActivity extends AppCompatActivity {
      * @param response
      */
     private void handleSuccess(Response response){
+        // Unlock screen orientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
         // Show snackbar message
         Snackbar.make(view, R.string.note_successfully_added, Snackbar.LENGTH_SHORT).show();
     }
@@ -208,6 +210,8 @@ public class BookingNotesViewActivity extends AppCompatActivity {
      * @param error
      */
     private void handleError(Throwable error){
+        // Unlock screen orientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
         errorHandler.handle(error, this, view);
     }
 

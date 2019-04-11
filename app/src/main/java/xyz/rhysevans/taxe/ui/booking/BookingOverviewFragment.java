@@ -249,7 +249,10 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
      */
     private void loadBooking(){
         // Show Progress Bar
+        activeBookingContainer.setVisibility(View.GONE);
+        emptyBookingContainer.setVisibility(View.GONE);
         progressIndicator.setVisibility(View.VISIBLE);
+
         // Lock Screen Orientation
         int currentOrientation = getResources().getConfiguration().orientation;
         if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -358,7 +361,6 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
      */
     private void handleBookingLoad(Booking booking){
         this.booking = booking;
-
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
         // Unlock screen orientation
@@ -462,6 +464,8 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
+        activeBookingContainer.setVisibility(View.VISIBLE);
+        emptyBookingContainer.setVisibility(View.GONE);
 
         // Re-Enable Buttons
         cancelBtn.setEnabled(true);
