@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -49,6 +50,8 @@ public class LoginFragment extends Fragment {
     private TextView registerText;
     private View progressIndicator;
 
+    private View view;
+
     private SharedPreferencesManager sharedPreferencesManager;
     private ErrorHandler errorHandler;
     private CompositeSubscription subscriptions;
@@ -84,7 +87,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        view = inflater.inflate(R.layout.fragment_login, container, false);
 
         // Initialize views
         initViews(view);
@@ -178,6 +181,12 @@ public class LoginFragment extends Fragment {
         // Unlock screen orientation
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
+        // If user is a Company_Admin -> Show Error Message
+        if(response.getRole().equals("Company_Admin")){
+            Snackbar.make(view, R.string.company_admin_login, Snackbar.LENGTH_LONG).show();
+            return;
+        }
+
         // Create a new user object to store non-sensitive data in shared prefs
         User user = new User(response.getId(), response.getName(), response.getEmail(), response.getRole(), response.getCreatedAt());
 
@@ -207,7 +216,7 @@ public class LoginFragment extends Fragment {
         // Unlock screen orientation
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
 
-        // Handle the error using the util classs
+        // Handle the error using the util class
         int errorCode = errorHandler.handle(error, this.getContext(), this.getView());
 
         // Show errors on form if auth error occurs

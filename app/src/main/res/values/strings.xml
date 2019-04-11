@@ -122,4 +122,5 @@
     <string name="booking_not_created">Booking not Created</string>
     <string name="network_error_long">A network error has occurred. Please make sure you are connected to the internet</string>
     <string name="incorrect_password_error">The password you entered is incorrect, try again.</string>
+    <string name="company_admin_login">Cannot log in as Company Admin, use the web admin panel instead.</string>
 </resources>
