@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ import xyz.rhysevans.taxe.databinding.FragmentBookingOverviewBinding;
 import xyz.rhysevans.taxe.model.Booking;
 import xyz.rhysevans.taxe.model.Response;
 import xyz.rhysevans.taxe.ui.authentication.LoginFragment;
+import xyz.rhysevans.taxe.ui.dialogs.StringPickerDialog;
 import xyz.rhysevans.taxe.util.BookingStatus;
 import xyz.rhysevans.taxe.util.ErrorHandler;
 import xyz.rhysevans.taxe.util.SharedPreferencesManager;
@@ -163,36 +165,12 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         cancelBtn = view.findViewById(R.id.cancel_btn);
         notesBtn = view.findViewById(R.id.view_notes_btn);
         releaseBtn = view.findViewById(R.id.release_btn);
+        editStatusBtn = view.findViewById(R.id.edit_status_btn);
 
         cancelBtn.setOnClickListener(v -> onCancelClick());
         notesBtn.setOnClickListener(v -> onNotesClick());
         releaseBtn.setOnClickListener(v -> onReleaseClick());
-    }
-
-    /**
-     * Load the booking using view model
-     */
-    private void loadBooking(){
-        // Show Progress Bar
-        progressIndicator.setVisibility(View.VISIBLE);
-        // Lock Screen Orientation
-        int currentOrientation = getResources().getConfiguration().orientation;
-        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
-        }
-        else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
-        }
-
-        // Check if an ID is present, if so, just load that booking
-        if(id != null){
-            subscriptions.add(bookingViewModel.getBooking(sharedPreferencesManager.getToken(), id)
-            .subscribe(this::handleBookingLoad, this::handleError));
-        }else{
-            // Get most recent booking from View Model
-            subscriptions.add(userViewModel.getMostRecentBooking(sharedPreferencesManager.getToken(),
-                    sharedPreferencesManager.getUser().getId()).subscribe(this::handleBookingLoad, this::handleError));
-        }
+        editStatusBtn.setOnClickListener(this::showStringPickerDialog);
     }
 
     /**
@@ -267,6 +245,32 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
     }
 
     /**
+     * Load the booking using view model
+     */
+    private void loadBooking(){
+        // Show Progress Bar
+        progressIndicator.setVisibility(View.VISIBLE);
+        // Lock Screen Orientation
+        int currentOrientation = getResources().getConfiguration().orientation;
+        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+        }
+        else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
+        }
+
+        // Check if an ID is present, if so, just load that booking
+        if(id != null){
+            subscriptions.add(bookingViewModel.getBooking(sharedPreferencesManager.getToken(), id)
+                    .subscribe(this::handleBookingLoad, this::handleError));
+        }else{
+            // Get most recent booking from View Model
+            subscriptions.add(userViewModel.getMostRecentBooking(sharedPreferencesManager.getToken(),
+                    sharedPreferencesManager.getUser().getId()).subscribe(this::handleBookingLoad, this::handleError));
+        }
+    }
+
+    /**
      * Actually Cancel a Booking (Send API Request Etc)
      */
     private void cancelBooking(){
@@ -294,7 +298,7 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
     }
 
     /**
-     * Actually release a boooking (Send the API request)
+     * Actually release a booking (Send the API request)
      */
     private void releaseBooking(){
         // Disable Release Button
@@ -316,6 +320,36 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         // Send Request
         subscriptions.add(bookingViewModel.releaseBooking(sharedPreferencesManager.getToken(), id)
             .subscribe(this::handleBookingRelease, this::handleError));
+    }
+
+    /**
+     * Update the status of a booking
+     */
+    private void updateBookingStatus(String status){
+        // Lock Screen Orientation
+        int currentOrientation = getResources().getConfiguration().orientation;
+        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+        }
+        else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
+        }
+
+        // Show Progress Bar
+        activeBookingContainer.setVisibility(View.GONE);
+        emptyBookingContainer.setVisibility(View.GONE);
+        progressIndicator.setVisibility(View.VISIBLE);
+
+        // Disable Buttons
+        releaseBtn.setEnabled(false);
+        cancelBtn.setEnabled(false);
+        editStatusBtn.setEnabled(false);
+
+        // Create Updated Booking Object
+        Booking updatedBooking = new Booking();
+        updatedBooking.setStatus(BookingStatus.valueOf(status));
+        subscriptions.add(bookingViewModel.editBooking(sharedPreferencesManager.getToken(), id, updatedBooking)
+                .subscribe(this::handleUpdateBookingStatus, this::handleError));
     }
 
     /**
@@ -356,22 +390,14 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         dataBinding.setUserRole(sharedPreferencesManager.getUser().getRole());
     }
 
+
     /**
      * Handle successful cancellation of booking
      * @param response
      */
     private void handleBookingCancellation(Response response){
-        // Unlock Screen Orientation
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
-        // Hide Progress Bar
-        progressIndicator.setVisibility(View.GONE);
+        handleSuccess();
 
-        // Re-Enable Buttons
-        cancelBtn.setEnabled(true);
-        releaseBtn.setEnabled(true);
-
-        // Refresh View
-        loadBooking();
         // Show Toast
         Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.booking_cancelled, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 150);
@@ -383,22 +409,26 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
      * @param response
      */
     private void handleBookingRelease(Response response){
-        // Hide Progress Bar
-        progressIndicator.setVisibility(View.GONE);
-        // Unlock screen orientation
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+        handleSuccess();
 
-        // Re-Enable Buttons
-        cancelBtn.setEnabled(true);
-        releaseBtn.setEnabled(true);
-
-        // Refresh View
-        loadBooking();
         // Show Toast
         Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.booking_released, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 150);
         toast.show();
 
+    }
+
+    /**
+     * Called when the booking's status is successfully updated
+     * @param response
+     */
+    private void handleUpdateBookingStatus(Response response){
+        handleSuccess();
+
+        // Show Toast
+        Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.booking_status_updated, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 150);
+        toast.show();
     }
 
     /**
@@ -414,6 +444,7 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         // Re-Enable Buttons
         cancelBtn.setEnabled(true);
         releaseBtn.setEnabled(true);
+        editStatusBtn.setEnabled(true);
 
         // Handle Errors using Error Handler
         errorHandler.handle(error, getContext(), getView());
@@ -421,6 +452,24 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         // If an error has occurred, show the empty view
         activeBookingContainer.setVisibility(View.GONE);
         emptyBookingContainer.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Generic success method for requests with no unique response
+     */
+    private void handleSuccess(){
+        // Unlock Screen Orientation
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+        // Hide Progress Bar
+        progressIndicator.setVisibility(View.GONE);
+
+        // Re-Enable Buttons
+        cancelBtn.setEnabled(true);
+        releaseBtn.setEnabled(true);
+        editStatusBtn.setEnabled(true);
+
+        // Refresh View
+        loadBooking();
     }
 
     /**
@@ -444,6 +493,33 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         booking.setDestination(prettyDestination);
 
         return booking;
+    }
+
+    /**
+     * Display a string picker dialog to prompt user for updated status
+     * @param view
+     */
+    private void showStringPickerDialog(View view){
+        // Get the string array
+        String[] stringArray = getResources().getStringArray(R.array.booking_status_array);
+
+        // Create the dialog fragment
+        StringPickerDialog dialog = new StringPickerDialog();
+        dialog.setOnValueChangeListener((picker, oldVal, newVal) -> {
+            // Update Booking Status
+            updateBookingStatus(stringArray[newVal]);
+        });
+
+
+        // Create new bundle to store args
+        Bundle args = new Bundle();
+        args.putInt(StringPickerDialog.MAX_VALUE_KEY, stringArray.length - 1);
+        args.putInt(StringPickerDialog.MIN_VALUE_KEY, 0);
+        args.putString(StringPickerDialog.MESSAGE_KEY, getString(R.string.booking_status_selection));
+        args.putStringArray(StringPickerDialog.STRING_ARRAY_KEY, stringArray);
+
+        dialog.setArguments(args);
+        dialog.show(getActivity().getSupportFragmentManager(), StringPickerDialog.TAG);
     }
 
     /**

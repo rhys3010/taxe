@@ -67,6 +67,7 @@
     <string name="release">Release</string>
     <string name="customer">Customer</string>
     <string name="release_booking_confirmation">Are you sure you wish to release this booking?</string>
+    <string name="booking_status_selection">Select Booking Status</string>
 
     <!-- Time Formats -->
     <string name="desired_time_format">%1$02d:%2$02d</string>
@@ -97,6 +98,7 @@
     <string name="create_booking_success">Booking Created Successfully</string>
     <string name="booking_cancelled">Booking Successfully Cancelled</string>
     <string name="booking_released">Booking Successfully Released</string>
+    <string name="booking_status_updated">Booking Status Successfully Updated</string>
 
     <!-- Validation Errors -->
     <string name="name_error">Full Name must be at least 3 characters long, and not contain any numbers.</string>
@@ -134,4 +136,11 @@
     <string name="network_error_long">A network error has occurred. Please make sure you are connected to the internet</string>
     <string name="incorrect_password_error">The password you entered is incorrect, try again.</string>
     <string name="company_admin_login">Cannot log in as Company Admin, use the web admin panel instead.</string>
+
+    <!-- Booking Status Array -->
+    <string-array name="booking_status_array">
+        <item>In_Progress</item>
+        <item>Arrived</item>
+        <item>Finished</item>
+    </string-array>
 </resources>
