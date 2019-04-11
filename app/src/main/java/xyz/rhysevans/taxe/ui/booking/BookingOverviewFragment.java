@@ -166,6 +166,7 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
 
         cancelBtn.setOnClickListener(v -> onCancelClick());
         notesBtn.setOnClickListener(v -> onNotesClick());
+        releaseBtn.setOnClickListener(v -> onReleaseClick());
     }
 
     /**
@@ -238,6 +239,34 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
     }
 
     /**
+     * Called when the release booking button is pressed to
+     * prompt user with confirmation dialog
+     */
+    private void onReleaseClick(){
+        // Show Confirmation Dialog
+        // Confirmation dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setTitle(getString(R.string.release_booking_confirmation));
+        // When users confirms dialog, end activity
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            releaseBooking();
+        });
+
+        // Do nothing if cancel
+        builder.setNegativeButton(android.R.string.cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Change button colors
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setTextColor(getActivity().getColor(R.color.colorPrimary));
+        Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        negativeButton.setTextColor(getActivity().getColor(R.color.colorPrimary));
+    }
+
+    /**
      * Actually Cancel a Booking (Send API Request Etc)
      */
     private void cancelBooking(){
@@ -265,6 +294,31 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
     }
 
     /**
+     * Actually release a boooking (Send the API request)
+     */
+    private void releaseBooking(){
+        // Disable Release Button
+        releaseBtn.setEnabled(false);
+        // Lock Screen Orientation
+        int currentOrientation = getResources().getConfiguration().orientation;
+        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+        }
+        else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
+        }
+
+        // Show Progress Bar
+        activeBookingContainer.setVisibility(View.GONE);
+        emptyBookingContainer.setVisibility(View.GONE);
+        progressIndicator.setVisibility(View.VISIBLE);
+
+        // Send Request
+        subscriptions.add(bookingViewModel.releaseBooking(sharedPreferencesManager.getToken(), id)
+            .subscribe(this::handleBookingRelease, this::handleError));
+    }
+
+    /**
      * Handle successful retrieval of bookings
      * @param booking
      */
@@ -289,7 +343,6 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
             }
         }
 
-
         // If booking is successfully loaded, hide empty view
         activeBookingContainer.setVisibility(View.VISIBLE);
         emptyBookingContainer.setVisibility(View.GONE);
@@ -308,12 +361,14 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
      * @param response
      */
     private void handleBookingCancellation(Response response){
-        // Re-enable Buton
-        cancelBtn.setEnabled(true);
         // Unlock Screen Orientation
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
         // Hide Progress Bar
         progressIndicator.setVisibility(View.GONE);
+
+        // Re-Enable Buttons
+        cancelBtn.setEnabled(true);
+        releaseBtn.setEnabled(true);
 
         // Refresh View
         loadBooking();
@@ -321,6 +376,29 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.booking_cancelled, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 150);
         toast.show();
+    }
+
+    /**
+     * Called when a bookinng was successfully released
+     * @param response
+     */
+    private void handleBookingRelease(Response response){
+        // Hide Progress Bar
+        progressIndicator.setVisibility(View.GONE);
+        // Unlock screen orientation
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+
+        // Re-Enable Buttons
+        cancelBtn.setEnabled(true);
+        releaseBtn.setEnabled(true);
+
+        // Refresh View
+        loadBooking();
+        // Show Toast
+        Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.booking_released, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 150);
+        toast.show();
+
     }
 
     /**
@@ -332,6 +410,10 @@ public class BookingOverviewFragment extends Fragment implements SwipeRefreshLay
         progressIndicator.setVisibility(View.GONE);
         // Unlock screen orientation
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+
+        // Re-Enable Buttons
+        cancelBtn.setEnabled(true);
+        releaseBtn.setEnabled(true);
 
         // Handle Errors using Error Handler
         errorHandler.handle(error, getContext(), getView());

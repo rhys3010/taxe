@@ -125,6 +125,14 @@ public interface RetrofitInterface {
     @PATCH("bookings/{id}")
     Observable<Response> editBooking(@Path("id") String id, @Body Booking booking);
 
+    /**
+     * Release a booking back into the collective pool
+     * @param id
+     * @return
+     */
+    @PATCH("bookings/{id}/release")
+    Observable<Response> releaseBooking(@Path("id") String id);
+
     /////////////////////
     //    COMPANIES    //
     ////////////////////

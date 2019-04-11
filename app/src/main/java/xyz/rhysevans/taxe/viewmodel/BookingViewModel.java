@@ -62,4 +62,16 @@ public class BookingViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    /**
+     * Release a booking back to the collective pool
+     * @param token
+     * @param bookingId
+     * @return
+     */
+    public Observable<Response> releaseBooking(String token, String bookingId){
+        return NetworkUtil.getRetrofit(token, false).releaseBooking(bookingId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

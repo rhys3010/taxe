@@ -67,6 +67,7 @@
     <string name="unavailable">Ddim ar Gael</string>
     <string name="release">Rhyddhau</string>
     <string name="customer">Cwsmer</string>
+    <string name="release_booking_confirmation">Wyt yn siwr dy fod eisiau rhyddhau yr archeb hon?</string>
 
     <!-- Time Formats -->
     <string name="desired_time_format">%1$02d:%2$02d</string>
@@ -95,7 +96,8 @@
     <!-- Success Strings -->
     <string name="register_success">Wedi Cofrestru yn Llwyddiannus</string>
     <string name="create_booking_success">Archeb Wedi ei Chreu yn Llwyddiannus</string>
-    <string name="booking_cancelled">Archeb Wedi eu Canslo yn Llwyddiannus</string>
+    <string name="booking_cancelled">Archeb Wedi ei Chanslo yn Llwyddiannus</string>
+    <string name="booking_released">Archeb Wedi ei rhyddhau yn Llwydiiannus</string>
 
     <!-- Validation Errors -->
     <string name="name_error">Rhaid i enw fod o leiaf 3 llythrennau yn hir a ddim cynnwys rhifau nag symbolau.</string>
