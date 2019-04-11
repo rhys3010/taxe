@@ -63,6 +63,8 @@
     <string name="note_successfully_added">Nodyn wedi ei ychwanegu i\'r archeb</string>
     <string name="resign_confirmation">Ydych yn siwr eich fod eisiau ymddiswyddo?</string>
     <string name="resigned_successfully">Wedi Ymddiswyddo yn llwyddiannus, ailgofnodwch.</string>
+    <string name="available">Ar Gael</string>
+    <string name="unavailable">Ddim ar Gael</string>
 
     <!-- Time Formats -->
     <string name="desired_time_format">%1$02d:%2$02d</string>

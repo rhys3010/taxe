@@ -62,6 +62,8 @@
     <string name="note_successfully_added">Note added to booking</string>
     <string name="resign_confirmation">Are you sure you wish to resign from your current company?</string>
     <string name="resigned_successfully">Resigned Successfully, please log in again.</string>
+    <string name="available">Available</string>
+    <string name="unavailable">Unavailable</string>
 
     <!-- Time Formats -->
     <string name="desired_time_format">%1$02d:%2$02d</string>

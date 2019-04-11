@@ -194,7 +194,7 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
         // Create account options list
         accountActions.add(new AccountActionModel(R.drawable.ic_vpn_key_black_24dp, R.string.account_action_change_password));
         accountActions.add(new AccountActionModel(R.drawable.ic_edit_black_24dp, R.string.account_action_change_name));
-        accountActions.add(new AccountActionModel(R.drawable.ic_exit_to_app_black_24dp, R.string.account_action_log_out));
+        accountActions.add(new AccountActionModel(R.drawable.ic_power_settings_new_black_24dp, R.string.account_action_log_out));
         accountActions.add(new AccountActionModel(R.drawable.ic_info_black_24dp, R.string.account_action_about));
 
         // Show resign option, if the user is a driver
