@@ -51,7 +51,7 @@
     <string name="get_started">Click the + below to get started</string>
     <string name="cancel_booking_confirmation">Are you sure you wish to cancel this booking?</string>
     <string name="view_account">My Account</string>
-    <string name="bookings_made">Bookings Made</string>
+    <string name="bookings_made">Bookings</string>
     <string name="active">Active</string>
     <string name="member_since">Member Since</string>
     <string name="last_booking">Last Booking</string>

@@ -113,13 +113,6 @@ public class HomeFragment extends Fragment {
         availabilityCard = view.findViewById(R.id.availability);
         availabilityToggle = view.findViewById(R.id.availability_toggle);
 
-        // Show Availability Slider if user is a driver
-        if(sharedPreferencesManager.getUser().getRole().equals("Driver")){
-            availabilityCard.setVisibility(View.VISIBLE);
-        }else{
-            availabilityCard.setVisibility(View.GONE);
-        }
-
         availabilityToggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
             // Only update the availability if it was the user who checked the switch
             if(buttonView.isPressed()){
@@ -219,7 +212,6 @@ public class HomeFragment extends Fragment {
             // Update Nav Bar
             ((TaxeMainActivity) getActivity()).initNavbar();
         }
-
 
         dataBinding.setUser(user);
     }
