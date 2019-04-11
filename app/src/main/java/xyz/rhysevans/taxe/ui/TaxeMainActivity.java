@@ -18,7 +18,7 @@ import android.view.MenuItem;
 import xyz.rhysevans.taxe.R;
 import xyz.rhysevans.taxe.ui.account.AccountOverviewFragment;
 import xyz.rhysevans.taxe.ui.authentication.AuthenticationActivity;
-import xyz.rhysevans.taxe.ui.booking.BookingHistoryFragment;
+import xyz.rhysevans.taxe.ui.booking.BookingListFragment;
 import xyz.rhysevans.taxe.ui.booking.BookingOverviewFragment;
 import xyz.rhysevans.taxe.ui.booking.CreateBookingActivity;
 import xyz.rhysevans.taxe.ui.home.HomeFragment;
@@ -118,8 +118,7 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
                 break;
 
             case R.id.nav_booking:
-                getSupportActionBar().setTitle(R.string.nav_booking);
-                loadFragment(new BookingOverviewFragment());
+                loadBookingFragment();
                 ret = true;
                 break;
 
@@ -129,7 +128,7 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
 
             case R.id.nav_history:
                 getSupportActionBar().setTitle(R.string.nav_history);
-                loadFragment(new BookingHistoryFragment());
+                loadFragment(new BookingListFragment());
                 ret = true;
                 break;
 
@@ -160,6 +159,28 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
     private void showCreateBooking(){
         Intent intent = new Intent(this, CreateBookingActivity.class);
         startActivityForResult(intent, CREATE_BOOKING_REQUEST_CODE);
+    }
+
+    /**
+     * Load the 'booking fragment' from the nav bar, what is displayed will depend on whether
+     * the user is a driver or a customer
+     */
+    private void loadBookingFragment(){
+        if(sharedPreferencesManager.getUser().getRole().equals("Driver")){
+            // Set title
+            getSupportActionBar().setTitle(R.string.nav_active_bookings);
+            // Create fragment and pass args to it
+            BookingListFragment bookingListFragment = new BookingListFragment();
+            Bundle args = new Bundle();
+            args.putBoolean(BookingListFragment.ACTIVE_BOOKING_KEY, true);
+            bookingListFragment.setArguments(args);
+            // Load the fragment
+            loadFragment(bookingListFragment);
+
+        }else{
+            getSupportActionBar().setTitle(R.string.nav_booking);
+            loadFragment(new BookingOverviewFragment());
+        }
     }
 
     /**

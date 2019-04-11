@@ -105,6 +105,18 @@ public class UserViewModel extends ViewModel {
     }
 
     /**
+     * Get a list of the user's ACTIVE bookings
+     * @param token
+     * @param userId
+     * @return
+     */
+    public Observable<ArrayList<Booking>> getActiveBookings(String token, String userId){
+        return NetworkUtil.getRetrofit(token, true).getUserBookings(userId, true)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
      * Remove the driver from the provided company
      * @param token
      * @param companyId

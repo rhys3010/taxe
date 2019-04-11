@@ -16,36 +16,41 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import xyz.rhysevans.taxe.R;
-import xyz.rhysevans.taxe.databinding.ListViewBookingEntryBinding;
+import xyz.rhysevans.taxe.databinding.ListViewActiveBookingsEntryBinding;
+import xyz.rhysevans.taxe.databinding.ListViewBookingHistoryEntryBinding;
 import xyz.rhysevans.taxe.model.Booking;
 import xyz.rhysevans.taxe.util.RecyclerViewItemClickListener;
 
 /**
- * BookingHistoryListAdapter.java
+ * BookingListAdapter.java
  *
- * List adapter used to populate the recycler view within booking history
+ * List adapter used to populate booking history recycler view
+ * and active bookings recycler view
  *
  * @author Rhys Evans
  * @version 0.1
  */
-public class BookingHistoryListAdapter extends RecyclerView.Adapter<BookingHistoryListAdapter.ViewHolder> {
+public class BookingListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private ArrayList<Booking> bookings;
     private RecyclerViewItemClickListener itemClickListener;
+    // Flag to indicate which view should be used to display the list
+    // (history view or active bookings view)
+    private boolean activeBookingsView;
 
     /**
-     * Default Constructor to initialize empty booking list
+     * Default Constructor to initialize empty booking list and retrieve the 'active' flag
      */
-    public BookingHistoryListAdapter(){
+    public BookingListAdapter(boolean activeBookingsView){
         bookings = new ArrayList<>();
-
+        this.activeBookingsView = activeBookingsView;
     }
 
     /**
      * Overloaded Constructor to initialize bookings list
      * @param bookings
      */
-    public BookingHistoryListAdapter(ArrayList<Booking> bookings){
+    public BookingListAdapter(ArrayList<Booking> bookings){
         this.bookings = bookings;
     }
 
@@ -95,16 +100,25 @@ public class BookingHistoryListAdapter extends RecyclerView.Adapter<BookingHisto
     }
 
     /**
-     * Create the individual entry's views using view holder
+     * Create the individual entry's views using the correct view holder
      * @param parent
      * @param viewType
      * @return
      */
     @Override
-    public @NonNull BookingHistoryListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+    public @NonNull RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         // Create a new booking entry view
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_view_booking_entry, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
+        View view;
+        RecyclerView.ViewHolder viewHolder;
+
+        // Decide which ViewHolder to use based on activeBookings flag
+        if(activeBookingsView){
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_view_active_bookings_entry, parent, false);
+            viewHolder = new ViewHolderActive(view);
+        }else{
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_view_booking_history_entry, parent, false);
+            viewHolder = new ViewHolderHistory(view);
+        }
 
         // Initialize the onClickListener for the view
         if(itemClickListener != null){
@@ -123,33 +137,56 @@ public class BookingHistoryListAdapter extends RecyclerView.Adapter<BookingHisto
      * @param position
      */
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position){
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position){
+        // Use the correct data binder based on the ViewHolder initialized
         if(bookings != null){
-            viewHolder.bind(bookings.get(position));
+            if(activeBookingsView){
+                ViewHolderActive viewHolderActive = (ViewHolderActive)viewHolder;
+                viewHolderActive.bind(bookings.get(position));
+
+            }else{
+                ViewHolderHistory viewHolderHistory = (ViewHolderHistory)viewHolder;
+                viewHolderHistory.bind(bookings.get(position));
+            }
         }
     }
 
 
     /**
-     * Static inner class for the recycler view's view holder
+     * Static inner class for the recycler view's HISTORY view holder
      */
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        ListViewBookingEntryBinding dataBinding;
-
-        /**
-         * Constructor to create view holder with data binder
-         * @param dataBinding
-         */
-        ViewHolder(ListViewBookingEntryBinding dataBinding){
-            this(dataBinding.getRoot());
-            this.dataBinding = dataBinding;
-        }
+    static class ViewHolderHistory extends RecyclerView.ViewHolder {
+        ListViewBookingHistoryEntryBinding dataBinding;
 
         /**
          * Default Constructor
          * @param itemView
          */
-        ViewHolder(@NonNull View itemView) {
+        ViewHolderHistory(@NonNull View itemView) {
+            super(itemView);
+            dataBinding = DataBindingUtil.bind(itemView);
+        }
+
+        /**
+         * Bind the contents of the bookings to the view
+         * @param booking
+         */
+        void bind(@NonNull Booking booking){
+            dataBinding.setBooking(booking);
+        }
+    }
+
+    /**
+     * Static inner class for the recycler view's ACTIVE view holder
+     */
+    static class ViewHolderActive extends RecyclerView.ViewHolder {
+        ListViewActiveBookingsEntryBinding dataBinding;
+
+        /**
+         * Default Constructor
+         * @param itemView
+         */
+        ViewHolderActive(@NonNull View itemView) {
             super(itemView);
             dataBinding = DataBindingUtil.bind(itemView);
         }

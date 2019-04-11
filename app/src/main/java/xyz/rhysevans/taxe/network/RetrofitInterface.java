@@ -80,12 +80,21 @@ public interface RetrofitInterface {
     Observable<ArrayList<Booking>> getUserBookings(@Path("id") String id, @Query("limit") int limit);
 
     /**
-     * Override getUserBookings method to support request without limit param
+     * Override getUserBookings method to support plain
      * @param id
      * @return
      */
     @GET("users/{id}/bookings")
     Observable<ArrayList<Booking>> getUserBookings(@Path("id") String id);
+
+    /**
+     * Override getUserBookings method to support request with only active bookings query
+     * @param id
+     * @param active
+     * @return
+     */
+    @GET("users/{id}/bookings")
+    Observable<ArrayList<Booking>> getUserBookings(@Path("id") String id, @Query("active") boolean active);
 
     /////////////////////
     //     BOOKINGS    //

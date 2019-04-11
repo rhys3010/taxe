@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   * Copyright (c) Rhys Evans
+   * All Rights Reserved -->
+<layout>
+    <data>
+        <variable
+            name="booking"
+            type="xyz.rhysevans.taxe.model.Booking"/>
+    </data>
+
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/booking_history_entry_margin">
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/booking_history_entry_margin"
+            android:orientation="vertical">
+
+            <!-- Pickup Location + Time Container -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Icon -->
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_my_location_black_24dp"
+                    android:tint="@color/colorPrimary"/>
+
+                <!-- Pickup Location -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:layout_gravity="center"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{booking.pickupLocation}"/>
+
+                <!-- Time -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:layout_marginEnd="@dimen/booking_info_icon_margin"
+                    android:textAlignment="viewEnd"
+                    android:textSize="@dimen/text_size_body_2"
+                    android:text="@{@string/short_time_display_format(booking.time)}"/>
+
+            </LinearLayout>
+
+            <!-- Destination + Status Container -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/booking_info_row_margin"
+                android:orientation="horizontal">
+
+                <!-- Icon -->
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_location_on_black_24dp"
+                    android:tint="@color/colorPrimary"/>
+
+                <!-- Destination -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:layout_gravity="center"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{booking.destination}"/>
+
+                <!-- Statuss -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:layout_marginEnd="@dimen/booking_info_icon_margin"
+                    android:textAlignment="viewEnd"
+                    android:text="@{booking.status.name()}"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</layout>

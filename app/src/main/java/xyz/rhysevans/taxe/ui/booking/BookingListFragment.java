@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
@@ -29,19 +30,21 @@ import xyz.rhysevans.taxe.util.SharedPreferencesManager;
 import xyz.rhysevans.taxe.viewmodel.UserViewModel;
 
 /**
- * BookingHistoryFragment.java
+ * BookingListFragment.java
  *
- * Manage the booking history screen
+ * Manage the any booking list fragments (Booking History & Driver's Active Bookings)
  *
  * @author Rhys Evans
  * @version 0.1
  */
-public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class BookingListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
-    /**
-     * The fragment's TAG, for use in fragment transactions
-     */
     public static final String TAG = LoginFragment.class.getSimpleName();
+    public static final String ACTIVE_BOOKING_KEY = "ACTIVE_BOOKING_KEY";
+
+    // A flag to determine whether the list should load all bookings
+    // or only 'active' bookings
+    private boolean activeBookings;
 
     private ArrayList<Booking> bookings;
 
@@ -50,7 +53,7 @@ public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayo
     private UserViewModel userViewModel;
     private SharedPreferencesManager sharedPreferencesManager;
 
-    private BookingHistoryListAdapter bookingHistoryListAdapter;
+    private BookingListAdapter bookingListAdapter;
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView bookingHistoryList;
@@ -58,7 +61,7 @@ public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayo
     private View view;
 
 
-    public BookingHistoryFragment() {
+    public BookingListFragment() {
         // Required empty public constructor
     }
 
@@ -89,6 +92,16 @@ public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayo
         // Initialize View model
         userViewModel = new UserViewModel();
 
+        // Check if 'activeBookings' flag is present in saved instance state
+        if(savedInstanceState != null){
+            activeBookings = savedInstanceState.getBoolean(ACTIVE_BOOKING_KEY);
+        }
+
+        // Check if a 'activeBookings' flag has been passed as an argument to the fragment
+        if(getArguments() != null){
+            activeBookings = getArguments().getBoolean(ACTIVE_BOOKING_KEY);
+        }
+
         initViews(view);
 
         // Load the bookings
@@ -104,15 +117,19 @@ public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayo
     private void initViews(View view){
         // Initialize List View
         bookingHistoryList = view.findViewById(R.id.booking_history_list);
-        bookingHistoryList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        // Initialize Adapter
-        bookingHistoryListAdapter = new BookingHistoryListAdapter();
-        bookingHistoryListAdapter.setHasStableIds(true);
-        bookingHistoryList.setAdapter(bookingHistoryListAdapter);
+        if(!activeBookings){
+            bookingHistoryList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        }
+
+        // Initialize Adapter based on the 'active bookings' flag
+        bookingListAdapter = new BookingListAdapter(activeBookings);
+
+        bookingListAdapter.setHasStableIds(true);
+        bookingHistoryList.setAdapter(bookingListAdapter);
         bookingHistoryList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Initialize Click Listener
-        bookingHistoryListAdapter.setItemClickListener((v, position) -> {
+        bookingListAdapter.setItemClickListener((v, position) -> {
             // Open a new activity to show the booking overview
             Intent intent = new Intent(getActivity(), BookingViewActivity.class);
             Bundle args = new Bundle();
@@ -150,8 +167,14 @@ public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayo
         // Show Progress Indicator
         swipeRefreshLayout.setRefreshing(true);
 
-        subscriptions.add(userViewModel.getUserBookings(sharedPreferencesManager.getToken(),
-                sharedPreferencesManager.getUser().getId()).subscribe(this::handleSuccess, this::handleError));
+        // Either load all bookings or load only active bookings
+        if(activeBookings){
+            subscriptions.add(userViewModel.getActiveBookings(sharedPreferencesManager.getToken(),
+                    sharedPreferencesManager.getUser().getId()).subscribe(this::handleSuccess, this::handleError));
+        }else{
+            subscriptions.add(userViewModel.getUserBookings(sharedPreferencesManager.getToken(),
+                    sharedPreferencesManager.getUser().getId()).subscribe(this::handleSuccess, this::handleError));
+        }
     }
 
     /**
@@ -178,7 +201,7 @@ public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayo
         }
 
         // Populate Bookings
-        bookingHistoryListAdapter.populateList(bookings);
+        bookingListAdapter.populateList(bookings);
     }
 
     /**
@@ -216,5 +239,15 @@ public class BookingHistoryFragment extends Fragment implements SwipeRefreshLayo
     public void onRefresh() {
         loadBookings();
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    /**
+     * Called just before fragment is deleted to save the 'activeBookings' flag
+     * @param outState
+     */
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(ACTIVE_BOOKING_KEY, activeBookings);
     }
 }
