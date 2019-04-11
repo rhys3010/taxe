@@ -10,6 +10,7 @@ import android.arch.lifecycle.ViewModel;
 import java.util.ArrayList;
 
 import rx.Observable;
+import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import xyz.rhysevans.taxe.model.Booking;
@@ -99,6 +100,19 @@ public class UserViewModel extends ViewModel {
     public Observable<Booking> getMostRecentBooking(String token, String userId){
         return NetworkUtil.getRetrofit(token, true).getUserBookings(userId, 1)
                 .flatMap(bookings -> NetworkUtil.getRetrofit(token, true).getBooking(bookings.get(0).getId()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * Remove the driver from the provided company
+     * @param token
+     * @param companyId
+     * @param userId
+     * @return
+     */
+    public Observable<Response> resign(String token, String companyId, String userId){
+        return NetworkUtil.getRetrofit(token, false).removeDriver(companyId, userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

@@ -60,6 +60,8 @@
     <string name="booking_notes">Booking Notes</string>
     <string name="new_note">Add Note to Booking</string>
     <string name="note_successfully_added">Note added to booking</string>
+    <string name="resign_confirmation">Are you sure you wish to resign from your current company?</string>
+    <string name="resigned_successfully">Resigned Successfully, please log in again.</string>
 
     <!-- Time Formats -->
     <string name="desired_time_format">%1$02d:%2$02d</string>
@@ -79,6 +81,7 @@
     <string name="account_action_change_name">Change Full Name</string>
     <string name="account_action_log_out">Log Out</string>
     <string name="account_action_about">About</string>
+    <string name="account_action_resign">Resign</string>
 
     <string name="account_option_icon_content_description">Icon for account action</string>
 

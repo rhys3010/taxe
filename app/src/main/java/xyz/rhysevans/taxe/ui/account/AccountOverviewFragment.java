@@ -7,8 +7,11 @@ package xyz.rhysevans.taxe.ui.account;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +26,15 @@ import org.apache.commons.text.WordUtils;
 
 import java.util.ArrayList;
 
+import rx.subscriptions.CompositeSubscription;
 import xyz.rhysevans.taxe.R;
+import xyz.rhysevans.taxe.model.Response;
 import xyz.rhysevans.taxe.model.User;
 import xyz.rhysevans.taxe.ui.authentication.AuthenticationActivity;
 import xyz.rhysevans.taxe.ui.authentication.LoginFragment;
+import xyz.rhysevans.taxe.util.ErrorHandler;
 import xyz.rhysevans.taxe.util.SharedPreferencesManager;
+import xyz.rhysevans.taxe.viewmodel.UserViewModel;
 
 /**
  * AccountOverviewFragment.java
@@ -44,6 +51,9 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
     public static final int CHANGE_PASSWORD_REQUEST_CODE = 4;
 
     private SharedPreferencesManager sharedPreferencesManager;
+    private ErrorHandler errorHandler;
+    private CompositeSubscription subscriptions;
+    private UserViewModel userViewModel;
 
     private ArrayList<AccountActionModel> accountActions;
     private View view;
@@ -65,6 +75,15 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
 
         // Init Shared prefs
         sharedPreferencesManager = SharedPreferencesManager.getInstance(getContext());
+
+        // Init error handler
+        errorHandler = new ErrorHandler();
+
+        // Init Subscriptions
+        subscriptions = new CompositeSubscription();
+
+        // Init View Model
+        userViewModel = new UserViewModel();
 
         // Init user masthead
         initMasthead(view);
@@ -107,6 +126,10 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
             case R.string.account_action_about:
                 Intent aboutIntent = new Intent(getActivity(), AboutActivity.class);
                 startActivity(aboutIntent);
+                break;
+
+            case R.string.account_action_resign:
+                resign();
                 break;
 
             default:
@@ -174,13 +197,17 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
         accountActions.add(new AccountActionModel(R.drawable.ic_exit_to_app_black_24dp, R.string.account_action_log_out));
         accountActions.add(new AccountActionModel(R.drawable.ic_info_black_24dp, R.string.account_action_about));
 
+        // Show resign option, if the user is a driver
+        if(sharedPreferencesManager.getUser().getRole().equals("Driver")){
+            accountActions.add(new AccountActionModel(R.drawable.ic_exit_to_app_black_24dp, R.string.account_action_resign));
+        }
+
         // Create and set adapter
         AccountActionsListAdapter adapter = new AccountActionsListAdapter(this.getContext(), accountActions);
         accountActionsList.setAdapter(adapter);
 
         // Add behaviour to options
         accountActionsList.setOnItemClickListener(this);
-
     }
 
     /**
@@ -218,5 +245,81 @@ public class AccountOverviewFragment extends Fragment implements ListView.OnItem
         positiveButton.setTextColor(getActivity().getColor(R.color.colorPrimary));
         Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
         negativeButton.setTextColor(getActivity().getColor(R.color.colorPrimary));
+    }
+
+    /**
+     * Confirms that the user wants to resign from their current company, if confirmed:
+     * the user resigns
+     */
+    private void resign(){
+        // Confirmation dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setTitle(getString(R.string.resign_confirmation));
+        // When users confirms dialog, send API request for resignation
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            // Lock Screen Orientation
+            int currentOrientation = getResources().getConfiguration().orientation;
+            if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+            }
+            else {
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
+            }
+
+            // Send Request
+            subscriptions.add(userViewModel.resign(sharedPreferencesManager.getToken(),
+                    sharedPreferencesManager.getUser().getCompany(),
+                    sharedPreferencesManager.getUser().getId())
+                    .subscribe(this::handleSuccess, this::handleError));
+        });
+
+        // Do nothing if cancel
+        builder.setNegativeButton(android.R.string.cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Change button colors
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        positiveButton.setTextColor(getActivity().getColor(R.color.colorPrimary));
+        Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        negativeButton.setTextColor(getActivity().getColor(R.color.colorPrimary));
+    }
+
+    /**
+     * Handle successful resignation via API:
+     * - Log the user out
+     * - Show Toast Message
+     * @param response
+     */
+    private void handleSuccess(Response response){
+        // Unlock screen orientation
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+
+        // Delete all shared prefs
+        sharedPreferencesManager.deleteAll();
+
+        // Send user to login screen and show toast messsage
+        Toast toast = Toast.makeText(getActivity().getApplicationContext(), getString(R.string.resigned_successfully), Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
+        toast.show();
+
+        Intent intent = new Intent(getActivity(), AuthenticationActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
+    /**
+     * Handle any error in resignation..
+     * @param error
+     */
+    private void handleError(Throwable error){
+        // Unlock screen orientation
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+
+        Log.d("ERROR", error.toString());
+
+        errorHandler.handle(error, getContext(), view);
     }
 }

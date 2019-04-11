@@ -38,6 +38,9 @@ public class LoginResponse {
     @SerializedName("_id")
     private String id;
 
+    @SerializedName("company")
+    private String company;
+
     @SerializedName("bookings")
     private String[] bookings;
 
@@ -101,5 +104,13 @@ public class LoginResponse {
      */
     public String[] getBookings(){
         return bookings;
+    }
+
+    /**
+     * Get the company ID of the user
+     * @return
+     */
+    public String getCompany(){
+        return this.company;
     }
 }

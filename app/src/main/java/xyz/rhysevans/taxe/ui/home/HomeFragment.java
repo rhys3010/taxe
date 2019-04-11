@@ -5,6 +5,7 @@
 
 package xyz.rhysevans.taxe.ui.home;
 
+import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -142,6 +143,24 @@ public class HomeFragment extends Fragment {
         // Beautify user's name
         String beautyName = WordUtils.capitalizeFully(user.getName());
         user.setName(beautyName);
+
+        // If the loaded user's role differs from that saved in shared prefs, update
+        if(!user.getRole().equals(sharedPreferencesManager.getUser().getRole())){
+            // Update Shared Preferences
+            User updatedUser = sharedPreferencesManager.getUser();
+            updatedUser.setRole(user.getRole());
+
+            // Update user's company
+            if(user.getCompany() != null){
+                updatedUser.setCompany(user.getCompany());
+            }
+
+            sharedPreferencesManager.putUser(updatedUser);
+
+            // Update Nav Bar
+            ((TaxeMainActivity) getActivity()).initNavbar();
+        }
+
 
         dataBinding.setUser(user);
     }

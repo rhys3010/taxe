@@ -130,9 +130,8 @@ public class User{
      * Set the role of the user that's being created
      * @param role
      */
-    public void setRole(Roles role){
-        // Convert role enum to string for API request
-        this.role = role.name();
+    public void setRole(String role){
+        this.role = role;
     }
 
     /**

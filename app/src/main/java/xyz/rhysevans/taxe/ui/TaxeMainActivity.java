@@ -64,14 +64,7 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
 
         // Initialize Nav Menu
         navMenu = findViewById(R.id.navigation_menu);
-
-        // If the logged in user is a driver, change the menu's XML source
-        if(sharedPreferencesManager.getUser().getRole().equals("Driver")){
-            navMenu.inflateMenu(R.menu.main_nav_driver);
-        }else{
-            navMenu.inflateMenu(R.menu.main_nav);
-        }
-
+        initNavbar();
         navMenu.setOnNavigationItemSelectedListener(this::onNavigationItemSelected);
 
         // Load the default fragment if opening for first time
@@ -86,6 +79,21 @@ public class TaxeMainActivity extends AppCompatActivity implements NavigationVie
             }else {
                 getSupportActionBar().setTitle(currentPageTitle);
             }
+        }
+    }
+
+    /**
+     * Initialize the nav bar depending on the user's role
+     */
+    public void initNavbar(){
+        // Clear old menu
+        navMenu.getMenu().clear();
+
+        // If the logged in user is a driver, change the menu's XML source
+        if(sharedPreferencesManager.isUserPresent() && sharedPreferencesManager.getUser().getRole().equals("Driver")){
+            navMenu.inflateMenu(R.menu.main_nav_driver);
+        }else{
+            navMenu.inflateMenu(R.menu.main_nav);
         }
     }
 

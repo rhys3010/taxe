@@ -190,6 +190,11 @@ public class LoginFragment extends Fragment {
         // Create a new user object to store non-sensitive data in shared prefs
         User user = new User(response.getId(), response.getName(), response.getEmail(), response.getRole(), response.getCreatedAt());
 
+        // If the user's company was returned by the LoginResponse, save it
+        if(response.getCompany() != null){
+            user.setCompany(response.getCompany());
+        }
+
         // Place all the values in the shared preferences
         sharedPreferencesManager.putToken(response.getToken());
         sharedPreferencesManager.putUser(user);

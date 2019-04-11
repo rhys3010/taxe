@@ -26,7 +26,7 @@
     <string name="time_input_hint">Amser Dymunol</string>
     <string name="number_of_passengers_input_hint">Nifer o Deithwyr</string>
     <string name="notes_input_hint">Nodiadau Ychwanegol (dewisol)</string>
-    <string name="cancel_booking_creation_confirmation">Wyt yn siwr dy fod eisiau canslo?</string>
+    <string name="cancel_booking_creation_confirmation">Ydych yn siwr eich fod eisiau canslo?</string>
     <string name="select_number">Dewis Rhif</string>
     <string name="number_of_passengers_selection">Dewis Nifer o Deithwyr</string>
     <string name="desired_time_selection">Dewis Amser Dymunol</string>
@@ -61,6 +61,8 @@
     <string name="booking_notes">Nodiadau yr Archeb</string>
     <string name="new_note">Ychwanegu Nodyn i\'r Archeb</string>
     <string name="note_successfully_added">Nodyn wedi ei ychwanegu i\'r archeb</string>
+    <string name="resign_confirmation">Ydych yn siwr eich fod eisiau ymddiswyddo?</string>
+    <string name="resigned_successfully">Wedi Ymddiswyddo yn llwyddiannus, ailgofnodwch.</string>
 
     <!-- Time Formats -->
     <string name="desired_time_format">%1$02d:%2$02d</string>
@@ -80,6 +82,7 @@
     <string name="account_action_change_name">Newid Enw Llawn</string>
     <string name="account_action_log_out">Allgofnodi</string>
     <string name="account_action_about">Gwybodaeth</string>
+    <string name="account_action_resign">Ymddiswyddo</string>
 
     <string name="account_option_icon_content_description">Icon for account action</string>
 

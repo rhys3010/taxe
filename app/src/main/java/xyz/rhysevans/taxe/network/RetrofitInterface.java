@@ -115,4 +115,17 @@ public interface RetrofitInterface {
      */
     @PATCH("bookings/{id}")
     Observable<Response> editBooking(@Path("id") String id, @Body Booking booking);
+
+    /////////////////////
+    //    COMPANIES    //
+    ////////////////////
+
+    /**
+     * Remove a given driver from a company
+     * @param companyId
+     * @param driverId
+     * @return
+     */
+    @PATCH("companies/{companyId}/drivers/{driverId}")
+    Observable<Response> removeDriver(@Path("companyId") String companyId, @Path("driverId") String driverId);
 }
