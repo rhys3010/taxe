@@ -310,17 +310,10 @@
                             </LinearLayout>
                         </LinearLayout>
 
-                        <View
-                            android:id="@+id/button_bar_separator"
-                            android:layout_below="@id/no_passengers_row"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@android:color/darker_gray"/>
-
                         <!-- Button Bar -->
                         <RelativeLayout
                             android:id="@+id/button_bar"
-                            android:layout_below="@id/button_bar_separator"
+                            android:layout_below="@id/no_passengers_row"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/booking_info_row_margin"
