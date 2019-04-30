@@ -1,13 +1,8 @@
 \chapter{Background \& Objectives}
+The aim of this project was to create a platform to serve as an intermediary between local taxi companies and their customers. The development of such a platform presented many engineering and project management challenges. This chapter aims to discuss the preparations required for the project, together with an analysis of the project's objectives and an in-depth description of the processes used.
 
-\section{Background}
-The aim of this project was to create a platform that serves as an intermediary between local taxi companies and their customers. The platform supports three types of users: Company Admin, Driver and Customer. It consists of two user-facing applications: An android app - intended to be usable by Drivers and Customers, and a mobile-friendly web application - intended to be usable by Company Admins. Both applications are served by a single REST API.
-
-Currently, it is intended that a single instance of the platform is used by many taxi companies, each with their own Company Admins and Drivers. The companies would then use the platform as a service in order to support their internal booking mechanisms. However, it can be adapted to be used by a single Company as their sole booking management mechanism. This makes the platform very flexible, allowing for varying use cases.
-
-The primary motivation for this project was to streamline the process of making taxi bookings in small, local areas. With the hope that a fully mobile, digital solution would lead to a better experience for both the companies and their customers. For example, being able to view a history of all bookings could be extremely helpful for cases of lost property, criminal damage, etc. In addition to this, by viewing the live status of their booking, and communicating with their driver via notes, customers can make sure they are present for their booking at the correct time, hopefully resulting in fewer wasted Taxis.
-
-\subsection{Background Research}
+\section{Preparation}\label{ref_background}
+\subsection{Background Research}\label{ref_background_research}
 In order to successfully execute the project, research had to be done into various aspects of the app's development. This includes methodology, technologies, and deployment options.
 
 \subsubsection{Methodology}\label{methodology_research_ref}
@@ -32,7 +27,7 @@ It became apparent that a relatively small web app would need to be created as p
 
 Due to previous experience, it was already decided that Android Studio would be the chosen IDE used to develop the Android application. However, there was still a decision to be made about developing the API and Web Application. The standard code editor 'Atom' had been used for previous web projects. However, upon further research JetBrains's 'WebStorm' IDE was discovered. Therefore research was done into both solutions in order to select the most appropriate.
 
-Lastly, project management, deployment, and development tools had to be researched. In terms of project management, it was already decided that an online Trello board would be used to keep track of the needed tasks. It was also decided early on that GitHub would be the primary version control tool used in the project, due to its familiarity and potential integration with continuous integration tools. In order to fully explore the potential of using an agile development methodology, various continuous integration tools were researched. These included: JetBrains's TeamCity~\cite{teamcity_documentation_ref}, TravisCI~\cite{travis_documentation_ref}, and Jenkins~\cite{jenkins_documentation_ref}. Each CI tool has its strengths, with TravisCI standing out as the most lightweight and easily integrated. TeamCity is developed by JetBrains, several of their products were also considered/used for the project so familiarity would be an advantage. Lastly, Jenkins appeared to be the most widely used tool and therefore would have plenty of documentary and online tutorials. Finally, in order to potentially support any CI tools, the containerization tool 'Docker'~\cite{docker_documentation_ref} was researched for use in the API's development.
+Lastly, project management, deployment, and development tools had to be researched. In terms of project management, it was already decided that an online Trello board~\cite{trello_ref} would be used to keep track of the needed tasks. It was also decided early on that GitHub would be the primary version control tool used in the project, due to its familiarity and potential integration with continuous integration tools. In order to fully explore the potential of using an agile development methodology, various continuous integration tools were researched. These included: JetBrains's TeamCity~\cite{teamcity_documentation_ref}, TravisCI~\cite{travis_documentation_ref}, and Jenkins~\cite{jenkins_documentation_ref}. Each CI tool has its strengths, with TravisCI standing out as the most lightweight and easily integrated. TeamCity is developed by JetBrains, several of their products were also considered/used for the project so familiarity would be an advantage. Lastly, Jenkins appeared to be the most widely used tool and therefore would have plenty of documentary and online tutorials. Finally, in order to potentially support any CI tools, the containerization tool 'Docker'~\cite{docker_documentation_ref} was researched for use in the API's development.
 
 \subsubsection{Deployment Options}
 Deployment of the Android app itself is made fairly straightforward by Android Studio's build options. Allowing for APK signing and Google Play Store support. However, with regards to the REST API and the Web Application, some research was required to decide on the most appropriate deployment solution. The following solutions were researched and considered as options: Heroku~\cite{heroku_documentation_ref}, Amazon Web Services (AWS)~\cite{aws_documentation_ref}, and self-hosting using Nginx~\cite{nginx_documentation_ref}. Each of these solutions had its advantages, deploying via Heroku would be made simple due to its in-built Docker support. Using AWS would allow for very fine grain control over server size, resources, and traffic management; it would also make supporting SSL encryption trivial. Lastly, a custom hosting solution using Nginx would be the simplest and easiest to manage, due to pre-existing server setups. However, this solution could have some security implications.
@@ -48,16 +43,57 @@ Having investigated a commercial solution that did not target Taxi companies dir
 Lastly, a primarily web-based service, 'minicabit'~\cite{minicabit_documentation_ref} was investigated. Minicabit is a UK based service, that allows users to retrieve taxi booking quotes, it is also possible to book a taxi based on the quotes received. The website's user interface was very friendly and intuitive. The look and feel of the quoting system were very similar to other websites within the travel industry. Although this service provides support for booking taxis, it appeared to have minimal support for any booking management or tracking.
 
 \section{Analysis}
-Taking into account the problem and what you learned from the background work, what was your analysis of the problem? How did your analysis help to decompose the problem into the main tasks that you would undertake? Were there alternative approaches? Why did you choose one approach compared to the alternatives? 
+\subsection{Objective}\label{ref_objectives}
+The primary objective of this project was to create a platform that serves as an intermediary between local taxi companies and their customers. The platform would need to support three types of users: Company Admin, Driver and Customer. 
 
-There should be a clear statement of the objectives of the work, which you will evaluate at the end of the work. 
+It would be intended that a single instance of the platform be used by many taxi companies, each with their own Company Admins and Drivers. The companies would then use the platform as a service in order to support their internal booking mechanisms. However, it should also have the ability to be adapted to be used by a single Company as their sole booking management mechanism. This would make the platform very flexible, allowing for varying use cases.
 
-In most cases, the agreed objectives or requirements will be the result of a compromise between what would ideally have been produced and what was determined to be possible in the time available. A discussion of the process of arriving at the final list is usually appropriate.
+The primary motivation for this project was to streamline the process of making taxi bookings in small, local areas. With the hope that a fully mobile, digital solution would lead to a better experience for both the companies and their customers. For example, being able to view a history of all bookings could be extremely helpful for cases of lost property, criminal damage, etc. In addition to this, by viewing the live status of their booking, and communicating with their driver via notes, customers can make sure they are present for their booking at the correct time, hopefully resulting in fewer wasted Taxis.
 
-As mentioned in the lectures, think about possible security issues for the project topic. Whilst these might not be relevant for all projects, do consider if there are relevant for your project. Where there are relevant security issues, discuss how they will this affect the work that you are doing. Carry forward this discussion into relevant areas for design, implementation and testing.
+\subsection{Proposed Approaches}
+Having formalized the objectives of this project, it was required that an approach to fulfilling those objectives be selected. Given the initial topic that this project stemmed from ('Android app of your choice'). It was apparent that a native Android App would be the primary solution to complete the project's objectives. However, there was plenty of freedom to decide on an approach for a backend to serve the application; or perhaps a secondary application to aid in the fulfillment of the objective.
+
+The first approach that was conceived involved a single Android App and a server to provide persistence. The single App would support all three user categories by serving content dynamically based on role. Although an entirely valid approach, it was believed that a mobile application may not be suitable for use by a Taxi Controller in an office environment.
+
+Bearing in mind the realizations gained from the 'single app' approach, a desktop application to support Company Admins was considered. This would likely involve a fairly simple desktop application being developed alongside the mobile application to consume a common backend. This approach certainly addresses the concerns raised by the previous approach. However, it would limit the use of the application to an office environment. There are some taxi companies that operate with shared roles, sometimes the controllers also act as drivers.
+
+The final and accepted approach was to support Customers and Drivers with an Android App and to support Company Admins with a Responsive Web Application. Both of which would still be served by a common backend. This was believed to be the most flexible and fitting solution. It would allow the application to be used from an array of devices and potentially allow multiple systems to be used at once in some very specific use-cases.
+
+\subsection{Deliverables}
+As discussed in Section~\ref{ref_objectives}, broadly, the primary objective of this project was to create a fully functioning Taxi booking platform. Six tangible deliverables can be drawn from this objective.
+
+\subsubsection{Full set of requirements in the form of User Stories}
+This deliverable would contain a full set of formally written user stories.
+Each story would contain four parts: title, description of the feature, 'essential' or 'non-essential' flag, and the acceptance criteria. Below is an example of a User Story for this platform:
+
+\textbf{Customers can cancel a booking at any time (Essential)}\\
+As a customer, I want to be able to cancel my booking so that if I no longer need a taxi I don't waste the taxi company's time driving out.\\
+
+\textbf{Acceptance Criteria}
+\begin{itemize}
+	\item If a customer selects to cancel a booking they are prompted for a confirmation.
+	\item If the customer confirms the cancellation their booking is updated.
+\end{itemize}
+
+Together, all of the 'essential' stories would form the minimum viable product for this project. With various systems partially fulfilling the story, until it has been fully completed. To consider the above example, the cancellation of a booking must be supported both within the API and the mobile application.
+
+\subsubsection{A fully functioning REST API to behave as the 'core' of the system}
+Given that each application within this platform would consume the API, it would need to partially meet the majority of the requirements laid out by the User Stories. Therefore, this deliverable would involve the creation and deployment of an API that can fully support each requirement of the platform. Considering the importance and use of this deliverable, security will most certainly be a primary concern.
+
+\subsubsection{User Interface prototypes and style documentation for the user-facing systems within the platform}
+This deliverable would involve the creation of UI prototypes and a decision about the general look and feel of the platform to be documented. This would allow the development of the user-facing systems to be informed and consistent with the rest of the platform.
+
+\subsubsection{A user-friendly and intuitive Android Application to consume the API and be used by Customers and Drivers}
+In order to support all of the requirements and API functionalities concerning Customers and Drivers, a 'front-end' would need to be created to allow these users to interact with the platform. This would be the primary user-facing application within the platform. It would also require support for allowing the creation of users and enforce access control for unauthenticated users.
+
+\subsubsection{A mobile-friendly Web Application to consume the API and be used by Company Admins}
+Similarly to the mobile application, a system would need to exist to allow Company Admins to interact with the platform. This system would need to satisfy all of the requirements relating to Company Admins. In order to do this, it would need to strictly enforce role-based access control to ensure only registered Company Admins can make use of the system.
+
+\subsubsection{A set of automated and manual tests to verify the correctness of each system and their success at fulfilling the set requirements}
+As with any project, correctness and accuracy are imperative. Therefore, thorough testing of the platform is undoubtedly a key deliverable. The testing strategy would also ensure accurate acceptance measurements of the requirements as outlined in each user story.
 
 \section{Process}
-Having narrowed down the options for development methodology to those discussed in Section~\ref{methodology_research_ref} and researched each option it was decided that an adapted version of Extreme Programming would be used for the project. 
+Having narrowed down the options for development methodology to those discussed in Section~\ref{methodology_research_ref} and researched each option it was decided that an adapted version of Extreme Programming would be used for the project. This section will discuss the specific practices and methods that will be applied in this project's development methodology.
 
 Given the restrictions that a plan-based approach such as SDLC  would have on the project, with specific regard to the requirements it was decided the approach had to be agile. Due to the relatively small scale and timeframe of the project, it was also thought that it would be very beneficial to focus on high quality, working software over the documentation required by SDLC.
 
@@ -72,7 +108,7 @@ The following practices are all considered primary practices within Extreme Prog
 Although mainly focused on software development teams to ensure a healthy workplace and work/life balance, this practice also suits individual projects very well. By following this practice, work is undertaken at the right time and location for the right length of time, without burning out. This requires that steps be taken to ensure a focused state can be entered to complete work without distractions. 
 
 \subsubsection{Stories}
-Stories are a key practice in most agile methodologies, in this project user stories were written for each desired functionality. Each story was labeled as either 'essential' or 'nice to have', this ensured that work was prioritized correctly and essential aspects of the system were built in a timely way. Stories were written on physical, coloured cards and placed on a corkboard in the main work area of the project. They also existed electronically on a Trello~\cite{ref_trello} board, this allowed progress to be shared with the project supervisor and allowed work to be completed away from the main work station. There was also be a static document created with each high-level story written formally, this can be found in the Appendices.
+Stories are a key practice in most agile methodologies, in this project user stories were written for each desired functionality. Each story was labeled as either 'essential' or 'nice to have', this ensured that work was prioritized correctly and essential aspects of the system were built in a timely way. Stories were written on physical, coloured cards and placed on a corkboard in the main work area of the project. They also existed electronically on a Trello~\cite{trello_ref} board, this allowed progress to be shared with the project supervisor and allowed work to be completed away from the main work station. There was also be a static document created with each high-level story written formally, this can be found in the Appendices.
 
 \subsubsection{Weekly Cycle}
 Weekly Cycles are synonymous with iterations in other agile methodologies. In this project weekly cycles ran from Saturday-Friday, meaning each cycle began on a Saturday and ended on a Friday. The first day of the cycle mainly consisted of planning and choosing which stories to tackle; there was also an overall reflection and a look at the project's current progress. The goal was that by the end of the cycle all stories had been realized and are now implemented, integrated and tested features within the system. The final day of the cycle involved writing an entry into the project's weekly blog~\cite{blog_ref} reflecting on the week's work and documenting the goals for the next week. By using a weekly cycle, software was constantly being produced, allowing for a regular opportunity to analyze and get feedback.
@@ -89,6 +125,6 @@ The 10-minute build practice is intended to enforce a quick and easy build proce
 \subsubsection{Continuous Integration}
 Continuous Integration supports the idea of a fast build process. By immediately testing and integrating code systems into the overall system, integration issues were caught much sooner and with less consequence. Continuous Integration also encouraged and enforced frequent and reliable automatic testing.
 
-\subsection{Incremental Design / Refactoring}
+\subsubsection{Incremental Design / Refactoring}
 Incremental Design suggests that some spike work be done up front to understand how much effort is required and any issues that might arise. This approach reduced risk and allowed for a better estimation for a given story. This practice allowed for informed design decisions to be made when necessary and be made with the most current information available. The practice of incremental design also calls for the use of frequent refactoring to ensure correct design.
 

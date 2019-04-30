@@ -1,7 +1,17 @@
 %\addcontentsline{toc}{chapter}{Development Process}
 \chapter{Design}
 
-You should concentrate on the more important aspects of the design. It is essential that an overview is presented before going into detail. As well as describing the design adopted it must also explain what other designs were considered and why they were rejected.The design should describe what you expected to do, and might also explain areas that you had to revise after some investigation.Typically, for an object-oriented design, the discussion will focus on the choice of objects and classes and the allocation of methods to classes. The use made of reusable components should be described and their source referenced. Particularly important decisions concerning data structures usually affect the architecture of a system and so should be described here.How much material you include on detailed design and implementation will depend very much on the nature of the project. It should not be padded out. Think about the significant aspects of your system. For example, describe the design of the user interface if it is a critical aspect of your system, or provide detail about methods and data structures that are not trivial. Do not spend time on long lists of trivial items and repetitive descriptions. If in doubt about what is appropriate, speak to your supervisor. You should also identify any support tools that you used. You should discuss your choice of implementation tools - programming language, compilers, database management system, program development environment, etc.Some example sub-sections may be as follows, but the specific sections are for you to define. 
+You should concentrate on the more important aspects of the design. It is essential that an overview is presented before going into detail. As well as describing the design adopted it must also explain what other designs were considered and why they were rejected.
+
+The design should describe what you expected to do, and might also explain areas that you had to revise after some investigation.
+
+Typically, for an object-oriented design, the discussion will focus on the choice of objects and classes and the allocation of methods to classes. The use made of reusable components should be described and their source referenced. Particularly important decisions concerning data structures usually affect the architecture of a system and so should be described here.
+
+How much material you include on detailed design and implementation will depend very much on the nature of the project. It should not be padded out. Think about the significant aspects of your system. For example, describe the design of the user interface if it is a critical aspect of your system, or provide detail about methods and data structures that are not trivial. Do not spend time on long lists of trivial items and repetitive descriptions. If in doubt about what is appropriate, speak to your supervisor.
+ 
+You should also identify any support tools that you used. You should discuss your choice of implementation tools - programming language, compilers, database management system, program development environment, etc.
+
+Some example sub-sections may be as follows, but the specific sections are for you to define. 
 
 \section{Overall Architecture}
 
@@ -12,3 +22,27 @@ You should concentrate on the more important aspects of the design. It is essent
 \section{User Interface}
 
 \section{Other relevant sections}
+
+\section{Technologies Used}
+As the developed platform would contain several systems, it was clear that a diverse array of technologies would need to be adopted. Both to aid project management and for use in implementation. This section will discuss the selected technologies for this project.
+
+\subsection{Implementation}
+With regards to the technology that would be used to develop the REST API, it was a close decision between Rails 5 and Node.js / Express.js. Although Flask and ASP.net were most certainly fit for purpose and had plenty of documentation to get started. There was a distinct lack of experience in the underlying languages (Python \& C\#). The project supervisor had a level of expertise in Rails, this would have been an advantage for the adoption of this framework. However, due to personal preference and a slight bias towards Javascript, Node.js together with Express.js was selected. This choice showed great promise, with a considerable amount of online resources and available testing libraries. It would also mean the development of the API would integrate seamlessly with Node.js's default package manager (NPM). This would allow access to hundreds of thousands of javascript packages.
+
+Having researched both Angular and React it was clear they were both equally appropriate for this task. However, Angular's traits were increasingly more appealing after in-depth research. It offered a substantial amount of in-built functionality compared to React. Examples of these functionalities are an In-built XSS protection, a native Router (eliminating the need for a third party library), a form builder, and SCSS compiling. It also supported Google's Material Design, through pre-built components, this was ideal to ensure consistency between the platform's applications. The only considerable drawback was that Angular is based in Typescript, a syntactically strict superset of Javascript; this was an unfamiliar technology. However, given the considerable advantages and previous experience with Javascript, the benefits certainly outweighed the drawbacks. It should also be mentioned that the adoption of Angular would loosely complete the project's adoption of the MEAN stack~\cite{mean_documentation_ref}.
+
+\subsection{Data Persistence}
+Although the research was certainly a key part of making a fully informed decision; a JSON-like document-oriented DBMS seemed like an obvious fit, having already decided to use Node.js for the API. Therefore, MongoDB was selected.  One disadvantage of a NoSQL solution is that complicated queries are typically considered more difficult compared to a traditional SQL DBMS. However, given the simple nature of the queries for this project, this didn't seem overly relevant. 
+
+\subsection{Development Environments}
+Having researched JetBrains' WebStorm, it was decided it would be a better fit for the development of both the platform's REST API and Web Application. With substantial language-specific support, code completion, syntax highlighting, and a preview of markdown files, it was an easy decision. WebStorm also provides in-built integration with docker, GitHub, and NPM.
+
+\subsection{Project Management}
+After researching many project management solutions, a decision was made to use Docker for containerization of the REST API. This conclusion was mainly motivated by the ability to easily replicate the development environment across multiple machines. Due to Extreme Programming being the project's chosen development methodology, a Continuous Integration tool had to be selected. Having researched several options, it was eventually decided that TravisCI would be used. It was by far the most lightweight and easy to understand tool of those researched. It seamlessly integrates with GitHub through the use of a single YAML file and OAuth, making adoption relatively easy for inexperienced users.
+
+\subsection{Deployment}
+
+
+
+
+
