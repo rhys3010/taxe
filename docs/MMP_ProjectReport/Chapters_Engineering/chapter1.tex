@@ -10,7 +10,7 @@ The primary motivation for this project was to streamline the process of making 
 \subsection{Background Research}
 In order to successfully execute the project, research had to be done into various aspects of the app's development. This includes methodology, technologies, and deployment options.
 
-\subsubsection{Methodology}
+\subsubsection{Methodology}\label{methodology_research_ref}
 Software Development Methodology is a key part of any large project. The effect of the methodology on the product, along with a project's ability to adapt to the methodology should always be considered when making a selection. With this in mind, several options were researched for the project.
 
 The first methodology researched was the Waterfall Model, or 'SDLC'~\cite{sdlc_ref}. Having already worked on a project using the Waterfall Model, there was less of a focus on researching the methodology but rather to consider its applicability in this project. As the Waterfall Model is a plan-driven approach it would require a lot of upfront documentation and decision making with regards to requirements, thus potentially making it rather inflexible. Given that this project also involved a significant learning curve with regards to the technologies used, it would perhaps be tricky to accurately gauge the ability to implement various functionalities early on.
@@ -57,5 +57,38 @@ In most cases, the agreed objectives or requirements will be the result of a com
 As mentioned in the lectures, think about possible security issues for the project topic. Whilst these might not be relevant for all projects, do consider if there are relevant for your project. Where there are relevant security issues, discuss how they will this affect the work that you are doing. Carry forward this discussion into relevant areas for design, implementation and testing.
 
 \section{Process}
-You need to describe briefly the life cycle model or research method that you used. You do not need to write about all of the different process models that you are aware of. Focus on the process model that you have used. It is possible that you needed to adapt an existing process model to suit your project; clearly identify what you used and how you adapted it for your needs.
+Having narrowed down the options for development methodology to those discussed in Section~\ref{methodology_research_ref} and researched each option it was decided that an adapted version of Extreme Programming would be used for the project. 
+
+Given the restrictions that a plan-based approach such as SDLC  would have on the project, with specific regard to the requirements it was decided the approach had to be agile. Due to the relatively small scale and timeframe of the project, it was also thought that it would be very beneficial to focus on high quality, working software over the documentation required by SDLC.
+
+Feature Driven Development was another agile approach that was considered. Although with adaptations, it could have been very well fitted for a single person project, it was apparent that FDD was intended for use in a team-based project. This is seen in its emphasis on roles. Therefore, it was clear that XP was the most appropriate agile methodology for the project.
+
+XP was selected in the hope that its use would help mitigate the increased risk associated with a project where there is a lack of experience and a lot of learning to do with the technologies used. Due to this increased risk, it was believed that creating a static requirement list would prove difficult and likely be very flawed. Therefore, given that XP is an Agile Approach and is intended to support changing requirements it fit perfectly.
+
+\subsection{Practices}
+The following practices are all considered primary practices within Extreme Programming~\cite[Ch.~7]{xp_explained_ref}. They have been selected due to their relevance to the project. The following inapplicable practices have been omitted: Sit Together, Whole Team, Informative Workspace, Pair Programming, Test First. These practices were aspects of XP targetted towards team-based projects and larger workspaces.
+
+\subsubsection{Energized Work}
+Although mainly focused on software development teams to ensure a healthy workplace and work/life balance, this practice also suits individual projects very well. By following this practice, work is undertaken at the right time and location for the right length of time, without burning out. This requires that steps be taken to ensure a focused state can be entered to complete work without distractions. 
+
+\subsubsection{Stories}
+Stories are a key practice in most agile methodologies, in this project user stories were written for each desired functionality. Each story was labeled as either 'essential' or 'nice to have', this ensured that work was prioritized correctly and essential aspects of the system were built in a timely way. Stories were written on physical, coloured cards and placed on a corkboard in the main work area of the project. They also existed electronically on a Trello~\cite{ref_trello} board, this allowed progress to be shared with the project supervisor and allowed work to be completed away from the main work station. There was also be a static document created with each high-level story written formally, this can be found in the Appendices.
+
+\subsubsection{Weekly Cycle}
+Weekly Cycles are synonymous with iterations in other agile methodologies. In this project weekly cycles ran from Saturday-Friday, meaning each cycle began on a Saturday and ended on a Friday. The first day of the cycle mainly consisted of planning and choosing which stories to tackle; there was also an overall reflection and a look at the project's current progress. The goal was that by the end of the cycle all stories had been realized and are now implemented, integrated and tested features within the system. The final day of the cycle involved writing an entry into the project's weekly blog~\cite{blog_ref} reflecting on the week's work and documenting the goals for the next week. By using a weekly cycle, software was constantly being produced, allowing for a regular opportunity to analyze and get feedback.
+
+\subsubsection{Quarterly Cycle}
+Quarterly Cycles are synonymous with releases. Given the scale of this project (roughly 12 weeks), a quarterly cycle consisted of 3 weekly cycles. This meant that the first quarterly cycle passed just in time for the mid-project demonstration, thus ensuring there was at least a partially working system to be delivered. At the beginning of each quarterly cycle, a plan was drafted for which stories should be completed in that cycle. The quarterly cycle plan was re-visited briefly at the beginning of each weekly cycle. 
+
+\subsubsection{Slack}
+The purpose of slack is to add low priority or non-essential stories to weekly and quarterly cycles. This allowed tasks or stories to be discarded if time became an issue, thus accounting for inaccurate estimates.
+
+\subsubsection{Ten-Minute Build}
+The 10-minute build practice is intended to enforce a quick and easy build process, if a build process is long and arduous it is less likely to be done often. Therefore an easy, automatic build process ensured that builds were done frequently, allowing for more feedback and less time between errors.
+
+\subsubsection{Continuous Integration}
+Continuous Integration supports the idea of a fast build process. By immediately testing and integrating code systems into the overall system, integration issues were caught much sooner and with less consequence. Continuous Integration also encouraged and enforced frequent and reliable automatic testing.
+
+\subsection{Incremental Design / Refactoring}
+Incremental Design suggests that some spike work be done up front to understand how much effort is required and any issues that might arise. This approach reduced risk and allowed for a better estimation for a given story. This practice allowed for informed design decisions to be made when necessary and be made with the most current information available. The practice of incremental design also calls for the use of frequent refactoring to ensure correct design.
 
