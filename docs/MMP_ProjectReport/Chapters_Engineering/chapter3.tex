@@ -1,7 +1,144 @@
 \chapter{Implementation}
+The implementation phase of this project spanned across 9 weeks. Given that the software development methodology adopted was Extreme Programming. The platform was implemented with an iterative approach or a series of 'Weekly Cycles'. In this chapter, an overview of the work done in each weekly cycle will be provided, including a discussion of any problems encountered and how they were overcome.
 
-The implementation should discuss any issues you encountered as you tried to implement your design. During the work, you might have found that elements of your design were unnecessary or overly complex; perhaps third-party libraries were available that simplified some of the functions that you intended to implement. If things were easier in some areas, then how did you adapt your project to take account of your findings?
+As discussed in Section~\ref{process_ref}, at the beginning of each week it was decided which stories would be completed, with some non-essential stories included to add slack.
 
-It is more likely that things were more complex than you first thought. In particular, were there any problems or difficulties that you found during implementation that you had to address? Did such problems simply delay you or were they more significant?
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.5\linewidth]{Resources/img/story_board.jpg}
+	\caption{The physical Story Board used throughout the project}
+	\label{fig:story-board}
+\end{figure}
 
-You can conclude this section by reviewing the end of the implementation stage against the planned requirements. 
+\section{Week 1 (15/02 - 22/02)}
+All the required prototyping for the platform took place in the first week of development. This included UI Prototypes for the Android App's screens, a prototype Authentication API, and a prototype Android App to consume the Authentication API.
+
+\subsection{Prototype Authentication API}
+During the creation of the prototype Authentication API, research into third-party authentication libraries was also done, with libraries such as Okta~\cite{okta_documentation_ref} and Passport.js~\cite{passport_documentation_ref} being considered. It was eventually decided, however, that a custom solution would allow for more fine-grain control over the API's authentication and access control.
+
+\subsection{Prototype Android App}
+Using the created API, the next task was to create a prototype Android App to consume the API. A major part of this task was to set up HTTP requests and JSON response de-serialization. The second tutorial in Raj Amal's series of walkthroughs~\cite{nodejs_authentication_tutorial_ref} proved essential in understanding Retrofit, rxJava, and Google's GSON. The prototype App allowed users to register, login, and view their profile. It enforced access control to ensure un-authenticated users couldn't view the main screen of the App. The Android aspect of this implementation was fairly trivial due to previous experience. For example, storing the user's access token in shared preferences and limiting access by requiring the presence of the token.
+
+\subsection{User Interface Prototypes}
+Now that there were prototypes in place to lay the foundation, it was time to prototype the User Interface for the actual platform. The first step in this process was to establish a general style and branding. This involved deciding on a colour scheme, choosing a typeface, and creating the first draft of the platform's logo. The remainder of the work involved actually creating the prototype for each of the App's screen. Prototypes were created with varying degrees of fidelity, the first pass simply involved sketching out some of the screens on paper. The final produced prototypes used Material Design components provided for Adobe XD~\cite{adobeXD_documentation_ref}. This meant that the produced prototypes would closely resemble the finished product produced in Android Studio. Examples of some of the created prototypes can be found in the report's appendices.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.5\linewidth]{Resources/img/color-scheme.png}
+	\caption{The Colour Scheme Selected for the Platform}
+	\label{fig:color-scheme}
+\end{figure}
+
+\newpage
+
+\section{Week 2 (23/02 - 01/03)}
+The focus of the second week of implementation was to get the REST API up and running and supporting all User related tasks: Registration, Authentication, and Account Management.
+
+\subsection{Node.js Project Creation}
+The very first step to implementing the API was to create the Node.js project and configure it to run in a Docker container alongside MongoDB. In order to create the Node.js project. An excellent GitHub repository~\cite{js_guidelines_documentation_ref} was discovered that outlined the best practices and standards in JavaScript projects.
+
+\subsection{Containerization of Project}
+Containerization of the API itself proved to be very straightforward, as it is a well-documented process and simply involved the creation of two files: Dockerfile and docker-compose.yml. The difficulty arose when attempting to connect the API container with MongoDB in order to persist data. The solution appeared to be to include a second container dedicated to MongoDB. This was working and a successful connection to the database could be made from within the API. However, in order to support data persistence after the containers were terminated, Data Volumes were required. A very helpful Medium tutorial~\cite{docker_medium_tutorial_ref} was used to correctly set up the data volumes and the setup was now working as intended.
+
+\subsection{Authentication}
+During the prototyping phase of development, an authentication API was created as a piece of spike work. Alongside this spike work, research into third-party authentication libraries was also done, with libraries such as Okta~\cite{okta_documentation_ref} and Passport.js~\cite{passport_documentation_ref} being considered. It was eventually decided, however, that a custom solution would allow for more fine-grain control over the API's authentication.
+
+In order to provide the best security for the API, a token-based approach to authentication was used. It was also believed this would make the consumption of the API easier for the mobile application, by removing the need for sessions; thus making the API truly RESTful. The core principle behind this approach is that the user would send their email and password to a specific route within the API via Basic Authentication (Base64 encoding). The credentials would then be decoded and verified against the password hash stored in the database. If valid, the API would then provide the user with a 24-hour access token, to be sent in the header of any subsequent requests. Although initially requiring a bit of thought and research, implementation of this approach didn't provide any considerable difficulties. An excellent and in-depth tutorial written by Raj Amal~\cite{nodejs_authentication_tutorial_ref} was used as a reference to assist in the implementation.
+
+\section{Week 3 (02/03 - 08/03)}
+Testing of the API's current routes and consumption of the API by the Android App was the main focus of the third week.
+
+\subsection{API Testing}
+With the API already running inside a Docker container, the testing process was much more portable. Two testing libraries were used: Mochajs~\cite{mocha_documentation_ref} as the primary testing framework and Chaijs~\cite{chai_documentation_ref} as the assertation library. Whilst gaining familiarity with the testing libraries, Samuele Zaza's tutorial on Scotch.io~\cite{mocha_chai_tutorial_ref} was invaluable. The API was tested on a per-route basis, with several different cases for each route being tested. There was a bit of difficulty getting the tests to run seamlessly within the Docker container in TravisCI's environment. However, improved Docker Compose configuration eventually solve these issues, with assistance from Joe Cieslik's article in Hackernoon~\cite{docker_testing_tutorial_ref}.
+
+\subsection{Implementation of Android App}
+Consumption of the API by the Android App was where the bulk of the work took place during this week of development. Having already created a prototype App to consume an API using Retrofit and rxJava, much of the concepts and the boilerplate code was already in place. The difficulty came with refactoring the code to ensure reliability and good design practices. A major part of this was the implementation of the Model, View, ViewModel design pattern. An article on Medium.com by Ahmad Shubita~\cite{mvvm_tutorial_ref} was used to get to grips with the design pattern and its implementation via Retrofit.
+
+Another essential aspect of the consumption of the API by the Android App was Error Handling, this is especially true for the registration process. In order to fully support internationalization/localization within the app, it was important that English error messages from the API not be displayed directly to the UI. Rather that error responses from the API come with four attributes: 'name' - the name given to a particular error; 'code' - an arbitrary number associated with a given error; 'message' - the error's name displayed in a more human-readable way; and 'description' - a brief description of the nature of the error. This way, the mobile app that consumes the API can simply read the code associated with a given error and fetch the matching string resource. One notable downside to this approach is that it increases the maintenance required. For example, if updates are made to the API that affects its error handling (a new error is added), this change must be accounted for in the App's Error-Parser.
+
+[INSERT ERROR-HANDLING DIAGRAM]
+
+\section{Week 4 (09/03 - 15/03)}
+The fourth week of development was mainly focused on preparations for the mid-project demonstration. Therefore, implementation of the platform itself was halted.
+
+\subsection{App Deployment}
+A major part of the preparations required for demonstrating the app's progress so far was the deployment of the API. Up to this point, the App had only been usable within an emulator ran on the same machine as the Node.js application. In order to properly demonstrate the app's development, it had to be able to access the API from an actual mobile device.
+
+As discussed in Section~\ref{deployment}, it was decided that the API would be deployed on a local server box using the Node.js process manager and Nginx's reverse proxy. Although there are certainly benefits to using Docker in production, for example, reduced setup times and improved portability. Much of the research done heavily discouraged its use if inexperienced, especially in a self-hosted environment. Therefore, the decision was made to deploy the API without docker, however, it will continue to be utilized for development and testing environments.
+
+The majority of the steps required to deploy the API were fairly straightforward and very well documented~\cite{deployment_tutorial_ref}. As discussed previously, there are certainly security implications associated with the chosen deployment approach. Such as lack of decent support for SSL, physical security concerns, inexperience with system administration, and the server itself being used for other, unrelated web applications. However, as a solution for demonstration purposes with fictitious personal data, it served its purpose excellently.
+
+\section{Week 5 (16/03 - 22/03)}
+With authentication already completed and supported both in the mobile app and on the REST API, the next logical step was to work on the implementation of booking creation. This task took surprisingly less time than anticipated, therefore there was time to complete some of the 'slack tasks'.
+
+\subsection{Booking Data Model support whithin the API}
+Having already implemented user authentication, creation, and management within the API, much of the foundations required for booking creation, management, and viewing were already in place. The main steps required were the following:
+
+\begin{itemize}
+	\item Create booking model
+	\item Interact with booking model via service
+	\item Create a controller to allow the router to interact with the service
+	\item Implement all the necessary routes for bookings (CRUD)
+	\item Add all the required input validations and error handling
+	\item Write unit tests for each booking route
+\end{itemize}
+
+The booking model, service, controller, and router are all fairly standard and similar to those for the user data model. 
+
+Input validation for booking creation was fairly trivial, with the exception of the 'time' field, as it had some special constraints:
+
+\begin{itemize}
+	\item Booking time cannot be further than 3 hours in the future
+	\item Boking time cannot be sooner than 10 minutes away
+	\item Booking time cannot be in the past
+\end{itemize}
+
+In order to easily compare time values, the ISO 8601 time stamp had to be parsed into a plain Javascript date object.
+
+\subsection{Booking Creation support within the Android App}
+Similarly to the API, having full support for the user data model within the App already made the implementation of booking creation very straightforward. Aspects of the App such as error handling and validation had to be updated to support the changes in the API.
+
+The main challenge for this aspect of the implementation was the UI. A dedicated Activity was created for booking creation, with standard text inputs for pickup location, destination, and notes. The number of passengers and booking time fields each have a custom dialog that prompts the user for an input. The number of passengers dialog is a custom dialog that contains a number-picker, with the parent activity implementing its value listener. Therefore, whenever the value of the number picker is changed, the parent activity is kept updated. The time picker, however, is a default android time picker with the dialog all created programmatically. Therefore, tracking the selected value was trivial.
+
+An interesting challenge faced when implementing the booking creation activity was deciding how to force the App to navigate to the 'booking viewing' screen upon successful creation of a booking. A considered option was simply to force the navigation whenever the booking creation activity was closed. However, this would prompt navigation even when the booking creation was canceled, which was an undesired behavior. The solution eventually implemented was to launch the booking creation activity with Android's 'startActivityForResult()' method. This would allow the activity to provide a return code when exited, meaning the activity could either exit with success or failure. If exited with success, a toast message is shown and the navigation is changed.
+
+\subsection{Account Management within the Android App}
+As mentioned at the start of this section, the primary tasks for this week's implementation took less time than anticipated. Therefore there was time to implement some of the less essential features. 
+
+Given that the support for account management was already supported in the API, it made sense to create the UI for account management. The main features of the account screen are a circular avatar with the user's first name initial and a list of account actions. All of the account actions were implemented with the exception of changing password. This required further security precautions within the API.
+
+\subsection{Support Dynamic Orientation within the Android App}
+The next functionality to be addressed was landscape support, up until this point the app had been locked into portrait mode for simplicity. Most screens ported over to landscape fairly easily, given that the Constraint Layout was used for most screens and is typically well supported in both landscape and portrait modes. However, the account overview screen and home screen required their own layout file specifically for landscape. Luckily, Android makes this very easy with the use of the 'land' suffix in resource folder names. A new resource folder named 'layout-land' was created to contain the landscape specific layouts. 
+
+Allowing the app to be rotated did present some unexpected complications,  specifically concerning asynchronous API calls. When a fragment or activity is destroyed, any outstanding asynchronous subscriptions are terminated (to avoid dangling). This does, however, mean that whenever a view is destroyed and re-created due to orientation change, any outstanding API calls are discarded. A simple, yet arguably lazy solution to this issue was simply to lock the orientation in place whenever an API call is made, then to unlock the orientation upon completion.
+
+\subsection{Welsh Language Support within the Android App}
+Having gone to the effort to support internationalization/localization within the app, it made sense to add string values for another language. This was trivial and simply involved translating all the existing string values and adding them to a '-cy' resource directory.
+
+[INSERT SCREENSHOT]
+
+\section{Week 6 (23/03 - 29/03)}
+This week's development was almost entirely based on the Android App. It primarily involved full support for bookings via implementation of the following: Active Booking Overview, Booking Cancelation, Booking History. Password changing was also re-visited.
+
+\subsection{Active Booking Overview}
+The user's currently active booking could be retrieved by simply retrieving their most recent booking. This is guaranteed to be accurate as new bookings cannot be created whilst an active booking already exists. The booking overview screen simply contained a card view with information populated by the API request. The card view is populated using Android's Data Binding library, allowing for stricter conformity to the MVVM design pattern.  Unfortunately, the view does need to be manually refreshed to fetch up to date data. However, this is made intuitive through the use of Android's SwipeRefreshLayout. The view is also refreshed whenever the user changes navigation.
+
+\subsection{Booking Cancelation}
+After implementing the booking overview screen, adding support for booking cancelation was trivial. A text-button was added to the bottom of the card view. Pressing the button prompts a simple confirmation dialog to the user. If confirmed, a request is sent to the API to update the booking's status to 'Cancelled'.
+
+\subsection{Booking History and Custom JSON De-Serialization}
+As seen in Figure~\ref{fig:entity_relationship}, the way bookings are stored under a user's record in the database is as an array of MongoDB Object IDs. Therefore when a user is retrieved from the API, their bookings are shown simply as a list of Object references. Whereas the booking history list is required to display a limited amount of information about the booking. Although technically each booking could be retrieved fully by making a GET request to the API for that specific booking, this is an undesirable solution and would require significantly more API requests. Therefore a new route was implemented within the API specifically to retrieve a full list of a user's bookings. Mongoose's 'populate' function proved very useful for this purpose. 
+
+The newly created route does not populate the 'driver' and 'customer' fields of the booking. Meaning they are still represented as strings (object IDs), whereas the booking model within the App stores the driver and customer fields as User objects. This caused some unexpected complications when it came to de-serialization of the JSON booking objects. When the booking JSON object was returned from a GET request to the /bookings/ route, it would be de-serialized just fine (due to driver and customer being populated). Whilst, if the booking JSON objects were returned from the /users/{id}/bookings route, a de-serialization exception was thrown. Upon further research, it was discovered that custom GSON de-serializers could be created that accounted for dynamic JSON fields. Although it took some time, this was done relatively easily and the problem was resolved.
+
+The remainder of the implementation for booking history went off without a hitch, a boilerplate Recycler View Adapter was created to handle the list of bookings. With a click listener to open an Activity and display the booking's full details. The booking overview fragment created earlier in this section was re-used here.
+
+\subsection{Password Changing}
+All of the UI elements required for supporting password changing were already implemented. An update to the user updating route on the API was required in order to force the user to provide a valid previous password before the changes could be approved.
+
+[INSERT BOOKING OVERVIEW SCREENSHOT]
+
+\section{Week 7 (30/03 - 05/04)}
+\section{Week 8 (06/04 - 12/04)}
+\section{Week 9 (13/04 - 19/04)}
+
