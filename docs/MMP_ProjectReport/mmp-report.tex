@@ -27,6 +27,8 @@
 % pdflatex mmp-report
 % pdflatex mmp-report
 
+\usepackage{pdfpages}
+
 % you will end up with mmp-report.pdf. Before submitting, add your user ID as a prefix, 
 % e.g. abc01-mmp-report.pdf 
 \usepackage{StylesAndReferences/mmp-report}
@@ -101,7 +103,7 @@
 \newpage
 \listoffigures % comment out this line if you don't have any figures / graphics
 \newpage 
-\listoftables % comment out this line if you don't have any tables
+%\listoftables % comment out this line if you don't have any tables
 \newpage
 
 % Set up page numbering
@@ -139,13 +141,6 @@
 
 \addcontentsline{toc}{chapter}{Appendices}
 \chapter*{Appendices}
-The appendices are for additional content that is useful to support the discussion in the report. It is material that is not necessarily needed in the body of the report, but its inclusion in the appendices makes it easy to access. 
-
-For example, if you have developed a Design Specification document as part of a plan-driven approach for the project, then it would be appropriate to include that document as an appendix. In the body of your report you would highlight the most interesting aspects of the design, referring your reader to the full specification for further detail.
-
-If you have taken an agile approach to developing the project, then you may be less likely to have developed a full requirements specification. Perhaps you use stories to keep track of the functionality and the 'future conversations'. It might not be relevant to include all of those in the body of your report. Instead, you might include those in an appendix. 
-
-There is a balance to be struck between what is relevant to include in the body of your report and whether additional supporting evidence is appropriate in the appendices. Speak to your supervisor or the module coordinator if you have questions about this.
 
 \pagebreak
 
@@ -171,6 +166,8 @@ There is a balance to be struck between what is relevant to include in the body 
 \include{Appendices/appendixA}
 \include{Appendices/appendixB}
 \include{Appendices/appendixC}
+\include{Appendices/appendixD}
+\include{Appendices/appendixE}
 
 \fancypagestyle{plain}{%
    \fancyhead{} %[C]{Annotated Bibliography}

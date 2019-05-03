@@ -1,15 +1,22 @@
 \chapter{Third-Party Code and Libraries}
+Bcrypt Js is a Javascript library to implement the bcrypt password hashing function. Version 2.3.0 is used within the platform to hash user passwords. The library is open source and available from the NPM website or GitHub directly: \url{https://www.npmjs.com/package/bcryptjs}. It is licensed under the MIT License~\cite{mit_license_ref} and is used without modification.
 
-If you have made use of any third party code or software libraries, i.e. any code that you have not designed and written yourself, then you must include this appendix. 
+Basic-Auth is a Javascript library to parse basic authentication headers within Node.js. It is used within the platform to decode credentials using Base64. The version used was 2.0.1, the library is available from NPM directly: \url{https://www.npmjs.com/package/basic-auth}. It is licensed under the MIT License~\cite{mit_license_ref} and is used without modification.
 
-As has been said in lectures, it is acceptable and likely that you will make use of third-party code and software libraries. If third party code or libraries are used, your work will build on that to produce notable new work. The key requirement is that we understand what your original work is and what work is based on that of other people. 
+Express is a minimalist web framework for Node.js. It was used within the platform in conjunction with Node.js to create the REST API. Version 4.16.4 was used. It is available from the NPM website: \url{https://www.npmjs.com/package/express}. It is licensed under the MIT License~\cite{mit_license_ref} and is used without modification.
 
-Therefore, you need to clearly state what you have used and where the original material can be found. Also, if you have made any changes to the original versions, you must explain what you have changed. 
+JsonWebToken (jwt)  is an implementation of JSON Web Tokens for Javascript. It is used within the platform to generate access tokens with a payload for users. It is available via the NPM website: \url{https://www.npmjs.com/package/jsonwebtoken}. Version 7.1.9 was used. It is licensed under the MIT License~\cite{mit_license_ref} and is used without modification.
 
-The following is an example of what you might say. 
+Mongoose is an Object Modelling Tool for MongoDB, it is designed to operate in asynchronous environments. Version 4.6.0 of this library was used within the platform to interact with the MongoDB database from the API. The library is available from the NPM website: \url{https://www.npmjs.com/package/mongoose}. It is licensed under the MIT License~\cite{mit_license_ref} and is used without modification.
 
-Apache POI library - The project has been used to read and write Microsoft Excel files (XLS) as part of the interaction with the client's existing system for processing data. Version 3.10-FINAL was used. The library is open source and it is available from the Apache Software Foundation 
-\cite{apache_poi}. The library is released using the Apache License 
-\cite{apache_license}. This library was used without modification. 
+Mockgoose is a Javascript library that allows MongoDB databases to be created in-memory for testing purposes. Version 8.0.1 is used within the platform's test suite to mock the backend database. It is available via the NPM website: \url{https://www.npmjs.com/package/mockgoose}. The library is licensed under the MIT License~\cite{mit_license_ref} and is used without modification.
 
-Include as many declarations as appropriate for your work. The specific wording is less important than the fact that you are declaring the relevant work.
+Mocha is a Javascript testing library that provides an environment for tests to be executed in. Version 6.0.2 is used in the platform for testing. It is available on NPM: \url{https://www.npmjs.com/package/mocha}. The library is licensed under the MIT License~\cite{mit_license_ref} and is used without modification.
+
+Chai is an assertion library intended to be used together with a testing library. Version 4.2.0 is used within the API for testing assertions and HTTP requests. It is available on NPM: \url{https://www.npmjs.com/package/chai}. The library is licensed under the MIT License~\cite{mit_license_ref} and is used without modification.
+
+Retrofit is a Java library to convert HTTP requests into Java interfaces. Version 2.1.0 was used within the Android App to send HTTP requests to the REST API. It is available on GitHub: \url{https://square.github.io/retrofit/} and is licensed under the Apache License~\cite{apache_license_ref}. It is used without modification.
+
+rxJava is a Java library by ReactiveX for creating asynchronous programs using observable sequences in Java. It was used within the Android App to create lifecycle aware, asynchronous HTTP requests. Version 2.1.0 was used and is available from GitHub: \url{https://github.com/ReactiveX/RxJava}. It is licensed under the Apache License~\cite{apache_license_ref} and is used without modification.
+
+Material Dashboard Angular is a boilerplate theme for Angular, it provides both the angular code and the Bootstrap and SCSS required. For the purposes of the project, only the Bootstrap and SCSS aspects were utilized. With the Angular components used for reference. The free version was used and is licensed under the MIT License~\cite{mit_license_ref}. It is available on Creative Tim's website: \url{https://www.creative-tim.com/product/material-dashboard-angular2}, it was used with minor modifications to some colour variables.
