@@ -36,4 +36,20 @@ As discussed at the beginning of the section, the platform in its entirety under
 
 The user testing was mainly focused on gauging the usability of the platform as a whole and preparing for the final demonstration. It was not intended to be a primary aspect of the testing strategy. However, having loaded the App onto one of the participant's devices (Samsung Galaxy S9 Running Android Pie), it was discovered that the App was throwing a network error. Because the App is consuming the API via HTTP, devices running a more up-to-date version of Android were rejecting the calls. The fix was simple and involved the simple addition of a line in the AndroidManifest file. However, if the test had not been completed, this issue would likely have occurred in the project's final demonstration.
 
-[INSERT USER TESTING IMAGES]
+\begin{figure}[!h]
+	\centering
+	\begin{subfigure}[b]{0.6\linewidth}
+		\includegraphics[width=\linewidth]{Resources/img/user_test_customer.jpg}
+		\caption{Customer}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.6\linewidth}
+		\includegraphics[width=\linewidth]{Resources/img/user_test_admin.jpg}
+		\caption{Company Admin}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.6\linewidth}
+		\includegraphics[width=\linewidth]{Resources/img/user_test_driver.jpg}
+		\caption{Driver}
+	\end{subfigure}
+	\caption{Photographs of the User Testing Process}
+	\label{fig:user_testing}
+\end{figure}

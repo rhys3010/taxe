@@ -24,9 +24,16 @@ Now that there were prototypes in place to lay the foundation, it was time to pr
 
 \begin{figure}[!htb]
 	\centering
-	\includegraphics[width=0.5\linewidth]{Resources/img/color-scheme.png}
-	\caption{The Colour Scheme Selected for the Platform}
-	\label{fig:color-scheme}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{Resources/img/booking_overview_prototype.png}
+		\caption{UI Prototype}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.4\linewidth}
+		\includegraphics[width=\linewidth]{Resources/img/booking_overview_real.jpg}
+		\caption{Actual Implementation}
+	\end{subfigure}
+	\caption{A comparison of the Booking Overview screen prototype and actual implementation}
+	\label{fig:ui_compare}
 \end{figure}
 
 \newpage
@@ -56,7 +63,12 @@ Consumption of the API by the Android App was where the bulk of the work took pl
 
 Another essential aspect of the consumption of the API by the Android App was Error Handling, this is especially true for the registration process. In order to fully support internationalization/localization within the app, it was important that English error messages from the API not be displayed directly to the UI. Rather that error responses from the API come with four attributes: 'name' - the name given to a particular error; 'code' - an arbitrary number associated with a given error; 'message' - the error's name displayed in a more human-readable way; and 'description' - a brief description of the nature of the error. This way, the mobile app that consumes the API can simply read the code associated with a given error and fetch the matching string resource. One notable downside to this approach is that it increases the maintenance required. For example, if updates are made to the API that affects its error handling (a new error is added), this change must be accounted for in the App's Error-Parser.
 
-[INSERT ERROR-HANDLING DIAGRAM]
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=\linewidth]{Resources/img/error_handling_flowchart.png}
+	\caption{A flowchart depicting the error handling process within the Android App}
+	\label{fig:error_flowchart}
+\end{figure}
 
 \section{Week 4 (09/03 - 15/03)}
 The fourth week of development was mainly focused on preparations for the mid-project demonstration. Therefore, implementation of the platform itself was halted.
@@ -115,8 +127,6 @@ Allowing the app to be rotated did present some unexpected complications,  speci
 \subsection{Welsh Language Support within the Android App}
 Having gone to the effort to support internationalization/localization within the app, it made sense to add string values for another language. This was trivial and simply involved translating all the existing string values and adding them to a '-cy' resource directory.
 
-[INSERT SCREENSHOT]
-
 \section{Week 6 (23/03 - 29/03)}
 This week's development was almost entirely based on the Android App. It primarily involved full support for bookings via implementation of the following: Active Booking Overview, Booking Cancelation, Booking History. Password changing was also re-visited.
 
@@ -135,8 +145,6 @@ The remainder of the implementation for booking history went off without a hitch
 
 \subsection{Password Changing}
 All of the UI elements required for supporting password changing were already implemented. An update to the user updating route on the API was required in order to force the user to provide a valid previous password before the changes could be approved.
-
-[INSERT BOOKING OVERVIEW SCREENSHOT]
 
 \section{Week 7 (30/03 - 05/04)}
 This week's primary focus was adding support for the Driver role within the platform. There was also some time to implement the app's home screen and re-assess how notes were being handled within bookings.
@@ -180,8 +188,6 @@ The bulk of the work took place in deciding how Companies would receive bookings
 
 The above mechanisms were implemented through the addition of three new routes: GET /bookings/, PATCH /bookings/{id}/release, PATCH /bookings/{id}/claim. The routes have all the necessary access protections to ensure only authorized users can perform the actions (for example, bookings can only be released by the company that owns it).
 
-[INSERT SEQUENCE DIAGRAM OF BOOKING CLAIM / RELEASE]
-
 \section{Week 9 (13/04 - 19/04)}
 The final week of development focused solely on the implementation of the Responsive Web App. In order to serve some of the created screens within the Web App, some minor updates to the API were also required.
 
@@ -190,10 +196,15 @@ Although the primary focus during the prototyping phase was on the API and the A
 
 Thankfully, most use-cases for the Web App required only boilerplate Angular code to make requests to the API and display the results on the screen. Bootstrap tables were mostly used to display information. Authentication and Access Control mirrored what had been done on the mobile app, with the user's access token being stored in local storage and attached to any HTTP request headers. Error Handling was also very straightforward, with any errors simply being displayed to the user via a notification element. The only downside to this approach is that error messages were being shown directly from the HTTP response, making the Web App unfriendly for internationalization. This is an area that given an opportunity for further development, would certainly be addressed.
 
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=\linewidth]{Resources/img/booking_claim_sequence.png}
+	\caption{A UML Sequence Diagram showing the process of claiming a booking via the Web App}
+	\label{fig:booking_claim_sequence}
+\end{figure}
+
 \subsection{Required Updates to the API}
 Some aspects of the Web App's development called for changes to the API in order to be implemented successfully. The two most prominent examples are listing of a Company's Admins and recruiting drivers via their email. There was no dedicated mechanism within the API to retrieve a populated list of a Company's Admins, this was required for the Web App's 'company profile' screen. This addition was very simple and simply involved the creation of a new route 'GET /companies/{id}/admins' that retrieved a list of admins.
 
 Another required change was supporting the addition of drivers to a company by their Email. Up to this point, Drivers had been added to a company by their Object IDs. However, this was not ideal, as Object IDs are long, complex strings that a user is unlikely to memorize or have access to. Therefore the 'PATCH /companies/drivers' route was adapted to support user emails as opposed to Object IDS.
-
-[INSERT SCREENSHOT OF ADD DRIVER]
 
